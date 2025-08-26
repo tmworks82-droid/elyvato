@@ -1,0 +1,3731 @@
+openapi: 3.0.3
+info:
+  title: CITY-CAB-CRM
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localcitycabcrm'
+paths:
+  /api/v1/get-all-color:
+    get:
+      summary: getAllColor
+      operationId: getAllColor
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath/api/v1/get-all-color</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully get...'
+                  data:
+                    -
+                      id: 1
+                      name: Red
+                    -
+                      id: 2
+                      name: Blue
+                    -
+                      id: 3
+                      name: Maroon
+                    -
+                      id: 4
+                      name: Yellow
+                    -
+                      id: 5
+                      name: Black
+                    -
+                      id: 6
+                      name: White
+                    -
+                      id: 7
+                      name: Green
+                    -
+                      id: 8
+                      name: Orange
+                    -
+                      id: 9
+                      name: Gray
+                    -
+                      id: 10
+                      name: 'Army Green'
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully get...'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: Red
+                      -
+                        id: 2
+                        name: Blue
+                      -
+                        id: 3
+                        name: Maroon
+                      -
+                        id: 4
+                        name: Yellow
+                      -
+                        id: 5
+                        name: Black
+                      -
+                        id: 6
+                        name: White
+                      -
+                        id: 7
+                        name: Green
+                      -
+                        id: 8
+                        name: Orange
+                      -
+                        id: 9
+                        name: Gray
+                      -
+                        id: 10
+                        name: 'Army Green'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Red
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Dashboard
+      security: []
+  /api/v1/get-all-stock:
+    get:
+      summary: getAllStock
+      operationId: getAllStock
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath/api/v1/get-all-stock</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully get...'
+                  data:
+                    -
+                      id: 1
+                      unit_id: 5
+                      name: Wire
+                      quantity: '10'
+                      unit:
+                        id: 5
+                        name: Piece
+                    -
+                      id: 2
+                      unit_id: 4
+                      name: Bulb
+                      quantity: '170'
+                      unit:
+                        id: 4
+                        name: Piece
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully get...'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        unit_id: 5
+                        name: Wire
+                        quantity: '10'
+                        unit:
+                          id: 5
+                          name: Piece
+                      -
+                        id: 2
+                        unit_id: 4
+                        name: Bulb
+                        quantity: '170'
+                        unit:
+                          id: 4
+                          name: Piece
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        unit_id:
+                          type: integer
+                          example: 5
+                        name:
+                          type: string
+                          example: Wire
+                        quantity:
+                          type: string
+                          example: '10'
+                        unit:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 5
+                            name:
+                              type: string
+                              example: Piece
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Dashboard
+      security: []
+  /api/v1/get-all-pdi-checklist:
+    get:
+      summary: getAllPdiChecklist
+      operationId: getAllPdiChecklist
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath/api/v1/get-all-pdi-checklist</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully get...'
+                  data:
+                    -
+                      id: 1
+                      name: 'Bulb Test'
+                    -
+                      id: 2
+                      name: 'Battery Test'
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully get...'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: 'Bulb Test'
+                      -
+                        id: 2
+                        name: 'Battery Test'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: 'Bulb Test'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Dashboard
+      security: []
+  /api/v1/get-all-assembly:
+    get:
+      summary: getAllAssembly
+      operationId: getAllAssembly
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath/api/v1/get-all-assembly</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully get...'
+                  data:
+                    rikshaw_model:
+                      -
+                        id: 1
+                        name: DLX
+                      -
+                        id: 2
+                        name: ECO
+                    rikshaw_differential_company:
+                      -
+                        id: 1
+                        name: HRS
+                      -
+                        id: 2
+                        name: CRS
+                    rikshaw_differential_variant:
+                      -
+                        id: 1
+                        variant_type: '33 Inch'
+                        created_at: '23-Aug-2024 09:40:19 AM'
+                      -
+                        id: 2
+                        variant_type: '43 Inch'
+                        created_at: '23-Aug-2024 09:40:19 AM'
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully get...'
+                  data:
+                    type: object
+                    properties:
+                      rikshaw_model:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            name: DLX
+                          -
+                            id: 2
+                            name: ECO
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: DLX
+                      rikshaw_differential_company:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            name: HRS
+                          -
+                            id: 2
+                            name: CRS
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: HRS
+                      rikshaw_differential_variant:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            variant_type: '33 Inch'
+                            created_at: '23-Aug-2024 09:40:19 AM'
+                          -
+                            id: 2
+                            variant_type: '43 Inch'
+                            created_at: '23-Aug-2024 09:40:19 AM'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            variant_type:
+                              type: string
+                              example: '33 Inch'
+                            created_at:
+                              type: string
+                              example: '23-Aug-2024 09:40:19 AM'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Dashboard
+      security: []
+  /api/v1/get-all-power-modal:
+    get:
+      summary: getAllPowerModal
+      operationId: getAllPowerModal
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath/api/v1/get-all-power-modal</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\nstatus: true,\nstatus_code: 200,\nmessage: \"Successfully get...\",\ndata: [\n{\nid: 1,\nname: \"4 Battery\"\n},\n{\nid: 2,\nname: \"5 Battery\"\n},\n{\nid: 3,\nname: \"Li-Battery\"\n},\n{\nid: 4,\nname: \"Cargo 4x5\"\n},\n{\nid: 5,\nname: \"Cargo 4x6\"\n},\n{\nid: 6,\nname: \"G-Rath\"\n}\n]\n}"
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Dashboard
+      security: []
+  /api/v1/get-motor-controller:
+    get:
+      summary: getMotorController
+      operationId: getMotorController
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath/api/v1/get-motor-controller</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully get...'
+                  data:
+                    motor_controller_company:
+                      -
+                        id: 1
+                        variant_type: HRS
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                      -
+                        id: 2
+                        variant_type: 'HRS SHINE'
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                      -
+                        id: 3
+                        variant_type: MAHALE
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                      -
+                        id: 4
+                        variant_type: ROTOMOTIVE
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                      -
+                        id: 5
+                        variant_type: AUTOLEK
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                      -
+                        id: 6
+                        variant_type: CY
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                      -
+                        id: 7
+                        variant_type: TSUYO
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                    motor_controller_variant:
+                      -
+                        id: 1
+                        variant_type: '33 Inch'
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                      -
+                        id: 2
+                        variant_type: '43 Inch'
+                        created_at: '23-Aug-2024 10:34:03 AM'
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully get...'
+                  data:
+                    type: object
+                    properties:
+                      motor_controller_company:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            variant_type: HRS
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                          -
+                            id: 2
+                            variant_type: 'HRS SHINE'
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                          -
+                            id: 3
+                            variant_type: MAHALE
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                          -
+                            id: 4
+                            variant_type: ROTOMOTIVE
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                          -
+                            id: 5
+                            variant_type: AUTOLEK
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                          -
+                            id: 6
+                            variant_type: CY
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                          -
+                            id: 7
+                            variant_type: TSUYO
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            variant_type:
+                              type: string
+                              example: HRS
+                            created_at:
+                              type: string
+                              example: '23-Aug-2024 10:34:03 AM'
+                      motor_controller_variant:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            variant_type: '33 Inch'
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                          -
+                            id: 2
+                            variant_type: '43 Inch'
+                            created_at: '23-Aug-2024 10:34:03 AM'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            variant_type:
+                              type: string
+                              example: '33 Inch'
+                            created_at:
+                              type: string
+                              example: '23-Aug-2024 10:34:03 AM'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Dashboard
+      security: []
+  /api/v1/get-all-chassis-number:
+    post:
+      summary: getAllChassisNumber
+      operationId: getAllChassisNumber
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n{\n\"user_id\":7\n}\n\n<aside class=\"note\">basepath/api/v1/get-all-chassis-number</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully list found...'
+                  data:
+                    -
+                      id: 1
+                      chasiss_no: HMDDDII0087766
+                      work_status: pending
+                      created_at: '22-Jul-2024 05:36:50 PM'
+                      current_status:
+                        id: 1
+                        step_name: 'Chassis Manufacturing'
+                    -
+                      id: 2
+                      chasiss_no: HMDDDII0087767
+                      work_status: pending
+                      created_at: '22-Jul-2024 05:36:50 PM'
+                      current_status:
+                        id: 1
+                        step_name: 'Chassis Manufacturing'
+                    -
+                      id: 3
+                      chasiss_no: HMDDDII0087768
+                      work_status: pending
+                      created_at: '22-Jul-2024 05:36:50 PM'
+                      current_status:
+                        id: 1
+                        step_name: 'Chassis Manufacturing'
+                    -
+                      id: 4
+                      chasiss_no: HMDDDII0087769
+                      work_status: pending
+                      created_at: '22-Jul-2024 05:36:50 PM'
+                      current_status:
+                        id: 1
+                        step_name: 'Chassis Manufacturing'
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully list found...'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        chasiss_no: HMDDDII0087766
+                        work_status: pending
+                        created_at: '22-Jul-2024 05:36:50 PM'
+                        current_status:
+                          id: 1
+                          step_name: 'Chassis Manufacturing'
+                      -
+                        id: 2
+                        chasiss_no: HMDDDII0087767
+                        work_status: pending
+                        created_at: '22-Jul-2024 05:36:50 PM'
+                        current_status:
+                          id: 1
+                          step_name: 'Chassis Manufacturing'
+                      -
+                        id: 3
+                        chasiss_no: HMDDDII0087768
+                        work_status: pending
+                        created_at: '22-Jul-2024 05:36:50 PM'
+                        current_status:
+                          id: 1
+                          step_name: 'Chassis Manufacturing'
+                      -
+                        id: 4
+                        chasiss_no: HMDDDII0087769
+                        work_status: pending
+                        created_at: '22-Jul-2024 05:36:50 PM'
+                        current_status:
+                          id: 1
+                          step_name: 'Chassis Manufacturing'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        chasiss_no:
+                          type: string
+                          example: HMDDDII0087766
+                        work_status:
+                          type: string
+                          example: pending
+                        created_at:
+                          type: string
+                          example: '22-Jul-2024 05:36:50 PM'
+                        current_status:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            step_name:
+                              type: string
+                              example: 'Chassis Manufacturing'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+  /api/v1/get-chassis-detail:
+    post:
+      summary: getChassisDetail
+      operationId: getChassisDetail
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\"\n}\n<aside class=\"notice\">basepath/api/v1/get-collection-by-category</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully data found...'
+                  data:
+                    -
+                      id: 1
+                      step_name: 'Chassis Manufacturing'
+                      is_child: 0
+                      child_module: null
+                      status_update:
+                        -
+                          id: 1
+                          chasiss_no: HMDDDII0087766
+                          workflow_step_id: 1
+                          assign_to: 7
+                          work_status: completed
+                          created_by: 1
+                          updated_by: null
+                          created_at: '22-Jul-2024 05:36:50 PM'
+                          user:
+                            id: 7
+                            name: 'Ashu Singh'
+                    -
+                      id: 2
+                      step_name: 'Chassis Box Manufacturing'
+                      is_child: 0
+                      child_module: null
+                      status_update:
+                        -
+                          id: 16
+                          chasiss_no: HMDDDII0087766
+                          workflow_step_id: 2
+                          assign_to: 7
+                          work_status: completed
+                          created_by: 7
+                          updated_by: 7
+                          created_at: '22-Jul-2024 11:01:25 PM'
+                          user:
+                            id: 7
+                            name: 'Ashu Singh'
+                    -
+                      id: 3
+                      step_name: Painting
+                      is_child: 0
+                      child_module: null
+                      status_update:
+                        -
+                          id: 17
+                          chasiss_no: HMDDDII0087766
+                          workflow_step_id: 3
+                          assign_to: 8
+                          work_status: pending
+                          created_by: 8
+                          updated_by: 8
+                          created_at: '22-Jul-2024 11:01:25 PM'
+                          user:
+                            id: 8
+                            name: Painting
+                    -
+                      id: 4
+                      step_name: 'Stock Pickup'
+                      is_child: 0
+                      child_module: null
+                      status_update: []
+                    -
+                      id: 5
+                      step_name: 'Fitting & Assembly'
+                      is_child: 0
+                      child_module: null
+                      status_update: []
+                    -
+                      id: 6
+                      step_name: 'PDI Check'
+                      is_child: 1
+                      child_module: get-all-pdi-checklist
+                      status_update: []
+                    -
+                      id: 7
+                      step_name: Dispatch
+                      is_child: 0
+                      child_module: null
+                      status_update: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully data found...'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        step_name: 'Chassis Manufacturing'
+                        is_child: 0
+                        child_module: null
+                        status_update:
+                          -
+                            id: 1
+                            chasiss_no: HMDDDII0087766
+                            workflow_step_id: 1
+                            assign_to: 7
+                            work_status: completed
+                            created_by: 1
+                            updated_by: null
+                            created_at: '22-Jul-2024 05:36:50 PM'
+                            user:
+                              id: 7
+                              name: 'Ashu Singh'
+                      -
+                        id: 2
+                        step_name: 'Chassis Box Manufacturing'
+                        is_child: 0
+                        child_module: null
+                        status_update:
+                          -
+                            id: 16
+                            chasiss_no: HMDDDII0087766
+                            workflow_step_id: 2
+                            assign_to: 7
+                            work_status: completed
+                            created_by: 7
+                            updated_by: 7
+                            created_at: '22-Jul-2024 11:01:25 PM'
+                            user:
+                              id: 7
+                              name: 'Ashu Singh'
+                      -
+                        id: 3
+                        step_name: Painting
+                        is_child: 0
+                        child_module: null
+                        status_update:
+                          -
+                            id: 17
+                            chasiss_no: HMDDDII0087766
+                            workflow_step_id: 3
+                            assign_to: 8
+                            work_status: pending
+                            created_by: 8
+                            updated_by: 8
+                            created_at: '22-Jul-2024 11:01:25 PM'
+                            user:
+                              id: 8
+                              name: Painting
+                      -
+                        id: 4
+                        step_name: 'Stock Pickup'
+                        is_child: 0
+                        child_module: null
+                        status_update: []
+                      -
+                        id: 5
+                        step_name: 'Fitting & Assembly'
+                        is_child: 0
+                        child_module: null
+                        status_update: []
+                      -
+                        id: 6
+                        step_name: 'PDI Check'
+                        is_child: 1
+                        child_module: get-all-pdi-checklist
+                        status_update: []
+                      -
+                        id: 7
+                        step_name: Dispatch
+                        is_child: 0
+                        child_module: null
+                        status_update: []
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        step_name:
+                          type: string
+                          example: 'Chassis Manufacturing'
+                        is_child:
+                          type: integer
+                          example: 0
+                        child_module:
+                          type: string
+                          example: null
+                        status_update:
+                          type: array
+                          example:
+                            -
+                              id: 1
+                              chasiss_no: HMDDDII0087766
+                              workflow_step_id: 1
+                              assign_to: 7
+                              work_status: completed
+                              created_by: 1
+                              updated_by: null
+                              created_at: '22-Jul-2024 05:36:50 PM'
+                              user:
+                                id: 7
+                                name: 'Ashu Singh'
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              chasiss_no:
+                                type: string
+                                example: HMDDDII0087766
+                              workflow_step_id:
+                                type: integer
+                                example: 1
+                              assign_to:
+                                type: integer
+                                example: 7
+                              work_status:
+                                type: string
+                                example: completed
+                              created_by:
+                                type: integer
+                                example: 1
+                              updated_by:
+                                type: string
+                                example: null
+                              created_at:
+                                type: string
+                                example: '22-Jul-2024 05:36:50 PM'
+                              user:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 7
+                                  name:
+                                    type: string
+                                    example: 'Ashu Singh'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: integer
+                  example: 'HMDDDII0087766 in JSON BODY'
+  /api/v1/swipe-right:
+    post:
+      summary: swipeRight
+      operationId: swipeRight
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n     \"user_id\":1,\n\"chasiss_no\":\"HMDDDII0087766\"\n}\n<aside class=\"notice\">basepath/api/v1/swipe-right</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully data updated...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully data updated...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+  /api/v1/add-color:
+    post:
+      summary: addColor
+      operationId: addColor
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"color_id\":1\n}\n<aside class=\"notice\">basepath/api/v1/add-color</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully color added...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully color added...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 409
+                  message: 'Already exist...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: 'Already exist...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*color_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+  /api/v1/add-assembly:
+    post:
+      summary: addAssembly
+      operationId: addAssembly
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087767\",\n\"user_id\":1,\n\"rikshaw_model_id\":1,\n\"rikshaw_differential_id\":1,\n\"rikshaw_differential_variants_id\":1,\n\"rikshaw_differential_serial_no\":\"SEJHJJ\"\n}\n<aside class=\"notice\">basepath/api/v1/add-color</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully assembly added...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully assembly added...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 409
+                  message: 'Already exist...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: 'Already exist...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*rikshaw_differential_serial_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*rikshaw_model_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*rikshaw_differential_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*rikshaw_differential_variants_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+  /api/v1/add-power-modal:
+    post:
+      summary: addPowerModal
+      operationId: addPowerModal
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"power_modal_id\":1\n}\n<aside class=\"notice\">basepath/api/v1/add-power-modal</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully power model added...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully power model added...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 409
+                  message: 'Already exist...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: 'Already exist...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*power_modal_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+  /api/v1/add-motor-controller:
+    post:
+      summary: addMotorController
+      operationId: addMotorController
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087767\",\n\"user_id\":1,\n\"motor_controller_company_id\":1,\n\"motor_controller_variant_id\":1,\n\"motor_controller_serial_no\":\"SEJHJJ\"\n\"controller_serial_no\":\"UUUYYYY\"\n}\n\n<aside class=\"notice\">basepath/api/v1/add-motor-controller</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Motor Controller successfully added...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Motor Controller successfully added...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  message: 'Oops, something went wrong...'
+                  status_code: 500
+                  data: []
+                  error: 'Exception Error...'
+                  exception: 'SQLSTATE[42S22]: Column not found.......'
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Oops, something went wrong...'
+                  status_code:
+                    type: integer
+                    example: 500
+                  data:
+                    type: array
+                    example: []
+                  error:
+                    type: string
+                    example: 'Exception Error...'
+                  exception:
+                    type: string
+                    example: 'SQLSTATE[42S22]: Column not found.......'
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'JHDFSHSDJF8R884 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*motor_controller_company_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*motor_controller_variant_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*motor_controller_serial_no':
+                  type: required
+                  description: string
+                  example: 'JHDFSHSDJF8R884 in JSON BODY'
+                '*controller_serial_no':
+                  type: required
+                  description: string
+                  example: '7857578JNJNDSNDSN in JSON BODY'
+  /api/v1/add-pdi-checklist:
+    post:
+      summary: addPdiChecklist
+      operationId: addPdiChecklist
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n\n<aside class=\"notice\">basepath/api/v1/add-pdi-checklist</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Pdi successfully processed...'
+                  data:
+                    created:
+                      -
+                        status: true
+                        message: 'Pdi successfully added...'
+                        status_code: 200
+                        data:
+                          chasiss_no: HMDDDII0087766
+                          created_by: 1
+                          updated_by: 1
+                          pdi_id: 4
+                          pdi_status: 'yes'
+                          newpdi_status: completed
+                    updated:
+                      -
+                        status: true
+                        message: 'Pdi successfully updated...'
+                        status_code: 200
+                        data:
+                          chasiss_no: HMDDDII0087766
+                          created_by: 1
+                          updated_by: 1
+                          pdi_id: 3
+                          pdi_status: 'yes'
+                          newpdi_status: completed
+                      -
+                        status: true
+                        message: 'Pdi successfully updated...'
+                        status_code: 200
+                        data:
+                          chasiss_no: HMDDDII0087766
+                          created_by: 1
+                          updated_by: 1
+                          pdi_id: 2
+                          pdi_status: 'no'
+                          newpdi_status: pending
+                      -
+                        status: true
+                        message: 'Pdi successfully updated...'
+                        status_code: 200
+                        data:
+                          chasiss_no: HMDDDII0087766
+                          created_by: 1
+                          updated_by: 1
+                          pdi_id: 1
+                          pdi_status: 'no'
+                          newpdi_status: pending
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Pdi successfully processed...'
+                  data:
+                    type: object
+                    properties:
+                      created:
+                        type: array
+                        example:
+                          -
+                            status: true
+                            message: 'Pdi successfully added...'
+                            status_code: 200
+                            data:
+                              chasiss_no: HMDDDII0087766
+                              created_by: 1
+                              updated_by: 1
+                              pdi_id: 4
+                              pdi_status: 'yes'
+                              newpdi_status: completed
+                        items:
+                          type: object
+                          properties:
+                            status:
+                              type: boolean
+                              example: true
+                            message:
+                              type: string
+                              example: 'Pdi successfully added...'
+                            status_code:
+                              type: integer
+                              example: 200
+                            data:
+                              type: object
+                              properties:
+                                chasiss_no:
+                                  type: string
+                                  example: HMDDDII0087766
+                                created_by:
+                                  type: integer
+                                  example: 1
+                                updated_by:
+                                  type: integer
+                                  example: 1
+                                pdi_id:
+                                  type: integer
+                                  example: 4
+                                pdi_status:
+                                  type: string
+                                  example: 'yes'
+                                newpdi_status:
+                                  type: string
+                                  example: completed
+                      updated:
+                        type: array
+                        example:
+                          -
+                            status: true
+                            message: 'Pdi successfully updated...'
+                            status_code: 200
+                            data:
+                              chasiss_no: HMDDDII0087766
+                              created_by: 1
+                              updated_by: 1
+                              pdi_id: 3
+                              pdi_status: 'yes'
+                              newpdi_status: completed
+                          -
+                            status: true
+                            message: 'Pdi successfully updated...'
+                            status_code: 200
+                            data:
+                              chasiss_no: HMDDDII0087766
+                              created_by: 1
+                              updated_by: 1
+                              pdi_id: 2
+                              pdi_status: 'no'
+                              newpdi_status: pending
+                          -
+                            status: true
+                            message: 'Pdi successfully updated...'
+                            status_code: 200
+                            data:
+                              chasiss_no: HMDDDII0087766
+                              created_by: 1
+                              updated_by: 1
+                              pdi_id: 1
+                              pdi_status: 'no'
+                              newpdi_status: pending
+                        items:
+                          type: object
+                          properties:
+                            status:
+                              type: boolean
+                              example: true
+                            message:
+                              type: string
+                              example: 'Pdi successfully updated...'
+                            status_code:
+                              type: integer
+                              example: 200
+                            data:
+                              type: object
+                              properties:
+                                chasiss_no:
+                                  type: string
+                                  example: HMDDDII0087766
+                                created_by:
+                                  type: integer
+                                  example: 1
+                                updated_by:
+                                  type: integer
+                                  example: 1
+                                pdi_id:
+                                  type: integer
+                                  example: 3
+                                pdi_status:
+                                  type: string
+                                  example: 'yes'
+                                newpdi_status:
+                                  type: string
+                                  example: completed
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  message: 'Oops, something went wrong...'
+                  status_code: 500
+                  data: []
+                  error: 'Exception Error...'
+                  exception: 'SQLSTATE[42S22]: Column not found.......'
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Oops, something went wrong...'
+                  status_code:
+                    type: integer
+                    example: 500
+                  data:
+                    type: array
+                    example: []
+                  error:
+                    type: string
+                    example: 'Exception Error...'
+                  exception:
+                    type: string
+                    example: 'SQLSTATE[42S22]: Column not found.......'
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*all_pdi_list':
+                  type: required
+                  description: array
+                  example: "[\n{\n\"pdi_id\": 1,\n\"pdi_status\": \"yes\"\n},\n{\n\"pdi_id\": 3,\n\"pdi_status\": \"no\"\n}\n     ] in JSON BODY"
+  /api/v1/get-pdi-checklist:
+    post:
+      summary: getPdiChecklist
+      operationId: getPdiChecklist
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n{\n\"chasiss_no\":\"HMDDDII0087766\"\n}\n\n<aside class=\"notice\">basepath/api/v1/get-pdi-checklist</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully get...'
+                  data:
+                    -
+                      id: 1
+                      chasiss_no: HMDDDII0087766
+                      pdi_id: 1
+                      pdi_status: pending
+                      created_at: '24-Jul-2024 11:30:57 PM'
+                    -
+                      id: 2
+                      chasiss_no: HMDDDII0087766
+                      pdi_id: 2
+                      pdi_status: pending
+                      created_at: '24-Jul-2024 11:30:57 PM'
+                    -
+                      id: 3
+                      chasiss_no: HMDDDII0087766
+                      pdi_id: 3
+                      pdi_status: completed
+                      created_at: '24-Jul-2024 11:31:56 PM'
+                    -
+                      id: 4
+                      chasiss_no: HMDDDII0087766
+                      pdi_id: 4
+                      pdi_status: completed
+                      created_at: '24-Jul-2024 11:39:35 PM'
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully get...'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        chasiss_no: HMDDDII0087766
+                        pdi_id: 1
+                        pdi_status: pending
+                        created_at: '24-Jul-2024 11:30:57 PM'
+                      -
+                        id: 2
+                        chasiss_no: HMDDDII0087766
+                        pdi_id: 2
+                        pdi_status: pending
+                        created_at: '24-Jul-2024 11:30:57 PM'
+                      -
+                        id: 3
+                        chasiss_no: HMDDDII0087766
+                        pdi_id: 3
+                        pdi_status: completed
+                        created_at: '24-Jul-2024 11:31:56 PM'
+                      -
+                        id: 4
+                        chasiss_no: HMDDDII0087766
+                        pdi_id: 4
+                        pdi_status: completed
+                        created_at: '24-Jul-2024 11:39:35 PM'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        chasiss_no:
+                          type: string
+                          example: HMDDDII0087766
+                        pdi_id:
+                          type: integer
+                          example: 1
+                        pdi_status:
+                          type: string
+                          example: pending
+                        created_at:
+                          type: string
+                          example: '24-Jul-2024 11:30:57 PM'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dashboard
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+  /api/v1/get-all-dealer:
+    get:
+      summary: getAllDealer
+      operationId: getAllDealer
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath/api/v1/get-all-dealer</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully get...'
+                  data:
+                    -
+                      id: 23
+                      name: Buyer
+                      mobile: '8573881201'
+                    -
+                      id: 24
+                      name: 'Shyama Kumar'
+                      mobile: '8573881201'
+                    -
+                      id: 25
+                      name: 'Jaya Mishra'
+                      mobile: '9161843032'
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully get...'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 23
+                        name: Buyer
+                        mobile: '8573881201'
+                      -
+                        id: 24
+                        name: 'Shyama Kumar'
+                        mobile: '8573881201'
+                      -
+                        id: 25
+                        name: 'Jaya Mishra'
+                        mobile: '9161843032'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 23
+                        name:
+                          type: string
+                          example: Buyer
+                        mobile:
+                          type: string
+                          example: '8573881201'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Dispatch
+      security: []
+  /api/v1/get-all-dispatch:
+    get:
+      summary: getAllDispatch
+      operationId: getAllDispatch
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath/api/v1/get-all-dispatch</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully fetched data...'
+                  data:
+                    dealers:
+                      -
+                        id: 2
+                        name: Ashu
+                      -
+                        id: 1
+                        name: 'Rock Davis'
+                    vehicle_types:
+                      -
+                        id: 1
+                        name: Passenger
+                      -
+                        id: 2
+                        name: Cargo
+                      -
+                        id: 3
+                        name: DustKart
+                    cargo_sizes:
+                      -
+                        id: 1
+                        name: '4x5 2.5F'
+                      -
+                        id: 2
+                        name: '4x5 3F'
+                    battery_company:
+                      -
+                        id: 1
+                        name: Liveguard
+                        ah:
+                          -
+                            id: 1
+                            battery_company_id: 1
+                            name: 140AH+15M
+                            created_at: '23-Aug-2024 09:09:23 AM'
+                      -
+                        id: 2
+                        name: Eastman
+                        ah:
+                          -
+                            id: 6
+                            battery_company_id: 2
+                            name: 130AH+12M
+                            created_at: '23-Aug-2024 09:09:23 AM'
+                          -
+                            id: 7
+                            battery_company_id: 2
+                            name: 135AH+15M
+                            created_at: '23-Aug-2024 09:09:23 AM'
+                      -
+                        id: 3
+                        name: CLN
+                        ah:
+                          -
+                            id: 12
+                            battery_company_id: 3
+                            name: Li-105AH+36M(48v)
+                            created_at: '23-Aug-2024 09:09:23 AM'
+                    charger_model:
+                      -
+                        id: 1
+                        name: 'AXIOME 15AMP'
+                      -
+                        id: 2
+                        name: 'AXIOME 16AMP'
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully fetched data...'
+                  data:
+                    type: object
+                    properties:
+                      dealers:
+                        type: array
+                        example:
+                          -
+                            id: 2
+                            name: Ashu
+                          -
+                            id: 1
+                            name: 'Rock Davis'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 2
+                            name:
+                              type: string
+                              example: Ashu
+                      vehicle_types:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            name: Passenger
+                          -
+                            id: 2
+                            name: Cargo
+                          -
+                            id: 3
+                            name: DustKart
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Passenger
+                      cargo_sizes:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            name: '4x5 2.5F'
+                          -
+                            id: 2
+                            name: '4x5 3F'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: '4x5 2.5F'
+                      battery_company:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            name: Liveguard
+                            ah:
+                              -
+                                id: 1
+                                battery_company_id: 1
+                                name: 140AH+15M
+                                created_at: '23-Aug-2024 09:09:23 AM'
+                          -
+                            id: 2
+                            name: Eastman
+                            ah:
+                              -
+                                id: 6
+                                battery_company_id: 2
+                                name: 130AH+12M
+                                created_at: '23-Aug-2024 09:09:23 AM'
+                              -
+                                id: 7
+                                battery_company_id: 2
+                                name: 135AH+15M
+                                created_at: '23-Aug-2024 09:09:23 AM'
+                          -
+                            id: 3
+                            name: CLN
+                            ah:
+                              -
+                                id: 12
+                                battery_company_id: 3
+                                name: Li-105AH+36M(48v)
+                                created_at: '23-Aug-2024 09:09:23 AM'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Liveguard
+                            ah:
+                              type: array
+                              example:
+                                -
+                                  id: 1
+                                  battery_company_id: 1
+                                  name: 140AH+15M
+                                  created_at: '23-Aug-2024 09:09:23 AM'
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 1
+                                  battery_company_id:
+                                    type: integer
+                                    example: 1
+                                  name:
+                                    type: string
+                                    example: 140AH+15M
+                                  created_at:
+                                    type: string
+                                    example: '23-Aug-2024 09:09:23 AM'
+                      charger_model:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            name: 'AXIOME 15AMP'
+                          -
+                            id: 2
+                            name: 'AXIOME 16AMP'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: 'AXIOME 15AMP'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Dispatch
+      security: []
+  /api/v1/add-dispatch:
+    post:
+      summary: addDispatch
+      operationId: addDispatch
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087768\",\n\"user_id\":1,\n\"dealer_id\":1,\n\"charger_modal_id\":1,\n\"vehicle_type_id\":1,\n\"battery_company_id\":1,\n\"battery_ah_id\":1,\n\"dispatch_by\":\"11626HHGTR\",\n\"cargo_size_id\":\"1\",\n\"dispatcher_name\":\"11626HHGTR\",\n\"carrier\":\"no\",\n\"alloy\":\"no\"\n}\n<aside class=\"notice\">basepath/api/v1/add-dispatch</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully dispatch added...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully dispatch added...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 409
+                  message: 'Already exist...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: 'Already exist...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dispatch
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*dealer_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*charger_modal_id':
+                  type: required
+                  description: string
+                  example: 'abc in JSON BODY'
+                '*battery_company_id':
+                  type: required
+                  description: string
+                  example: 'abc in JSON BODY'
+                '*battery_ah_id':
+                  type: required
+                  description: string
+                  example: 'abc in JSON BODY'
+                '*dispatch_by':
+                  type: required
+                  description: string
+                  example: 'abc in JSON BODY'
+                '*carrier':
+                  type: required
+                  description: enum()
+                  example: 'yes/no in JSON BODY'
+                '*alloy':
+                  type: required
+                  description: enum()
+                  example: 'yes/no in JSON BODY'
+                cargo_size_id:
+                  type: String
+                  description: ''
+                  example: 'ABC in JSON BODY'
+                dispatcher_name:
+                  type: required
+                  description: String
+                  example: 'ABC in JSON BODY'
+  /api/v1/add-charger-image:
+    post:
+      summary: addChargerImage
+      operationId: addChargerImage
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"base64image\":\"STRING BASE64IMAGE\"\n}\n<aside class=\"notice\">basepath/api/v1/add-charger-image</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Charger picture successfully updated...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Charger picture successfully updated...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 409
+                  message: 'Already exist...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: 'Already exist...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dispatch
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*base64image':
+                  type: required
+                  description: string
+                  example: 'STRING BASE64IMAGE in JSON BODY'
+  /api/v1/add-battery-image:
+    post:
+      summary: addBatteryImage
+      operationId: addBatteryImage
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"base64image\":\"STRING BASE64IMAGE\"\n}\n<aside class=\"notice\">basepath/api/v1/add-battery-image</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Battery picture successfully updated...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Battery picture successfully updated...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 409
+                  message: 'Already exist...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: 'Already exist...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dispatch
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*base64image':
+                  type: required
+                  description: string
+                  example: 'STRING BASE64IMAGE in JSON BODY'
+  /api/v1/add-chassis-image:
+    post:
+      summary: addChassisImage
+      operationId: addChassisImage
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"base64image\":\"STRING BASE64IMAGE\"\n}\n<aside class=\"notice\">basepath/api/v1/add-charger-image</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Chasiss picture successfully updated...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Chasiss picture successfully updated...'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token is Invalid'
+                  status_code: 401
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Token is Invalid'
+                  status_code:
+                    type: integer
+                    example: 401
+                  status:
+                    type: boolean
+                    example: false
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Authorised Token Not Found'
+                  status_code: 403
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Authorised Token Not Found'
+                  status_code:
+                    type: integer
+                    example: 403
+                  status:
+                    type: boolean
+                    example: false
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Data not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Data not found...'
+                  data:
+                    type: array
+                    example: []
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 409
+                  message: 'Already exist...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: 'Already exist...'
+                  data:
+                    type: array
+                    example: []
+        419:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your login has expired. Please log in again.'
+                  status_code: 419
+                  status: false
+                properties:
+                  message:
+                    type: string
+                    example: 'Your login has expired. Please log in again.'
+                  status_code:
+                    type: integer
+                    example: 419
+                  status:
+                    type: boolean
+                    example: false
+      tags:
+        - Dispatch
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*chasiss_no':
+                  type: required
+                  description: string
+                  example: 'HMDDDII0087766 in JSON BODY'
+                '*user_id':
+                  type: required
+                  description: integer
+                  example: '1/2/3 in JSON BODY'
+                '*base64image':
+                  type: required
+                  description: string
+                  example: 'STRING BASE64IMAGE in JSON BODY'
+  /api/v1/login:
+    post:
+      summary: login
+      operationId: login
+      description: "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\nEX\n {\n\"email_id\":\"You@domain.com\",\n\"password\":\"Abc@12345\"\n}\n <aside class=\"notice\">basepath/api/v1/login</aside>"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: true
+                  status_code: 200
+                  message: 'Successfully login..'
+                  data:
+                    user_data:
+                      user_id: 1
+                      name: 'Md Saddam Hussain'
+                      email: Hussain@gmail.com
+                    access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWwtbnJpcy5jYS9hcGkvdjEvbG9naW4iLCJpYXQiOjE2ODk2Nzk3ODYsImV4cCI6MTY4OTY4MzM4NiwibmJmIjoxNjg5Njc5Nzg2LCJqdGkiOiJUeXFsTU95MlA0WXpibXFsIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xSMoCqyWexiUAmnCNmC6xJZjvOWbQM9GMRZuQUYpSfc
+                    token_type: bearer
+                    expires_in: 60
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  status_code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'Successfully login..'
+                  data:
+                    type: object
+                    properties:
+                      user_data:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: 'Md Saddam Hussain'
+                          email:
+                            type: string
+                            example: Hussain@gmail.com
+                      access_token:
+                        type: string
+                        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWwtbnJpcy5jYS9hcGkvdjEvbG9naW4iLCJpYXQiOjE2ODk2Nzk3ODYsImV4cCI6MTY4OTY4MzM4NiwibmJmIjoxNjg5Njc5Nzg2LCJqdGkiOiJUeXFsTU95MlA0WXpibXFsIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xSMoCqyWexiUAmnCNmC6xJZjvOWbQM9GMRZuQUYpSfc
+                      token_type:
+                        type: string
+                        example: bearer
+                      expires_in:
+                        type: integer
+                        example: 60
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 401
+                  message: 'Incorrect Password...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: 'Incorrect Password...'
+                  data:
+                    type: array
+                    example: []
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: false
+                  status_code: 404
+                  message: 'Eamil id not found...'
+                  data: []
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  status_code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Eamil id not found...'
+                  data:
+                    type: array
+                    example: []
+      tags:
+        - Login
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '*email_id':
+                  type: required
+                  description: string
+                  example: you@domain.com
+                '*password':
+                  type: required
+                  description: string
+                  example: '********'
+      security: []
+tags:
+  -
+    name: Dashboard
+    description: "\nAPIs for all dashboard"
+  -
+    name: Dispatch
+    description: "\nAPIs for all dispatch related"
+  -
+    name: Login
+    description: "\nAPIs for managing all Auth Related"

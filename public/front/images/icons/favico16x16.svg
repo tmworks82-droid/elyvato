@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.19 14.53">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        font-family: Gotham-Black, Gotham;
+        font-size: 12.5px;
+        font-weight: 800;
+      }
+
+      .cls-3 {
+        fill: #204b41;
+      }
+    </style>
+  </defs>
+  <g id="Layer_4" data-name="Layer 4">
+    <g>
+      <circle class="cls-3" cx="7.1" cy="7.19" r="7.1"/>
+      <text class="cls-2" transform="translate(2.88 10.62)"><tspan x="0" y="0">y</tspan></text>
+      <polyline class="cls-3" points="6.91 7.07 9.89 7.07 11.62 1.98 8.5 1.84 6.91 6.99"/>
+      <path class="cls-1" d="M9.23,5.58h-1.57v-.27c0-.44.36-.8.8-.8h1.84s.09,0,.09,0c0,.59-.56,1.06-1.15,1.06Z"/>
+      <path class="cls-1" d="M9.84,4.3h-1.57v-.27c0-.44.36-.8.8-.8h1.84s.09,0,.09,0c0,.59-.56,1.06-1.15,1.06Z"/>
+      <path class="cls-1" d="M10.31,3.04h-1.57v-.27c0-.44.36-.8.8-.8h1.84s.09,0,.09,0c0,.59-.56,1.06-1.15,1.06Z"/>
+      <path class="cls-1" d="M8.67,6.86h-1.57v-.27c0-.44.36-.8.8-.8h1.84s.09,0,.09,0c0,.59-.56,1.06-1.15,1.06Z"/>
+    </g>
+  </g>
+</svg>

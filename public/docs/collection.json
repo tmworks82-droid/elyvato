@@ -1,0 +1,1297 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localcitycabcrm\/"
+        }
+    ],
+    "info": {
+        "name": "CITY-CAB-CRM",
+        "_postman_id": "03089699-f1e1-4994-9dd2-ac1f0d0d6695",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Dashboard",
+            "description": "\nAPIs for all dashboard",
+            "item": [
+                {
+                    "name": "getAllColor",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-all-color",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-all-color"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath\/api\/v1\/get-all-color<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully get...\",\n\"data\": [\n{\n\"id\": 1,\n\"name\": \"Red\"\n},\n{\n\"id\": 2,\n\"name\": \"Blue\"\n},\n{\n\"id\": 3,\n\"name\": \"Maroon\"\n},\n{\n\"id\": 4,\n\"name\": \"Yellow\"\n},\n{\n\"id\": 5,\n\"name\": \"Black\"\n},\n{\n\"id\": 6,\n\"name\": \"White\"\n},\n{\n\"id\": 7,\n\"name\": \"Green\"\n},\n{\n\"id\": 8,\n\"name\": \"Orange\"\n},\n{\n\"id\": 9,\n\"name\": \"Gray\"\n},\n{\n\"id\": 10,\n\"name\": \"Army Green\"\n}\n]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getAllStock",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-all-stock",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-all-stock"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath\/api\/v1\/get-all-stock<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully get...\",\n\"data\": [\n{\n\"id\": 1,\n\"unit_id\": 5,\n\"name\": \"Wire\",\n\"quantity\": \"10\",\n\"unit\": {\n\"id\": 5,\n\"name\": \"Piece\"\n}\n},\n{\n\"id\": 2,\n\"unit_id\": 4,\n\"name\": \"Bulb\",\n\"quantity\": \"170\",\n\"unit\": {\n\"id\": 4,\n\"name\": \"Piece\"\n}\n}\n]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getAllPdiChecklist",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-all-pdi-checklist",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-all-pdi-checklist"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath\/api\/v1\/get-all-pdi-checklist<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully get...\",\n\"data\": [\n{\n\"id\": 1,\n\"name\": \"Bulb Test\"\n},\n{\n\"id\": 2,\n\"name\": \"Battery Test\"\n}\n]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getAllAssembly",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-all-assembly",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-all-assembly"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath\/api\/v1\/get-all-assembly<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully get...\",\n\"data\": {\n\"rikshaw_model\": [\n{\n\"id\": 1,\n\"name\": \"DLX\"\n},\n{\n\"id\": 2,\n\"name\": \"ECO\"\n}\n],\n\"rikshaw_differential_company\": [\n{\n\"id\": 1,\n\"name\": \"HRS\"\n},\n{\n\"id\": 2,\n\"name\": \"CRS\"\n}\n],\n\"rikshaw_differential_variant\": [\n{\n\"id\": 1,\n\"variant_type\": \"33 Inch\",\n\"created_at\": \"23-Aug-2024 09:40:19 AM\"\n},\n{\n\"id\": 2,\n\"variant_type\": \"43 Inch\",\n\"created_at\": \"23-Aug-2024 09:40:19 AM\"\n}\n]\n}\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getAllPowerModal",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-all-power-modal",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-all-power-modal"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath\/api\/v1\/get-all-power-modal<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\nstatus: true,\nstatus_code: 200,\nmessage: \"Successfully get...\",\ndata: [\n{\nid: 1,\nname: \"4 Battery\"\n},\n{\nid: 2,\nname: \"5 Battery\"\n},\n{\nid: 3,\nname: \"Li-Battery\"\n},\n{\nid: 4,\nname: \"Cargo 4x5\"\n},\n{\nid: 5,\nname: \"Cargo 4x6\"\n},\n{\nid: 6,\nname: \"G-Rath\"\n}\n]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getMotorController",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-motor-controller",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-motor-controller"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath\/api\/v1\/get-motor-controller<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully get...\",\n\"data\": {\n\"motor_controller_company\": [\n{\n\"id\": 1,\n\"variant_type\": \"HRS\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n},\n{\n\"id\": 2,\n\"variant_type\": \"HRS SHINE\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n},\n{\n\"id\": 3,\n\"variant_type\": \"MAHALE\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n},\n{\n\"id\": 4,\n\"variant_type\": \"ROTOMOTIVE\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n},\n{\n\"id\": 5,\n\"variant_type\": \"AUTOLEK\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n},\n{\n\"id\": 6,\n\"variant_type\": \"CY\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n},\n{\n\"id\": 7,\n\"variant_type\": \"TSUYO\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n}\n],\n\"motor_controller_variant\": [\n{\n\"id\": 1,\n\"variant_type\": \"33 Inch\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n},\n{\n\"id\": 2,\n\"variant_type\": \"43 Inch\",\n\"created_at\": \"23-Aug-2024 10:34:03 AM\"\n}\n]\n}\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getAllChassisNumber",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-all-chassis-number",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-all-chassis-number"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required ."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n{\n\"user_id\":7\n}\n\n<aside class=\"note\">basepath\/api\/v1\/get-all-chassis-number<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully list found...\",\n\"data\": [\n{\n\"id\": 1,\n\"chasiss_no\": \"HMDDDII0087766\",\n\"work_status\": \"pending\",\n\"created_at\": \"22-Jul-2024 05:36:50 PM\",\n\"current_status\": {\n\"id\": 1,\n\"step_name\": \"Chassis Manufacturing\"\n}\n},\n{\n\"id\": 2,\n\"chasiss_no\": \"HMDDDII0087767\",\n\"work_status\": \"pending\",\n\"created_at\": \"22-Jul-2024 05:36:50 PM\",\n\"current_status\": {\n\"id\": 1,\n\"step_name\": \"Chassis Manufacturing\"\n}\n},\n{\n\"id\": 3,\n\"chasiss_no\": \"HMDDDII0087768\",\n\"work_status\": \"pending\",\n\"created_at\": \"22-Jul-2024 05:36:50 PM\",\n\"current_status\": {\n\"id\": 1,\n\"step_name\": \"Chassis Manufacturing\"\n}\n},\n{\n\"id\": 4,\n\"chasiss_no\": \"HMDDDII0087769\",\n\"work_status\": \"pending\",\n\"created_at\": \"22-Jul-2024 05:36:50 PM\",\n\"current_status\": {\n\"id\": 1,\n\"step_name\": \"Chassis Manufacturing\"\n}\n}\n]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getChassisDetail",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-chassis-detail",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-chassis-detail"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\"\n}\n<aside class=\"notice\">basepath\/api\/v1\/get-collection-by-category<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully data found...\",\n\"data\": [\n{\n\"id\": 1,\n\"step_name\": \"Chassis Manufacturing\",\n\"is_child\": 0,\n\"child_module\": null,\n\"status_update\": [\n{\n\"id\": 1,\n\"chasiss_no\": \"HMDDDII0087766\",\n\"workflow_step_id\": 1,\n\"assign_to\": 7,\n\"work_status\": \"completed\",\n\"created_by\": 1,\n\"updated_by\": null,\n\"created_at\": \"22-Jul-2024 05:36:50 PM\",\n\"user\": {\n\"id\": 7,\n\"name\": \"Ashu Singh\"\n}\n}\n]\n},\n{\n\"id\": 2,\n\"step_name\": \"Chassis Box Manufacturing\",\n\"is_child\": 0,\n\"child_module\": null,\n\"status_update\": [\n{\n\"id\": 16,\n\"chasiss_no\": \"HMDDDII0087766\",\n\"workflow_step_id\": 2,\n\"assign_to\": 7,\n\"work_status\": \"completed\",\n\"created_by\": 7,\n\"updated_by\": 7,\n\"created_at\": \"22-Jul-2024 11:01:25 PM\",\n\"user\": {\n\"id\": 7,\n\"name\": \"Ashu Singh\"\n}\n}\n]\n},\n{\n\"id\": 3,\n\"step_name\": \"Painting\",\n\"is_child\": 0,\n\"child_module\": null,\n\"status_update\": [\n{\n\"id\": 17,\n\"chasiss_no\": \"HMDDDII0087766\",\n\"workflow_step_id\": 3,\n\"assign_to\": 8,\n\"work_status\": \"pending\",\n\"created_by\": 8,\n\"updated_by\": 8,\n\"created_at\": \"22-Jul-2024 11:01:25 PM\",\n\"user\": {\n\"id\": 8,\n\"name\": \"Painting\"\n}\n}\n]\n},\n{\n\"id\": 4,\n\"step_name\": \"Stock Pickup\",\n\"is_child\": 0,\n\"child_module\": null,\n\"status_update\": []\n},\n{\n\"id\": 5,\n\"step_name\": \"Fitting & Assembly\",\n\"is_child\": 0,\n\"child_module\": null,\n\"status_update\": []\n},\n{\n\"id\": 6,\n\"step_name\": \"PDI Check\",\n\"is_child\": 1,\n\"child_module\": \"get-all-pdi-checklist\",\n\"status_update\": []\n},\n{\n\"id\": 7,\n\"step_name\": \"Dispatch\",\n\"is_child\": 0,\n\"child_module\": null,\n\"status_update\": []\n}\n]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "swipeRight",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/swipe-right",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/swipe-right"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n     \"user_id\":1,\n\"chasiss_no\":\"HMDDDII0087766\"\n}\n<aside class=\"notice\">basepath\/api\/v1\/swipe-right<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully data updated...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addColor",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-color",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-color"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*color_id\":\"1\\\/2\\\/3 in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"color_id\":1\n}\n<aside class=\"notice\">basepath\/api\/v1\/add-color<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully color added...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n\"status\": false,\n\"status_code\": 409,\n\"message\": \"Already exist...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addAssembly",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-assembly",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-assembly"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*rikshaw_differential_serial_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*rikshaw_model_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*rikshaw_differential_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*rikshaw_differential_variants_id\":\"1\\\/2\\\/3 in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087767\",\n\"user_id\":1,\n\"rikshaw_model_id\":1,\n\"rikshaw_differential_id\":1,\n\"rikshaw_differential_variants_id\":1,\n\"rikshaw_differential_serial_no\":\"SEJHJJ\"\n}\n<aside class=\"notice\">basepath\/api\/v1\/add-color<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully assembly added...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n\"status\": false,\n\"status_code\": 409,\n\"message\": \"Already exist...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addPowerModal",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-power-modal",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-power-modal"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*power_modal_id\":\"1\\\/2\\\/3 in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"power_modal_id\":1\n}\n<aside class=\"notice\">basepath\/api\/v1\/add-power-modal<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully power model added...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n\"status\": false,\n\"status_code\": 409,\n\"message\": \"Already exist...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addMotorController",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-motor-controller",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-motor-controller"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"JHDFSHSDJF8R884 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*motor_controller_company_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*motor_controller_variant_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*motor_controller_serial_no\":\"JHDFSHSDJF8R884 in JSON BODY\",\"*controller_serial_no\":\"7857578JNJNDSNDSN in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087767\",\n\"user_id\":1,\n\"motor_controller_company_id\":1,\n\"motor_controller_variant_id\":1,\n\"motor_controller_serial_no\":\"SEJHJJ\"\n\"controller_serial_no\":\"UUUYYYY\"\n}\n\n<aside class=\"notice\">basepath\/api\/v1\/add-motor-controller<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Motor Controller successfully added...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"status\": false,\n\"message\": \"Oops, something went wrong...\",\n\"status_code\": 500,\n\"data\": [],\n\"error\": \"Exception Error...\",\n\"exception\": \"SQLSTATE[42S22]: Column not found.......\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addPdiChecklist",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-pdi-checklist",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-pdi-checklist"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*all_pdi_list\":\"[\\n{\\n\\\"pdi_id\\\": 1,\\n\\\"pdi_status\\\": \\\"yes\\\"\\n},\\n{\\n\\\"pdi_id\\\": 3,\\n\\\"pdi_status\\\": \\\"no\\\"\\n}\\n     ] in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n\n<aside class=\"notice\">basepath\/api\/v1\/add-pdi-checklist<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Pdi successfully processed...\",\n\"data\": {\n\"created\": [\n{\n\"status\": true,\n\"message\": \"Pdi successfully added...\",\n\"status_code\": 200,\n\"data\": {\n\"chasiss_no\": \"HMDDDII0087766\",\n\"created_by\": 1,\n\"updated_by\": 1,\n\"pdi_id\": 4,\n\"pdi_status\": \"yes\",\n\"newpdi_status\": \"completed\"\n}\n}\n],\n\"updated\": [\n{\n\"status\": true,\n\"message\": \"Pdi successfully updated...\",\n\"status_code\": 200,\n\"data\": {\n\"chasiss_no\": \"HMDDDII0087766\",\n\"created_by\": 1,\n\"updated_by\": 1,\n\"pdi_id\": 3,\n\"pdi_status\": \"yes\",\n\"newpdi_status\": \"completed\"\n}\n},\n{\n\"status\": true,\n\"message\": \"Pdi successfully updated...\",\n\"status_code\": 200,\n\"data\": {\n\"chasiss_no\": \"HMDDDII0087766\",\n\"created_by\": 1,\n\"updated_by\": 1,\n\"pdi_id\": 2,\n\"pdi_status\": \"no\",\n\"newpdi_status\": \"pending\"\n}\n},\n{\n\"status\": true,\n\"message\": \"Pdi successfully updated...\",\n\"status_code\": 200,\n\"data\": {\n\"chasiss_no\": \"HMDDDII0087766\",\n\"created_by\": 1,\n\"updated_by\": 1,\n\"pdi_id\": 1,\n\"pdi_status\": \"no\",\n\"newpdi_status\": \"pending\"\n}\n}\n]\n}\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"status\": false,\n\"message\": \"Oops, something went wrong...\",\n\"status_code\": 500,\n\"data\": [],\n\"error\": \"Exception Error...\",\n\"exception\": \"SQLSTATE[42S22]: Column not found.......\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getPdiChecklist",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-pdi-checklist",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-pdi-checklist"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n{\n\"chasiss_no\":\"HMDDDII0087766\"\n}\n\n<aside class=\"notice\">basepath\/api\/v1\/get-pdi-checklist<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully get...\",\n\"data\": [\n{\n\"id\": 1,\n\"chasiss_no\": \"HMDDDII0087766\",\n\"pdi_id\": 1,\n\"pdi_status\": \"pending\",\n\"created_at\": \"24-Jul-2024 11:30:57 PM\"\n},\n{\n\"id\": 2,\n\"chasiss_no\": \"HMDDDII0087766\",\n\"pdi_id\": 2,\n\"pdi_status\": \"pending\",\n\"created_at\": \"24-Jul-2024 11:30:57 PM\"\n},\n{\n\"id\": 3,\n\"chasiss_no\": \"HMDDDII0087766\",\n\"pdi_id\": 3,\n\"pdi_status\": \"completed\",\n\"created_at\": \"24-Jul-2024 11:31:56 PM\"\n},\n{\n\"id\": 4,\n\"chasiss_no\": \"HMDDDII0087766\",\n\"pdi_id\": 4,\n\"pdi_status\": \"completed\",\n\"created_at\": \"24-Jul-2024 11:39:35 PM\"\n}\n]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Dispatch",
+            "description": "\nAPIs for all dispatch related",
+            "item": [
+                {
+                    "name": "getAllDealer",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-all-dealer",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-all-dealer"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath\/api\/v1\/get-all-dealer<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully get...\",\n\"data\": [\n{\n\"id\": 23,\n\"name\": \"Buyer\",\n\"mobile\": \"8573881201\"\n},\n{\n\"id\": 24,\n\"name\": \"Shyama Kumar\",\n\"mobile\": \"8573881201\"\n},\n{\n\"id\": 25,\n\"name\": \"Jaya Mishra\",\n\"mobile\": \"9161843032\"\n}\n]\n }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getAllDispatch",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/get-all-dispatch",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/get-all-dispatch"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n\n<aside class=\"notice\">basepath\/api\/v1\/get-all-dispatch<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully fetched data...\",\n\"data\": {\n\"dealers\": [\n{\n\"id\": 2,\n\"name\": \"Ashu\"\n},\n{\n\"id\": 1,\n\"name\": \"Rock Davis\"\n}\n],\n\"vehicle_types\": [\n{\n\"id\": 1,\n\"name\": \"Passenger\"\n},\n{\n\"id\": 2,\n\"name\": \"Cargo\"\n},\n{\n\"id\": 3,\n\"name\": \"DustKart\"\n}\n],\n\"cargo_sizes\": [\n{\n\"id\": 1,\n\"name\": \"4x5 2.5F\"\n},\n{\n\"id\": 2,\n\"name\": \"4x5 3F\"\n}\n],\n\"battery_company\": [\n{\n\"id\": 1,\n\"name\": \"Liveguard\",\n\"ah\": [\n{\n\"id\": 1,\n\"battery_company_id\": 1,\n\"name\": \"140AH+15M\",\n\"created_at\": \"23-Aug-2024 09:09:23 AM\"\n}\n]\n},\n{\n\"id\": 2,\n\"name\": \"Eastman\",\n\"ah\": [\n{\n\"id\": 6,\n\"battery_company_id\": 2,\n\"name\": \"130AH+12M\",\n\"created_at\": \"23-Aug-2024 09:09:23 AM\"\n},\n{\n\"id\": 7,\n\"battery_company_id\": 2,\n\"name\": \"135AH+15M\",\n\"created_at\": \"23-Aug-2024 09:09:23 AM\"\n}\n]\n},\n{\n\"id\": 3,\n\"name\": \"CLN\",\n\"ah\": [\n{\n\"id\": 12,\n\"battery_company_id\": 3,\n\"name\": \"Li-105AH+36M(48v)\",\n\"created_at\": \"23-Aug-2024 09:09:23 AM\"\n}\n]\n}\n],\n\"charger_model\": [\n{\n\"id\": 1,\n\"name\": \"AXIOME 15AMP\"\n},\n{\n\"id\": 2,\n\"name\": \"AXIOME 16AMP\"\n}\n]\n}\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addDispatch",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-dispatch",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-dispatch"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*dealer_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*charger_modal_id\":\"abc in JSON BODY\",\"*battery_company_id\":\"abc in JSON BODY\",\"*battery_ah_id\":\"abc in JSON BODY\",\"*dispatch_by\":\"abc in JSON BODY\",\"*carrier\":\"yes\\\/no in JSON BODY\",\"*alloy\":\"yes\\\/no in JSON BODY\",\"cargo_size_id\":\"ABC in JSON BODY\",\"dispatcher_name\":\"ABC in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087768\",\n\"user_id\":1,\n\"dealer_id\":1,\n\"charger_modal_id\":1,\n\"vehicle_type_id\":1,\n\"battery_company_id\":1,\n\"battery_ah_id\":1,\n\"dispatch_by\":\"11626HHGTR\",\n\"cargo_size_id\":\"1\",\n\"dispatcher_name\":\"11626HHGTR\",\n\"carrier\":\"no\",\n\"alloy\":\"no\"\n}\n<aside class=\"notice\">basepath\/api\/v1\/add-dispatch<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Successfully dispatch added...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n\"status\": false,\n\"status_code\": 409,\n\"message\": \"Already exist...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addChargerImage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-charger-image",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-charger-image"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*base64image\":\"STRING BASE64IMAGE in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"base64image\":\"STRING BASE64IMAGE\"\n}\n<aside class=\"notice\">basepath\/api\/v1\/add-charger-image<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Charger picture successfully updated...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n\"status\": false,\n\"status_code\": 409,\n\"message\": \"Already exist...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addBatteryImage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-battery-image",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-battery-image"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*base64image\":\"STRING BASE64IMAGE in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"base64image\":\"STRING BASE64IMAGE\"\n}\n<aside class=\"notice\">basepath\/api\/v1\/add-battery-image<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Battery picture successfully updated...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n\"status\": false,\n\"status_code\": 409,\n\"message\": \"Already exist...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "addChassisImage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/add-chassis-image",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/add-chassis-image"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer _token required."
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*chasiss_no\":\"HMDDDII0087766 in JSON BODY\",\"*user_id\":\"1\\\/2\\\/3 in JSON BODY\",\"*base64image\":\"STRING BASE64IMAGE in JSON BODY\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\n {\n\"chasiss_no\":\"HMDDDII0087766\",\n\"user_id\":1,\n\"base64image\":\"STRING BASE64IMAGE\"\n}\n<aside class=\"notice\">basepath\/api\/v1\/add-charger-image<\/aside>"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": true,\n\"status_code\": 200,\n\"message\": \"Chasiss picture successfully updated...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"message\": \"Token is Invalid\",\n\"status_code\": 401,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"message\": \"Authorised Token Not Found\",\n\"status_code\": 403,\n\"status\": false\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"status\": false,\n\"status_code\": 404,\n\"message\": \"Data not found...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n\"status\": false,\n\"status_code\": 409,\n\"message\": \"Already exist...\",\n\"data\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 419,
+                            "body": "{\n\"message\": \"Your login has expired. Please log in again.\",\n\"status_code\": 419,\n\"status\": false\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Login",
+            "description": "\nAPIs for managing all Auth Related",
+            "item": [
+                {
+                    "name": "login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"*email_id\":\"you@domain.com\",\"*password\":\"********\"}"
+                        },
+                        "description": "If everything is okay, you'll get a `200` OK response with data.\n\nOtherwise, the request will fail with a `404` error, and a response not found!\n\nEX\n {\n\"email_id\":\"You@domain.com\",\n\"password\":\"Abc@12345\"\n}\n <aside class=\"notice\">basepath\/api\/v1\/login<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"status\": true,\n     \"status_code\": 200,\n     \"message\": \"Successfully login..\",\n     \"data\": {\n         \"user_data\": {\n             \"user_id\": 1,\n             \"name\": \"Md Saddam Hussain\",\n             \"email\": \"Hussain@gmail.com\"\n         },\n         \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWwtbnJpcy5jYS9hcGkvdjEvbG9naW4iLCJpYXQiOjE2ODk2Nzk3ODYsImV4cCI6MTY4OTY4MzM4NiwibmJmIjoxNjg5Njc5Nzg2LCJqdGkiOiJUeXFsTU95MlA0WXpibXFsIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xSMoCqyWexiUAmnCNmC6xJZjvOWbQM9GMRZuQUYpSfc\",\n         \"token_type\": \"bearer\",\n         \"expires_in\": 60\n     }\n }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n     \"status\": false,\n     \"status_code\": 401,\n     \"message\": \"Incorrect Password...\",\n     \"data\": []\n }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n     \"status\": false,\n     \"status_code\": 404,\n     \"message\": \"Eamil id not found...\",\n     \"data\": []\n }",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}
