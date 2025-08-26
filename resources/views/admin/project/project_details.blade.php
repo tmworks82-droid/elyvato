@@ -161,7 +161,7 @@ body.adminlte-body {
  {
     border-bottom: 2px solid #dee2e6;
 }
-
+ 
 .nav-tabs .nav-link.active {
     background-color: #007bff !important;
     color: white !important;
@@ -215,7 +215,7 @@ body.adminlte-body {
                             <h3 class="card-title">{{ $page_name }} details</h3>
                             <button type="button" class="btn btn-warning btn-sm float-right ml-2"
                                 data-id="{{ $project->id }}" data-toggle="modal" data-target="#milestoneModal">
-                                Create Milestone
+                                Create Milestone 
                             </button>
                         </div>
 
