@@ -3,7 +3,7 @@
     $metaDescription = 'Explore Elyvato - your scalable content marketing partner for videos, creatives, and performance-driven brand storytelling.';
     $robotsMeta = 'index, follow';
     $canonical = 'https://elyvato.com';
-    $featuredImage = '/images/tmw-team.JPG';
+     $featuredImage = '/front/assets/images/elyvato-header-logo.png';
 @endphp
 
 
@@ -12,6 +12,49 @@
 @extends('layouts.front.app')
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+    
+<style>
+    .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 258px;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background: #fff;
+        transition: 0.2s;
+        margin-bottom: 12px;
+    }
+    .social-btn img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        border-radius: 4px;
+    }
+    .google-btn {
+        border: 1px solid #dadce0;
+    }
+    .facebook-btn {
+        background-color: #1877f2;
+        color: white;
+        border: none;
+    }
+    .social-btn:hover {
+        opacity: 0.9;
+    }
+
+    a:hover {
+        color: #fff !important;
+    }    
+
+</style>
+
 @endsection
 @section('pageContent')
 
@@ -83,6 +126,24 @@
                             <!-- <input type="submit" class="btn btn-main btn-md-large w-100" value="Sign In" /> -->
                              <button class="btn btn-main btn-md-large w-100 btn-login" type="submit">Sign In</button>
                         </form>
+                        
+                          <div class="hr_content mb20 text-center">
+                             <hr><span class="hr_top_text">OR</span>
+                         </div>
+                         
+                         <div class="d-md-flex justify-content-around">
+                            <!-- Google Button -->
+
+                            <a class="social-btn google-btn" href="{{ route('social.redirect','google') }}" id="googlebtn">
+                              <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google"> Continue with Google
+                            </a>
+                            
+                            <a class="social-btn facebook-btn" href="{{ route('social.redirect','facebook') }}">
+                              <img src="https://www.svgrepo.com/show/452196/facebook-1.svg" id="facebookbtn" alt="Facebook"> Continue with Facebook
+                            </a>
+
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -97,7 +158,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        
+      $('#googlebtn').click(function(){
+        PleaseWait();
+    });
+     $('#facebookbtn').click(function(){
+        PleaseWait();
+    });
+
        
         document.getElementById('showPasswordToggle').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
@@ -115,7 +182,7 @@
 
 
 
-                $('#user_login_form').on('submit', function(e) {
+        $('#user_login_form').on('submit', function(e) {
             e.preventDefault();
             
             let $btn = $('.btn-login');
@@ -136,16 +203,7 @@
             
             success: function(response) {
 
-            // Swal.fire({
-            //     title: 'Success!',
-            //     text: response.message,
-            //     icon: 'success',
-            //     confirmButtonText: 'Done',
-            //     confirmButtonColor: '#f97a00',  
-            //     allowOutsideClick: false             
-            // }).then(() => {
-            //     window.location.href = response.url;
-            // });
+           
             
             Swal.fire({
                 title: 'Success!',
@@ -163,11 +221,22 @@
             },
             error: function(xhr) {
                 let errorText = 'Invalid credentials.';
+
                 if (xhr.status === 422 && xhr.responseJSON.errors) {
-                errorText = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+                    // validation errors
+                    errorText = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+                } 
+                else if (xhr.status === 401 && xhr.responseJSON.message) {
+                    // wrong email/password
+                    errorText = xhr.responseJSON.message;
+                } 
+                else if (xhr.status === 429 && xhr.responseJSON.message) {
+                    // throttle block
+                    errorText = xhr.responseJSON.message;
                 }
+
                 Swal.fire('Login Failed', errorText, 'error');
-                 $btn.prop('disabled', false).text('Sign In');
+                $btn.prop('disabled', false).text('Sign In');
             }
             });
         });

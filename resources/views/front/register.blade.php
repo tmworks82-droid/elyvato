@@ -15,6 +15,47 @@
 @endsection
 @section('pageContent')
 
+<style>
+    .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 258px;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background: #fff;
+        transition: 0.2s;
+        margin-bottom: 12px;
+    }
+    .social-btn img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        border-radius: 4px;
+    }
+    .google-btn {
+        border: 1px solid #dadce0;
+    }
+    .facebook-btn {
+        background-color: #1877f2;
+        color: #dadce0;
+        border: none;
+    }
+    .social-btn:hover {
+        opacity: 0.9;
+        color:#fff !important;
+    }
+
+    a:hover {
+        color: #fff !important;
+    }    
+</style>
+
 {{-- ============================= breadcrumb section ============================= --}}
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="d-none">
     <ol class="breadcrumb mb-0" itemscope itemtype="https://schema.org/BreadcrumbList">
@@ -48,33 +89,30 @@
                         <p class="mb-3 mb-md-4">Already have an account? <a href="/login">Sign In!</a></p>
                         <form id="registerForm">
                             @csrf
-
+                           
                             <div class="form-floating mb-3">
                                 <!-- <input type="email" class="form-control focus-shadow-none" name="email" id="email" placeholder="name@website.com"> -->
-                               <input
-                                  type="email"
-                                  class="form-control focus-shadow-none"
-                                  name="email"
-                                  id="email"
-                                  placeholder="name@website.com"
-                                  required
-                                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|net|org|co\.in|edu)$"
-                                >
+                               <input 
+                                  type="email" 
+                                  class="form-control focus-shadow-none" 
+                                  name="email" 
+                                  id="email" 
+                                  placeholder="name@website.com" 
+                                  required  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|net|org|co\.in|edu)$">
 
                                 <label for="email">Email Address*</label>
                             </div>
                             <div class="form-floating mb-3">
 
-
-                                <input
-                                  type="text"
+                                <input 
+                                  type="text" 
                                   name="mobile"
                                   id="phone"
-                                  class="form-control"
-                                  placeholder="Phone Number"
-                                  maxlength="10"
+                                  class="form-control" 
+                                  placeholder="Phone Number" 
+                                  maxlength="10" 
                                   inputmode="numeric"
-
+                                  
                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"
                                 />
 
@@ -82,6 +120,22 @@
                             </div>
                             <button class="btn btn-main btn-md-large w-100 btn-submin" type="submit">Create Account</button>
                         </form>
+                         <div class="hr_content mb20 text-center">
+                             <hr><span class="hr_top_text">OR</span>
+                         </div>
+                         
+                         <div class="d-md-flex justify-content-around">
+                            <!-- Google Button -->
+
+                            <a class="social-btn google-btn" href="{{ route('social.redirect','google') }}" id="googlebtn">
+                              <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google"> Continue with Google
+                            </a>
+                            
+                            <a class="social-btn facebook-btn" href="{{ route('social.redirect','facebook') }}">
+                              <img src="https://www.svgrepo.com/show/452196/facebook-1.svg" id="facebookbtn" alt="Facebook"> Continue with Facebook
+                            </a>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,39 +151,17 @@
 <script>
 
 $('document').ready(function(){
-
-//     Swal.fire({
-//     title: 'success',
-//     icon: "success",
-//     // confirmButtonText: "Explore Services",
-//     // confirmButtonColor: "#f97a00",
-//     timer: 5000, // Auto close in 5 sec
-//     timerProgressBar: true, // shows a small timer bar
-//     allowOutsideClick: false
-// }).then((result) => {
-//     Swal.fire({
-//     title: "🎉 Thank You!",
-//     html: "You have successfully registered!<br> We’ve sent your login details to your email.<br><b>Please check your inbox</b> and log in to get started.",
-//     icon: "success", // keeps the green check ✅
-//     confirmButtonText: "Great, Let's Go 🚀",
-//     confirmButtonColor: "#f97a00",
-//     backdrop: `rgba(0,0,0,0.6)`,
-//     allowOutsideClick: false,
-//     customClass: {
-//         popup: 'animated fadeInDown',
-//         title: 'swal2-title-custom',
-//         confirmButton: 'swal2-confirm-custom'
-//     }
-// }).then((result) => {
-//     // If user clicks confirm OR popup auto closes → redirect
-//     if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-//         window.location.href = "{{ url('login') }}";
-//     }
-// });
-// });
+    
 
 
-    // PleaseWait();
+
+     $('#googlebtn').click(function(){
+        PleaseWait();
+    });
+     $('#facebookbtn').click(function(){
+        PleaseWait();
+    });
+
 })
 
 
@@ -145,7 +177,7 @@ emailInput.addEventListener("input", function () {
 });
 
 
-
+        
 // Here load city
 $('#state').on('change', function() {
   var stateID = $(this).val();
@@ -174,7 +206,7 @@ $('#state').on('change', function() {
 
 $('#registerForm').on('submit', function(e) {
   e.preventDefault();
-
+  
   PleaseWait();
 
   let $btn = $('.btn-submin');
@@ -198,7 +230,7 @@ $('#registerForm').on('submit', function(e) {
         Swal.fire({
             title: response.message,
             icon: "success",
-            confirmButtonText: "Done",
+            confirmButtonText: "Done", 
             // draggable: true
             timer: 5000, // Auto close in 5 sec
             timerProgressBar: true, // shows a small timer bar
@@ -218,7 +250,7 @@ $('#registerForm').on('submit', function(e) {
                 confirmButton: 'swal2-confirm-custom'
             }
         }).then((result) => {
-
+        
                 if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
                     window.location.href = "{{ url('login') }}";
                 }
@@ -230,7 +262,7 @@ $('#registerForm').on('submit', function(e) {
           Swal.fire({
               title: response.message,
               icon: "warning",
-              confirmButtonText: "Ok",
+              confirmButtonText: "Ok", 
               draggable: true
           }).then(function() {
               window.location.href = "{{ url('login') }}";

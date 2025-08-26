@@ -20,7 +20,7 @@ use App\Models\TimeSheet;
 use App\Models\HireTalent;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use Auth;
+
 
 
 function fetchAllUserData() {

@@ -11,7 +11,7 @@
       background-color: red;
       color: white;
       border-radius: 50%;
-      padding: 5px 10px;
+      padding:4px 8px;
       font-size: 10px;
       font-weight: bold;
       line-height: 1;
@@ -76,11 +76,12 @@
               <a href="#" class="nav-link {{ request()->is('projects') || request()->is('booking/*') || request()->is('payments/*') || request()->is('projects-details') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-cog"></i>
                 <p>
-                  Projects @if(BookingNotification()>0)
-                <span class="badge-notification">new</span>
-                @endif
+                  Projects 
                   <i class="right fas fa-angle-left"></i>
                 </p>
+                @if(BookingNotification()>0)
+                <span class="badge-notification">new</span>
+                @endif
                 
               </a>
 

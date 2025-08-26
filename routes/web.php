@@ -24,7 +24,7 @@ use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\FrontAuthController;
 use App\Http\Controllers\Front\BookingController;
 
-
+use App\Http\Controllers\Front\SocialAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -273,9 +273,8 @@ Route::domain(config('app.domain'))->group(function () {
 
             // here front controller
         Route::post('/contact-store', [FrontController::class, 'store'])->name('contact.store');
-        
+
         Route::get('/comming-soon', [FrontController::class, 'CommingSoon'])->name('comming.soon');
-        
 
         Route::post('/create-order', [BookingController::class, 'createRazorpayOrder'])->name('razorpay.order.create');
         Route::post('/proceed-booking', [BookingController::class, 'ProceedToBooking'])->name('user.proceed.booking');
@@ -285,6 +284,17 @@ Route::domain(config('app.domain'))->group(function () {
         Route::get('/login', [FrontAuthController::class, 'UserLoginForm'])->name('user_login_form');
         
         // Route::post('/toggle-clock', [FrontController::class, 'toggleClock']);
+        
+          // Social Login Routes
+        Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])
+            ->where('provider', 'google|facebook')
+            ->name('social.redirect');
+        
+        Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])
+            ->where('provider', 'google|facebook')
+            ->name('social.callback');
+            
+            
 
         Route::get('/forgot/password', [FrontAuthController::class, 'ForgetPassword'])->name('forget.password');
         Route::post('/send-otp', [FrontAuthController::class, 'sendOtp'])->name('send.otp');

@@ -122,4 +122,10 @@ return [
 
     'password_timeout' => 10800,
 
+    'throttle' => [
+        'max_attempts' => 3,     // how many login tries allowed
+        'decay_seconds' => 60,   // lockout time in seconds
+    ],
+
+
 ];

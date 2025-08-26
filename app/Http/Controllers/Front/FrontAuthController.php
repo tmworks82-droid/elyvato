@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\RateLimiter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Country;
@@ -325,7 +325,7 @@ class FrontAuthController extends Controller
     }
 
 
-   public function loginUser(Request $request)
+   public function loginUser_old(Request $request)
     {
         // dd($url);
         $request->validate([
@@ -358,6 +358,52 @@ class FrontAuthController extends Controller
         ], 401);
     }
 
+
+public function loginUser(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string',
+    ]);
+
+    $maxAttempts = config('auth.throttle.max_attempts');
+    $decaySeconds = config('auth.throttle.decay_seconds');
+
+    $key = Str::lower($request->input('email').'|'.$request->ip());
+
+    if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Too many login attempts. Please try again in ' .
+                RateLimiter::availableIn($key) . ' seconds.'
+        ], 429);
+    }
+
+    $admin = Admin::where('email', $request->email)
+                  ->where('type', 'customer')
+                  ->first();
+
+    if (!empty($admin) && \Hash::check($request->password, $admin->password)) {
+        Auth::login($admin, $request->remember);
+
+        RateLimiter::clear($key);
+
+        $url = session()->pull('custom_redirect_url') ?? url('/');
+
+        return response()->json([
+            'success' => true,
+            'message' => '🎉 Logged in. Let the magic begin!',
+            'url'     => $url,
+        ]);
+    }
+
+    RateLimiter::hit($key, $decaySeconds);
+
+    return response()->json([
+        'success' => false,
+        'message' => 'Invalid email or password.'
+    ], 401);
+}
 
     public function ForgetPassword(){
         $data['title']="Forgot Password";

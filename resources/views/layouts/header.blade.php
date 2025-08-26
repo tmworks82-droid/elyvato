@@ -47,6 +47,12 @@
         .custom-control-label{
             cursor: pointer;
         }
+
+        .badge {
+    font-size: 0.75rem;
+    padding: 0.375em 0.75em;
+}
+
     </style>
 
 </head>

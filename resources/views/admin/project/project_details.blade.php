@@ -6,6 +6,37 @@
 @extends('layouts.main')
 @section('title', 'ElyvatoContent| ' . $page_name . ' list')
 <style>
+
+    /* AdminLTE v3.2.0 Compatible Styles */
+:root {
+    --adminlte-primary: #007bff;
+    --adminlte-secondary: #6c757d;
+    --adminlte-success: #28a745;
+    --adminlte-info: #17a2b8;
+    --adminlte-warning: #ffc107;
+    --adminlte-danger: #dc3545;
+    --adminlte-light: #f8f9fa;
+    --adminlte-dark: #343a40;
+    --adminlte-sidebar-bg: #343a40;
+    --adminlte-sidebar-text: #c2c7d0;
+    --adminlte-sidebar-hover: #454d55;
+    --adminlte-navbar-bg: #ffffff;
+    --adminlte-content-bg: #f4f6f9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body.adminlte-body {
+    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--adminlte-content-bg);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+
     .switch {
         position: relative;
         display: inline-block;
@@ -65,6 +96,89 @@
     .slider.round:before {
         border-radius: 50%;
     }
+
+    /* here is new style  */
+
+    /* Cards */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.card-title {
+    color: var(--adminlte-dark);
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* Tables */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: var(--adminlte-dark);
+    background-color: #f8f9fa;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.375em 0.75em;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.25rem;
+    font-weight: 500;
+    padding: 0.375rem 0.75rem;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.nav-tabs nav nav-tabs
+ {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #007bff !important;
+    color: white !important;
+    border-color: #007bff !important;
+}
+
+
+.card-title {
+    color: #343a40 !important;
+    font-weight: 600 !important;
+     float: none !important;
+}
+
+
+
+
+
 </style>
 
 @section('content')
@@ -90,129 +204,11 @@
 
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-
-                        {{-- <div class="card">
-                            <!-- Filter Header -->
-                            <div class="card-header">
-                                <h3 class="card-title">{{ $page_name }} details</h3>
-
-                                <button type="button" class="btn btn-warning btn-sm float-right ml-2"
-                                    data-id="{{ $project->id }}" data-toggle="modal" data-target="#milestoneModal">
-                                    Create Milestone
-                                </button>
-
-                                <button type="button" class="btn btn-success btn-sm open-task-modal float-right ml-2"
-                                    data-toggle="modal" data-target="#taskModal">
-                                    Create Task
-                                </button>
-
-                                <button type="button" class="btn btn-info btn-sm float-right ml-2"
-                                    data-id="{{ $project->id }}" data-toggle="modal" data-target="#EmployeeModal">
-                                    Add Employee
-                                </button>
-                                @if (Auth::user('admin')->id == 1 || Auth::user('admin')->id == 2)
-                                    <button type="button" class="btn btn-primary btn-sm float-right ml-2"
-                                        data-id="{{ $project->id }}" data-toggle="modal"
-                                        data-target="#accouintmanagerModal">
-                                        Add Account Manager
-                                    </button>
-                                @endif
-                            </div>
-
-                            <!-- /.card-header -->
-
-                            <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="col-md-4 mb-2">
-                                        <strong>Account Manager:</strong> {{ $project->accountManager->name ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>Employee:</strong> {{ $project->employee->name ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>Project Price:</strong> {{ $project->booking->total_price ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>Initial Price:</strong>
-                                        {{ $project->booking->initial_paid_amount ?? 'N/A' }}
-                                    </div>
-
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-4 mb-2">
-                                        <strong>SOW Name:</strong> {{ $project->booking->statementOfWork->title ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>SOW Min Price:</strong>
-                                        {{ $project->booking->statementOfWork->min_price ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>SOW Max Price:</strong>
-                                        {{ $project->booking->statementOfWork->max_price ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>SOW Estimated Time:</strong>
-                                        {{ $project->booking->statementOfWork->estimated_time ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>SOW Description:</strong>
-                                        {!! $project->booking->statementOfWork->description ?? 'N/A' !!}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>Service:</strong>
-                                        {{ $project->booking->statementOfWork->service->name ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>Sub Service:</strong>
-                                        {{ $project->booking->statementOfWork->subservice->name ?? 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <strong>Started At:</strong>
-                                        {{ $project->started_at ? \Carbon\Carbon::parse($project->started_at)->format('d M Y') : 'N/A' }}
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6 mb-2">
-                                        <strong>Completed At:</strong>
-                                        {{ $project->completed_at ? \Carbon\Carbon::parse($project->completed_at)->format('d M Y') : 'N/A' }}
-                                    </div>
-
-                                    <div class="col-md-6 mb-2">
-                                        <strong>Status:</strong> @if($project->project_status=='Not_started') Not Started @elseif($project->project_status=='active') Active @else Completed @endif
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- /.card-body -->
-                            <div class="card-footer clearfix">
-                                <ul class="pagination pagination-sm m-0 float-right">
-
-                                </ul>
-                            </div>
-                        </div> --}}
-
-                        <!-- /.card -->
-                    </div>
-                    <!-- /.col -->
-                </div>
+               
 
                 {{-- here new  --}}
 
-                <div class="card tab-pane fade show active" id="project-tab-1">
+                <div class=" tab-pane fade show active" id="project-tab-1">
                     <div class="container-fluid mt-4">
                         <!-- Tabs Navigation -->
                         <div class="card-header">
@@ -221,24 +217,6 @@
                                 data-id="{{ $project->id }}" data-toggle="modal" data-target="#milestoneModal">
                                 Create Milestone
                             </button>
-
-                            {{-- <button type="button" class="btn btn-success btn-sm open-task-modal float-right ml-2"
-                                    data-toggle="modal" data-target="#taskModal">
-                                    Create Task
-                                </button> --}}
-
-                            {{-- <button type="button" class="btn btn-info btn-sm float-right ml-2"
-                                    data-id="{{ $project->id }}" data-toggle="modal" data-target="#EmployeeModal">
-                                    Add Employee
-                                </button>
-
-                                @if (Auth::user('admin')->id == 1 || Auth::user('admin')->id == 2)
-                                  <button type="button" class="btn btn-primary btn-sm float-right ml-2"
-                                      data-id="{{ $project->id }}" data-toggle="modal"
-                                      data-target="#accouintmanagerModal">
-                                      Add Account Manager
-                                  </button>
-                                @endif --}}
                         </div>
 
                         <ul class="nav nav-tabs" id="projectTab" role="tablist">
@@ -271,7 +249,7 @@
                             <!-- Detail Tab -->
                             <div class="tab-pane fade show active" id="detail" role="tabpanel"
                                 aria-labelledby="detail-tab">
-                                <div class="row">
+                                {{--<div class="row">
                                     <div class="col-sm-9">
                                         <div class="row mb-3">
 
@@ -365,16 +343,136 @@
                                                 <h6 class="fw-bold mb-3">About the Client</h6>
                                                 <p class="mb-1"><i class="bi bi-geo-alt me-1"></i>{{$project->booking->user->name}}</p>
                                                 <p class="mb-1"><i class="bi bi-flag-fill me-1 text-danger"></i> {{$project->booking->user->email}} ({{$project->booking->user->mobile}})</p>
-                                                {{-- <div class="mb-2">
-                                                    <span class="text-warning">★★★★★</span> <strong>5.0</strong> <small>(4
-                                                        reviews)</small>
-                                                </div> --}}
+                                              
                                                 <p class="mb-2 text-muted"><i class="bi bi-calendar me-1"></i> Member Registered
                                                     {{ formatDateReadable($project->booking->user->created_at)}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>--}}
 
-                                                {{-- <h6 class="fw-bold mt-4 mb-2">Client Engagement</h6>
-                                                <a href="#" class="text-decoration-none text-primary small">Upgrade
-                                                    your membership to see client engagement</a> --}}
+                                {{-- here new row UI  --}}
+                                <div class="row">
+                                    <!-- Project Information -->
+                                    <div class="col-lg-8">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Project Information</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <!-- Description -->
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3"><strong>Description:</strong></div>
+                                                    <div class="col-sm-9" style="max-height: 150px; overflow-y:auto;">
+                                                        @if (!empty($project->booking->statementOfWork->description))
+                                                            {!! $project->booking->statementOfWork->description !!}
+                                                        @elseif(!empty($project->description))
+                                                            {!! $project->description !!}
+                                                        @else
+                                                            <a href="#" data-id="{{ $project->id }}" data-toggle="modal" data-target="#addproject_details">
+                                                                Update Details
+                                                            </a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <!-- Service -->
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3"><strong>Service:</strong></div>
+                                                    <div class="col-sm-9">{{ $project->booking->statementOfWork->service->name ?? 'N/A' }}</div>
+                                                </div>
+
+                                                <!-- Sub Service -->
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3"><strong>Sub Service:</strong></div>
+                                                    <div class="col-sm-9">{{ $project->booking->statementOfWork->subservice->name ?? 'N/A' }}</div>
+                                                </div>
+
+                                                <!-- Account Manager -->
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3"><strong>Account Manager:</strong></div>
+                                                    <div class="col-sm-9">
+                                                        {{ $project->accountManager->name ?? 'N/A' }}
+                                                        @if (Auth::user('admin')->id == 1 || Auth::user('admin')->id == 2)
+                                                            <a href="#" data-id="{{ $project->id }}" data-toggle="modal" data-target="#accouintmanagerModal">
+                                                                @if (!empty($project->account_manager_id)) (Update Manager) @else (Add Manager) @endif
+                                                            </a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <!-- Employee -->
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3"><strong>Employee:</strong></div>
+                                                    <div class="col-sm-9">
+                                                        {{ $project->employee->name ?? 'N/A' }}
+                                                @if (auth()->user()->hasPermission('assign_employee'))
+                                                    <a href="#" data-id="{{ $project->id }}" data-toggle="modal"
+                                                        data-target="#EmployeeModal">
+                                                        @if (!empty($project->employee_id))
+                                                            (Update Employee)
+                                                        @else
+                                                            (Add Employee)
+                                                        @endif
+                                                    </a>
+                                                @endif
+                                                    </div>
+                                                </div>
+
+                                                <!-- Dates -->
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3"><strong>Started At:</strong></div>
+                                                    <div class="col-sm-9">{{ $project->started_at ? \Carbon\Carbon::parse($project->started_at)->format('d M Y') : 'N/A' }}</div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3"><strong>Completed At:</strong></div>
+                                                    <div class="col-sm-9">{{ $project->completed_at ? \Carbon\Carbon::parse($project->completed_at)->format('d M Y') : 'N/A' }}</div>
+                                                </div>
+
+                                                <!-- Status -->
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3"><strong>Status:</strong></div>
+                                                    <div class="col-sm-9">
+                                                        <span class="badge 
+                                                            @if($project->project_status=='Not_started') bg-secondary 
+                                                            @elseif($project->project_status=='active') bg-warning 
+                                                            @else bg-success @endif">
+                                                            @if($project->project_status=='Not_started') Not Started 
+                                                            @elseif($project->project_status=='active') Active 
+                                                            @else Completed @endif
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Client & Pricing Info -->
+                                    <div class="col-lg-4">
+                                        <!-- Client Info -->
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Client Information</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-2"><strong>Name:</strong> <br> {{ $project->booking->user->name ?? $project->booking->user->username }}</p>
+                                                <p class="mb-2"><strong>Email:</strong> <br> <a href="mailto:{{ $project->booking->user->email }}">{{ $project->booking->user->email }}</a></p>
+                                                <p class="mb-2"><strong>Phone:</strong> <br> <a href="tel:{{ $project->booking->user->mobile }}">{{ $project->booking->user->mobile }}</a></p>
+                                                <p class="mb-0 text-muted"><strong>Member Since:</strong> <br> {{ formatDateReadable($project->booking->user->created_at) }}</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Pricing Info -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Project Pricing</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-2"><strong>Project Price:</strong> <br> ₹ {{ $project->booking->total_price ?? 'N/A' }}</p>
+                                                <p class="mb-2"><strong>Initial Price:</strong> <br>₹ {{ $project->booking->initial_paid_amount ?? 'N/A' }}</p>
+                                                <p class="mb-2"><strong>SOW Min Price:</strong> <br>₹ {{ $project->booking->statementOfWork->min_price ?? 'N/A' }}</p>
+                                                <p class="mb-0"><strong>SOW Max Price:</strong> <br> ₹ {{ $project->booking->statementOfWork->max_price ?? 'N/A' }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -384,7 +482,8 @@
 
                             <!-- Payments Tab -->
                             <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
-                                <div class="row mt-4">
+                                
+                                {{--<div class="row mt-4">
                                     <!-- Left Side: Payment Summary & Milestones -->
                                     <div class="col-md-8">
                                         <!-- Payment Summary -->
@@ -395,12 +494,12 @@
                                                     @if (!empty($project->booking->payments))
                                                         @foreach ($project->booking->payments as $payment)
                                                             <div class="col">
-                                                                {{-- <p class="mb-1">Requested</p> --}}
+                                                                -- <p class="mb-1">Requested</p> -
 
                                                                 <h6>{{ $payment->amount }}</h6>
                                                             </div>
                                                             <div class="col">
-                                                                {{-- <p class="mb-1">Paid</p> --}}
+                                                                -- <p class="mb-1">Paid</p> --
                                                                 <h6>
                                                                     <span
                                                                         class="badge badge-success">{{ $payment->status }}</span>
@@ -408,8 +507,7 @@
                                                                 </h6>
                                                             </div>
                                                             <div class="col">
-                                                                {{-- <p class="mb-1">Type</p> --}}
-                                                                {{-- <h6>{{ $payment->payment_type }}</h6> --}}
+                                                                
                                                                 <h6>{{ $payment->created_at }}</h6>
                                                             </div>
                                                         @endforeach
@@ -492,79 +590,205 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>--}}
+
+                                <div class="row mt-4">
+                                    <!-- Left Side: Payment Summary & Milestones -->
+                                    <div class="col-md-8">
+                                        <!-- Payment Summary -->
+                                        <div class="row mb-4 text-center">
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Initial Payment</h5>
+                                                        <h3 class="text-success">
+                                                            ₹ {{ $project->booking->initial_paid_amount ?? '$0.00' }}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-body text-center">
+                                                        <h5 class="card-title">Project Payment</h5>
+                                                        <h3 class="text-primary">
+                                                           ₹ {{ $project->booking->total_price ?? '$0.00' }}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Total Paid</h5>
+                                                        <h3 class="text-info">
+                                                            @php
+                                                                $totalPaid = 0;
+                                                                if (!empty($project->booking->payments)) {
+                                                                    foreach ($project->booking->payments as $pay) {
+                                                                        if ($pay->status == 'completed') {
+                                                                            $totalPaid += $pay->amount;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            @endphp
+                                                            ₹ {{ $totalPaid }}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Milestone Payments -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Milestone Payments</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    @if (!empty($milestone) && count($milestone) > 0)
+                                                        <table class="table table-striped align-middle">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Due Date</th>
+                                                                    <th>Title</th>
+                                                                    <th>Description</th>
+                                                                    <th>Amount</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created On</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($milestone as $mile)
+                                                                    <tr>
+                                                                        <td>{{ \Carbon\Carbon::parse($mile->due_date)->format('d M Y') }}</td>
+                                                                        <td>{{ $mile->title }}</td>
+                                                                        <td>{{ $mile->description }}</td>
+                                                                        <td class="text-success">${{ $mile->amount }}</td>
+                                                                        <td>
+                                                                            <span class="badge 
+                                                                                @if($mile->status=='pending') bg-warning 
+                                                                                @elseif($mile->status=='completed') bg-success 
+                                                                                @else bg-secondary @endif">
+                                                                                {{ ucwords(str_replace('_', ' ', $mile->status)) }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>{{ \Carbon\Carbon::parse($mile->created_on)->format('d M Y H:i') }}</td>
+                                                                        <td>
+                                                                            @if($mile->status=='pending')
+                                                                                <button type="button" 
+                                                                                    class="btn btn-sm btn-primary request_milestone"
+                                                                                    data-id="{{ $mile->id }}">
+                                                                                    Request Payment
+                                                                                </button>
+                                                                            @else
+                                                                                <span class="badge bg-success">Completed</span>
+                                                                            @endif
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    @else
+                                                        <div class="text-center text-muted">
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/742/742751.png" alt="No milestones" width="64">
+                                                            <p class="mt-2">No created milestones yet.</p>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Side: Client Info -->
+                                    <div class="col-md-4">
+                                        <div class="card mb-4">
+                                            <div class="card-body text-center">
+                                                <h6 class="card-title">The Client</h6>
+                                                <h6 class="mb-0">{{ $project->booking->user->name }}</h6>
+                                                <span class="text-dark">
+                                                    {{ $project->booking->user->email }} <br> ({{ $project->booking->user->mobile }})
+                                                </span>
+                                                <div class="mt-2">
+                                                    <button class="btn btn-outline-primary btn-sm">Chat</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+
+
                             </div>
 
                             <!-- Tasklist Tab -->
                             <div class="tab-pane fade" id="tasklist" role="tabpanel" aria-labelledby="tasklist-tab">
                                 <div class="card">
-                                 
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h5 class="card-title mb-0">Task List</h5>
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">Task List</h5>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#taskModal">
+                + Add Task
+            </button>
+        </div>
 
-                                            <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                            data-target="#taskModal">+Add Task</button>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Assign To</th>
+                        <th>Milestone</th>
+                        <th>Created On</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!empty($tasks) && count($tasks) > 0)
+                        @foreach ($tasks as $task)
+                            <tr>
+                                <td>{{ $task->title }}</td>
+                                <td>{{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}</td>
+                                <td>
+                                    <span class="badge 
+                                        @if($task->status == 'review') bg-warning text-dark 
+                                        @elseif($task->status == 'completed') bg-success 
+                                        @elseif($task->status == 'pending') bg-secondary 
+                                        @else bg-info @endif">
+                                        {{ strtolower($task->status) }}
+                                    </span>
+                                </td>
+                                <td>{{ GetUser($task->assigned_to)->name ?? 'N/A' }}</td>
+                                <td>{{ $task->milestone->title ?? 'N/A' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($task->created_at)->format('M d, Y') }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-light border view-task-btn"
+                                            data-id="{{ $task->id }}"
+                                            data-toggle="modal"
+                                            data-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">
+                                No tasks available.
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-                                        </div>
-
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered align-middle">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Title</th>
-                                                        <th>Due Date</th>
-                                                        {{-- <th>Description</th> --}}
-                                                        <th>Status</th>
-                                                        {{-- <th>Progress</th> --}}
-                                                        <th>Assign To</th>
-                                                        <th>Milestone</th>
-                                                        <th>Created On</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    @if (!empty($tasks) && count($tasks) > 0)
-                                                        @foreach ($tasks as $task)
-                                                            <tr>
-                                                                <td>{{ $task->title }}
-                                                                    {{-- <button href="#" class="btn btn-sm bg-success ml-1" data-toggle="modal" data-target="#taskModal">
-                                                                         +Add Task
-                                                                     </button> --}}
-
-                                                                    {{-- <span class="badge badge-success" data-toggle="modal"
-                                                                        data-target="#taskModal">+Add Task</span> --}}
-
-                                                                </td>
-                                                                <td> {{ \Carbon\Carbon::parse($task->due_date)->format('M j, Y') }}
-                                                                </td>
-                                                                {{-- <td>{{$task->description}}</td> --}}
-                                                                <td>
-                                                                    <span class="badge badge-success">{{ ucfirst($task->status) }}</span>
-                                                                </td>
-                                                                {{-- <td>{{ $task->progress }}</td> --}}
-                                                                <td> {{ GetUser($task->assigned_to)->name }} </td>
-                                                                <td> {{ $task->milestone->title }} </td>
-                                                                <td> {{ \Carbon\Carbon::parse($task->due_date)->format('M j, Y') }}
-                                                                </td>
-                                                                <td>
-                                                                    <!-- Example Button -->
-                                                                <button class="btn btn-sm bg-warning view-task-btn"
-                                                                    data-id="{{ $task->id }}"
-                                                                    data-toggle="modal"
-                                                                    data-target="#taskDetailsModal">
-                                                                    <i class="fas fa-solid fa-eye"></i>
-                                                                </button>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -971,6 +1195,9 @@
 
             </div><!-- /.container-fluid -->
         </section>
+
+     
+
         <!-- /.content -->
     </div>
     <!-- /.card-body -->
