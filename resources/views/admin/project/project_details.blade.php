@@ -176,9 +176,6 @@ body.adminlte-body {
 }
 
 
-
-
-
 </style>
 
 @section('content')

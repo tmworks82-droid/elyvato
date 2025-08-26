@@ -11,7 +11,7 @@
       background-color: red;
       color: white;
       border-radius: 50%;
-      padding:4px 8px;
+      padding:4px 4px;
       font-size: 10px;
       font-weight: bold;
       line-height: 1;
