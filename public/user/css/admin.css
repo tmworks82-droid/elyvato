@@ -611,3 +611,11 @@ input:focus {
 .nav-pills .nav-link.active:hover{
     color: var(--bs-dark);
 }
+
+.badge{
+    padding: 4px !important;
+}
+
+.text-bg-info{
+    background-color: #61e5ff !important;
+}

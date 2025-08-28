@@ -56,7 +56,8 @@
     .footer {
       text-align: center;
       margin-top: 40px;
-      color: #ffffff;
+      color: #000000;
+      /* background: #303030; */
       font-size: 12px;
     }
     .booking-details, .next-steps {

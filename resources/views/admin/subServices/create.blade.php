@@ -21,10 +21,7 @@
               <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
               <li class="breadcrumb-item">{{ $page_name }}</li>
               <li class="breadcrumb-item active">Create New</li>
-
             </ol>
-
-
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -83,7 +80,7 @@
 
             <div class="mb-3 col-md-4">
               <label for="image" class="form-label">SubService Image (400x400)</label>
-              <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg">
+              <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg" >
               @if(!empty($subservice->subservice_icon))
                 <img src="{{ asset($subservice->subservice_icon) }}" alt="Service Image" width="100">
               @endif
@@ -111,6 +108,19 @@
                 <label class="form-check-label" for="inactive">Inactive</label>
               </div>
             </div>
+
+              <!-- SEO Title -->
+                <div class="mb-3 col-md-6">
+                    <label for="seo_title" class="form-label">SEO Title</label>
+                    <input type="text" name="seo_title" id="seo_title" class="form-control"
+                        value="{{ old('seo_title', $subservice->seo_title ?? '') }}" required>
+                </div>
+
+                 <!-- Meta Description -->
+                <div class="mb-3 col-md-6">
+                    <label for="meta_description" class="form-label">Meta Description</label>
+                    <textarea name="meta_description" id="meta_description" rows="3" class="form-control" required>{{ old('meta_description', $subservice->meta_description ?? '') }}</textarea>
+                </div>
 
           </div>
 
@@ -140,3 +150,19 @@
   </div>
   <!-- /.content-wrapper -->
 @endsection
+@push('scripts')
+<script>
+
+   $('#name').on('input', function () {
+        let titleVal = $(this).val();
+      $('#seo_title').val(titleVal);
+      
+    });
+
+     $('#description').on('input', function () {
+        let titleVal = $(this).val();
+      $('#meta_description').val(titleVal);
+      
+    });
+</script>
+@endpush

@@ -21,6 +21,8 @@ class SubService extends Model
         'is_active',
         'created_by',
         'updated_by',
+        'seo_title',
+        'meta_description',
     ];
 
     protected $casts = [

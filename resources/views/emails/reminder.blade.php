@@ -54,7 +54,7 @@
     .footer {
       text-align: center;
       margin-top: 40px;
-      color: #ffffff;
+      color: #000000;
       font-size: 12px;
     }
   </style>

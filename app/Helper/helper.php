@@ -252,7 +252,8 @@ function SubService(){
             return true;
         } catch (\Exception $e) {
             \Log::error('Email sending failed: ' . $e->getMessage());
-            return false;
+            // dd($e->getMessage());
+            return $e->getMessage();
         }
     }
 

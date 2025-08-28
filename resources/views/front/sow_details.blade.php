@@ -1,6 +1,6 @@
 @php
-	$title = $title;
-	$metaDescription = 'Explore Elyvato - your scalable content marketing partner for videos, creatives, and performance-driven brand storytelling.';
+	$title = $sows->meta_title ?? $title . ' - Elyvato';
+	$metaDescription = $sows->meta_description ?? 'Explore Elyvato - your scalable content marketing partner for videos, creatives, and performance-driven brand storytelling.';
 	$robotsMeta = 'index, follow';
 	$canonical = 'https://elyvato.com';
 	$featuredImage = '/images/tmw-team.JPG';
@@ -242,6 +242,7 @@
 								<div class="gig-detail-card-icon-box">
 									<i class="ri-vip-crown-2-line"></i>
 								</div>
+								
 								<div>
 									<h3 class="fs-5 mb-1">Subscription GIG</h3>
 									<p class="mb-0 text-sm">{{ucwords($sows->subscription_time)}}</p>
@@ -249,7 +250,6 @@
 							</div>
 						</div>
 						@endif
-						
 					</div>
 
 					<div class="my-3 my-md-5">

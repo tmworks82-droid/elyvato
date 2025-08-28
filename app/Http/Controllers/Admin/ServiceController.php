@@ -62,6 +62,8 @@ class ServiceController
         $request->validate([
             'name' => 'required',
             'icon' => 'required',
+            'seo_title' =>' nullable|string|max:255',
+        'meta_description' => 'nullable|string',
             // 'image' => 'required|image|mimes:jpg,jpeg,png|dimensions:width=400,height=400|max:2048',
         ]);
 
@@ -99,6 +101,8 @@ class ServiceController
         $data['service_icon']            = $imagePath;
         $data['is_active']                = $all['is_active'];
         $data['description']              = $all['description'];
+        $data['meta_description']              = $all['meta_description'];
+        $data['seo_title']              = $all['seo_title'];
         $data['status']                   = 1;
         $data['icon']                   = $request->icon;
         $data['created_by']               = $created_by;
@@ -111,6 +115,7 @@ class ServiceController
         if($save){
                 return redirect()->route($this->route.'.index')->with('success', $this->permission.' created successfully.');
         }
+
         // Redirect to the index page with a success message
         return redirect()->route($this->route.'.index')->with('success', $this->permission.' Faild ,to create service.');
     }
@@ -154,7 +159,9 @@ class ServiceController
 
         $request->validate([
             'name' => 'required',
-            'icon'=>'required'
+            'icon'=>'required',
+            'seo_title' =>' nullable|string|max:255',
+        'meta_description' => 'nullable|string',
         ]);
 
         // dd($all);
@@ -179,6 +186,9 @@ class ServiceController
         }
 
         $all1['name']                    = ucfirst($all['name']);
+        $all1['se0_title']                    = ucfirst($all['se0_title']);
+        $all1['meta_description']                    = ucfirst($all['meta_description']);
+        $all1['description']                    = ucfirst($all['description']);
         $all1['icon']                    = $all['icon'];
         
         $all1['updated_at']              = date('Y-m-d H:i:s');
@@ -238,8 +248,7 @@ class ServiceController
     } else {
         $data['subservice'] = null;
     }
-    // dd($id);
-    // Fetch all services for the dropdown
+
     $data['service'] = Service::all();
         return view('admin.subServices.create',$data);
     }
@@ -253,6 +262,8 @@ class ServiceController
             'description' => 'nullable|string',
             'is_active' => 'required|boolean',
             // 'status' => 'nullable|boolean',
+            'seo_title' =>' nullable|string|max:255',
+            'meta_description' => 'nullable|string',
         ]);
 
         $status = $request->has('status') ? 1 : 0;
@@ -285,7 +296,9 @@ class ServiceController
             $data->service_id= $request->service_id;
             $data->name= $request->name;
             $data->description= $request->description;
-            // $data->subservice_icon = $imagePath ;
+            $data->seo_title= $request->seo_title;
+            $data->meta_description= $request->meta_description;
+           
             $data->is_active= $request->is_active;
             $data->updated_by= $userId;
            $data->save();
@@ -317,6 +330,8 @@ class ServiceController
            $data->service_id= $request->service_id;
            $data->name= $request->name;
            $data->description=$request->description;
+           $data->seo_title= $request->seo_title;
+            $data->meta_description= $request->meta_description;
         //    $data->subservice_icon = $request->subservice_icon;
             $data->is_active=$request->is_active;
             $data->created_by= $userId;

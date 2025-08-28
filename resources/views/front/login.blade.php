@@ -184,7 +184,7 @@
 
         $('#user_login_form').on('submit', function(e) {
             e.preventDefault();
-            
+            PleaseWait();
             let $btn = $('.btn-login');
             $btn.prop('disabled', true).text('Processing...');
     
@@ -202,9 +202,7 @@
             },
             
             success: function(response) {
-
-           
-            
+                Swal.close();
             Swal.fire({
                 title: 'Success!',
                 text: response.message,
@@ -220,6 +218,7 @@
 
             },
             error: function(xhr) {
+                Swal.close();
                 let errorText = 'Invalid credentials.';
 
                 if (xhr.status === 422 && xhr.responseJSON.errors) {

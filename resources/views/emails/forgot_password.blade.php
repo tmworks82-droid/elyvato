@@ -58,7 +58,7 @@
         .footer {
             text-align: center;
             margin-top: 40px;
-            color: #ffffff;
+            color: #000000;
             font-size: 12px;
             text-align: center;
         }
@@ -78,7 +78,7 @@
     </div>
     <div class="footer">
         &copy; {{ date('Y') }} Elyvato. All rights reserved. <br>
-        For support, <a href="mailto:support@elyvato.com" style="color:#ffffff;">contact us</a>.
+        For support, <a href="mailto:support@elyvato.com" style="color:#000000;">contact us</a>.
     </div>
 </body>
 </html>

@@ -84,7 +84,7 @@
 
     <!-- Footer -->
     <div class="footer">
-      <p>Need help? <a href="mailto:support@{{ request()->getHost() }}" style="color:#ffffff;">Contact Support</a></p>
+      <p>Need help? <a href="mailto:support@{{ request()->getHost() }}" style="color:#000000;">Contact Support</a></p>
       <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
     </div>
   </div>

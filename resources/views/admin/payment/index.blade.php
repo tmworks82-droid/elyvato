@@ -118,25 +118,30 @@
                         <tr>
                             <th>ID</th>
                             <th>Booking ID</th>
+                            <th>Client Info</th>
                             <th>Amount</th>
                             <th>Payment Type</th>
                             <th>Status</th>
                             <th>Payment Date</th>
-                            <th>Created By</th>
+                            {{-- <th>Created By</th> --}}
                             <th>Updated At</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($payments as $payment)
+                        
                             <tr>
                                 <td>{{ $payment->id }}</td>
-                                <td>{{ $payment->booking_id }}</td>
+                                <td>{{ $payment->booking->booking_id }}</td>
+                                <td>{{ GetUser($payment->booking->user_id)->name ?? GetUser($payment->booking->user_id)->username }} <br>
+                                {{GetUser($payment->booking->user_id)->email}} ({{GetUser($payment->booking->user_id)->mobile}})
+                                </td>
                                 <td>₹{{ number_format($payment->amount, 2) }}</td>
                                 <td><span class="badge badge-info">{{ ucfirst($payment->payment_type) }}</span></td>
                                 <td><span class="badge badge-success">{{ ucfirst($payment->status) }} </span></td>
-                                <td>{{ $payment->payment_date }}</td>
-                                <td>{{ $payment->creator->name ?? 'N/A' }}</td>
-                                <td>{{ $payment->updated_at}}</td>
+                                <td>{{ formatDateReadable($payment->payment_date) }}</td>
+                                {{--<td>{{ $payment->creator->name ?? 'N/A' }}</td>--}}
+                                <td>{{ formatDateReadable($payment->updated_at)}}</td>
                             </tr>
                         @empty
                             <tr>

@@ -54,7 +54,7 @@
     .footer {
       text-align: center;
       margin-top: 40px;
-      color: #ffffff;
+      color: #000000;
       font-size: 12px;
     }
     .details-box {
@@ -87,7 +87,7 @@
 
     <!-- Footer -->
     <div class="footer">
-      Have questions? <a href="mailto:support@{{ request()->getHost() }}" style="color:#ffffff;">Email us</a><br>
+      Have questions? <a href="mailto:support@{{ request()->getHost() }}" style="color:#000000;">Email us</a><br>
       &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
     </div>
   </div>

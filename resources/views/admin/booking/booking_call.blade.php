@@ -116,24 +116,13 @@
                                 @if (!empty($custom_booking))
                                     <button class="btn btn-sm btn-info float-right m-1" data-toggle="modal"
                                         data-target="#viewrequirement">View Custome Requirement</button>
-                              
-                                @php
-                                  $project= App\Models\Project::where('booking_id',$custom_booking->booking_id)->first();
-                                @endphp
-                                @if(!empty($project))
-                                <a href="#" class="btn btn-warning btn-sm float-right m-1" data-id="{{ $project->id }}"
-                                                        data-toggle="modal" data-target="#addproject_details">
-                                                        Add Project Requirement
-                                    </a>
-                                    @endif
-                                  @endif
-                                                    
+                                @endif
+
                             </div>
                             <div class="card">
                                 <!-- Nav tabs -->
                                 <!-- Tab panes -->
                                 <div class="tab-content pt-3">
-
                                     <!-- Predefined Booking -->
                                     <div class="tab-pane fade show active" id="predefined" role="tabpanel"
                                         aria-labelledby="predefined-tab">
@@ -150,52 +139,98 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @if (!empty($call_bookings) && count($call_bookings) > 0)
+                                                    @foreach ($call_bookings as $call_booking)
+                                                        <tr>
+                                                            <td>{{ GetUser($call_booking->booking->user_id)->username ?? 'No Username' }}
+                                                                ({{ GetUser($call_booking->booking->user_id)->mobile }})
+                                                            </td>
 
-                                                <tr>
-                                                    <td>{{ GetUser($call_booking->created_by)->username ??'No Username' }} ({{ GetUser($call_booking->created_by)->mobile }})</td>
-                                                    <td> {{ formatDateReadable($call_booking->scheduled_at) ?? 'N/A' }} </td>
-                                                    
-                                                    <td>
-                                                        @if($call_booking->status !=='pending')
-                                                         <a href="{{ $call_booking->call_link }}" target="_blank">
-                                                                <span class="badge badge-info"> Meet Link
-                                                                <i class="fas fa-link"></i></span>
-                                                                </a>
-                                                           @else
-                                                           N/A
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-info">{{ UCfirst($call_booking->status) }}</span>
-                                                    </td>
-                                                    <td>{{ formatDateReadable($call_booking->created_on) }}</td>
-                                                    <td>{{ $call_booking->notes }}</td>
+                                                            <td>
+                                                                {{ formatDateReadable($call_booking->scheduled_at) ?? 'N/A' }}
+                                                            </td>
 
-                                                    <td>
-                                                        @if ($call_booking->status == 'pending')
-                                                            <button class="btn btn-sm bg-warning" data-toggle="modal"
-                                                                data-target="#sechdul_call"> Schedule Call</button>
-                                                        @elseif($call_booking->status == 'scheduled')
-                                                            <button class="btn btn-sm bg-success mark-completed-btn"
-                                                                data-bookingType="@if (!empty($custom_booking)) custome_booking @else predefine @endif"
-                                                                data-type="completed"
-                                                                data-id="{{ $call_booking->id }}">Meeting Done
-                                                                </button>
-                                                                
-                                                            <button class="btn btn-sm bg-danger mark-completed-btn"
-                                                                data-type="cancelled"
-                                                                data-id="{{ $call_booking->id }}">Cacelled</button>
-                                                                
-                                                        @elseif($call_booking->status == 'completed')
-                                                            <span class="badge badge-info"> Completed</span>
-                                                        @else
-                                                            <span class="badge badge-danger">
-                                                                {{ $call_booking->status }}</span>
-                                                               <button class="btn btn-sm bg-warning" data-toggle="modal"
-                                                                data-target="#re_sechduleCall"> Re-schedule</button>
-                                                        @endif
-                                                    </td>
-                                                </tr>
+                                                            <td>
+                                                                @if ($call_booking->status == 'scheduled' || $call_booking->status == 'completed')
+                                                                    <a href="{{ $call_booking->call_link }}"
+                                                                        target="_blank">
+                                                                        <span class="badge badge-info"> Meet Link
+                                                                            <i class="fas fa-link"></i></span>
+                                                                    </a>
+                                                                @else
+                                                                    N/A
+                                                                @endif
+                                                            </td>
+
+                                                            <td>
+                                                                @if ($call_booking->status == 'pending')
+                                                                    <span
+                                                                        class="badge badge-warning">{{ UCfirst($call_booking->status) }}</span>
+                                                                @elseif($call_booking->status == 'completed')
+                                                                    <span
+                                                                        class="badge badge-success">{{ UCfirst($call_booking->status) }}</span>
+                                                                @elseif($call_booking->status == 'cancelled')
+                                                                    <span
+                                                                        class="badge badge-danger">{{ UCfirst($call_booking->status) }}</span>
+                                                                @else
+                                                                    <span
+                                                                        class="badge badge-info">{{ UCfirst($call_booking->status) }}</span>
+                                                                @endif
+                                                            </td>
+
+                                                            <td>{{ formatDateReadable($call_booking->created_on) }}</td>
+
+                                                            <td>{{ $call_booking->notes }}</td>
+                                                            <td>
+                                                                @if (!empty($call_booking->booking->project))
+                                                                    <a href="#"
+                                                                        class="btn btn-warning btn-sm float-left m-1"
+                                                                        data-id="{{ $call_booking->booking->project->id ?? '' }}"
+                                                                        data-toggle="modal"
+                                                                        data-target="#addproject_details"
+                                                                        id="addproject_details_btn">
+                                                                        Add Project Note
+                                                                    </a>
+                                                                @endif
+
+                                                                @if ($call_booking->status == 'pending')
+                                                                    <button class="btn btn-sm bg-warning sechduleCall"
+                                                                        data-toggle="modal" data-id="{{ $call_booking->id }}" data-target="#sechdul_call">
+                                                                        Schedule Call</button>
+                                                                    <button class=" btn btn-sm bg-warning re-scheduled"
+                                                                        data-id="{{ $call_booking->booking_id }}"
+                                                                        data-call="{{ $call_booking->id }}"
+                                                                        data-toggle="modal" data-target="#re_sechduleCall">
+                                                                        Re-schedule</button>
+                                                                @elseif($call_booking->status == 'scheduled')
+                                                                    <button class="btn btn-sm bg-success mark-completed-btn"
+                                                                        data-bookingType="@if (!empty($custom_booking)) custome_booking @else predefine @endif"
+                                                                        data-type="completed"
+                                                                        data-id="{{ $call_booking->id }}">Meeting Done
+
+                                                                    </button>
+
+                                                                    <button class=" btn btn-sm bg-danger mark-completed-btn"
+                                                                        data-type="cancelled"
+                                                                        data-id="{{ $call_booking->id }}">
+                                                                        Cacelled
+                                                                    </button>
+                                                                @elseif($call_booking->status == 'completed')
+                                                                    <span class=" badge badge-info"> Completed</span>
+                                                                @else
+                                                                    <span class="badge badge-danger">
+                                                                        {{ $call_booking->status }}</span>
+                                                                @endif
+
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="7" class="text-center">No call bookings found.</td>
+                                                    </tr>
+                                                @endif
+
 
                                             </tbody>
                                         </table>
@@ -226,7 +261,8 @@
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <h5 class="modal-title" id="sechdul_call">Schedule a call</h5>
+                            <h5 class="modal-title" id="sechdul_call" data-id="{{ $call_booking->id }}">Schedule a call
+                            </h5>
 
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
@@ -236,7 +272,7 @@
 
                         <form id="sechduleCall" method="POST">
                             @csrf
-                            <input type="hidden" name="call_id" id="call_id" value="{{ $call_booking->id }}">
+                            <input type="hidden" name="call_id" id="call_id">
 
                             <div class="modal-body">
                                 <!-- Title -->
@@ -260,12 +296,12 @@
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <!--re-schedule call -->
-            
-              <div class="modal fade" id="re_sechduleCall" tabindex="-1" role="dialog" aria-labelledby="re_sechduleCall"
-                aria-hidden="true">
+
+            <div class="modal fade" id="re_sechduleCall" tabindex="-1" role="dialog"
+                aria-labelledby="re_sechduleCall" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -278,25 +314,29 @@
 
                         <form id="re-sechduleCall" method="POST">
                             @csrf
-                           
-                            <input type="hidden" name="booking_id" id="id" value="{{ $call_booking->booking_id }}">
+
+                            <input type="hidden" class="booking_id" name="booking_id" id="id">
+                            <input type="hidden" class="call_id" name="call_id" id="callId">
 
                             <div class="modal-body">
                                 <!-- Title -->
                                 <div class="mb-3">
-                                        <label class="form-label"> Date</label>
-                                        <input type="date" name="date" id="date" class="form-control" required="" min="2025-08-23">
+                                    <label class="form-label"> Date</label>
+                                    <input type="date" name="date" id="date" class="form-control"
+                                        required="" min="2025-08-23">
                                 </div>
-                                
-                            <div class="mb-3">
-                              <label class="form-label">Time</label>
-                              <select name="time" id="time" class="form-control" required></select>
-                            </div>
-                                
+
+                                <div class="mb-3">
+                                    <label class="form-label">Time</label>
+                                    <select name="time" id="time" class="form-control" required></select>
+                                </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Meet Link</label>
-                                    <input type="text" name="call_link" id="call_link" class="form-control"
-                                        placeholder=" Meet link here...">
+                                    <input type="text" name="call_link" id="call_link"
+                                        value="{{ $call_booking->call_link ?? '' }}" class="form-control"
+                                        placeholder=" Meet link here..."
+                                        @if (!empty($call_booking->call_link)) readonly @endif>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Note</label> <br>
@@ -314,46 +354,47 @@
                 </div>
             </div>
 
-            
             <div class="modal fade" id="addproject_details" tabindex="-1" role="dialog"
-                                aria-labelledby="addproject_details" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="addproject_details">Note Project Required</h5>
-                                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-labelledby="addproject_details" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addproject_details">Add Project Note</h5>
+                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button> --}}
-            
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                            </button>
-            
-                                        </div>
-            
-                                        <form id="add_project_details" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="project_id" id="project_id" value="{{ $project->id ?? 0 }}">
-            
-                                            <div class="modal-body">
-                                                <!-- Title -->
-                                                <div class="mb-3">
-                                                    <label class="form-label">Description</label> <br>
-                                                    
-                                                                   
-                                                    <textarea rows="8" class="form-control" cols="25" name="description" id="description"> {{$project->description?? 'No description'}}</textarea>
-                                                </div>
-                                            </div>
-            
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button name="button"  value="Update Project description" type="submit"  class="btn btn-primary btn-save">Save</button>
-                                            </div>
-                                        </form>
-            
-                                    </div>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+
+                        <form id="add_project_details" method="POST">
+                            @csrf
+                            <input type="hidden" name="project_id" id="booking_id">
+
+                            <div class="modal-body">
+                                <!-- Title -->
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label> <br>
+
+
+                                    <textarea rows="8" class="form-control" cols="25" name="description" id="description"> 
+                                                        @if (!empty($call_booking->booking->project->description))
+{{ $call_booking->booking->project->description }}
+@endif
+                                                     </textarea>
                                 </div>
                             </div>
-                
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button name="button" value="Update Project description" type="submit"
+                                    value="save project details" class="btn btn-primary btn-save">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </section>
         <!-- /.content -->
     </div>
@@ -430,12 +471,12 @@
 
 @endsection
 @push('scripts')
-  <!-- jQuery -->
-   <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>-->
-        <!--<script src="https://cdn.rawgit.com/mugifly/jquery-simple-datetimepicker/72933bbe/jquery.simple-dtpicker.js"></script>-->
-        <!--<link href="https://cdn.rawgit.com/mugifly/jquery-simple-datetimepicker/72933bbe/jquery.simple-dtpicker.css" rel="stylesheet" />-->
+    <!-- jQuery -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>-->
+    <!--<script src="https://cdn.rawgit.com/mugifly/jquery-simple-datetimepicker/72933bbe/jquery.simple-dtpicker.js"></script>-->
+    <!--<link href="https://cdn.rawgit.com/mugifly/jquery-simple-datetimepicker/72933bbe/jquery.simple-dtpicker.css" rel="stylesheet" />-->
 
-<script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
 
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -444,39 +485,53 @@
 
 
     <script>
-        
-   CKEDITOR.replace('description');
-         
-$(function(){
-  let start = 7 * 60;        // 7:00 AM in minutes
-  let end   = 23 * 60 + 30;  // 11:30 PM in minutes
+        CKEDITOR.replace('description');
 
-  for(let mins = start; mins <= end; mins += 30){
-    let h = Math.floor(mins/60);
-    let m = mins % 60;
-    let ampm = h >= 12 ? 'PM' : 'AM';
-    let displayH = (h % 12) || 12;
-    let displayM = m < 10 ? '0'+m : m;
-    let display = displayH + ':' + displayM + ' ' + ampm;
-    let value   = (h<10?'0':'')+h+':' + (m<10?'0':'')+m;
+        $(function() {
+            let start = 7 * 60; // 7:00 AM in minutes
+            let end = 23 * 60 + 30; // 11:30 PM in minutes
 
-    $('#time').append(new Option(display, value));
-  }
-});
+            for (let mins = start; mins <= end; mins += 30) {
+                let h = Math.floor(mins / 60);
+                let m = mins % 60;
+                let ampm = h >= 12 ? 'PM' : 'AM';
+                let displayH = (h % 12) || 12;
+                let displayM = m < 10 ? '0' + m : m;
+                let display = displayH + ':' + displayM + ' ' + ampm;
+                let value = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
 
-         
+                $('#time').append(new Option(display, value));
+            }
+        });
+
+
         $(document).ready(function() {
+
+            $('.sechduleCall').click(function() {
+                var callId = $(this).data('id');
+                $('#call_id').val(callId);
+            });
+
+            $('.re-scheduled').click(function() {
+                var booking_id = $(this).data('id');
+                var call_id = $(this).data('call');
+                // alert(booking_id);
+                // alert(call_id);
+                $('.booking_id').val(booking_id);
+                $('#callId').val(call_id);
+            });
+
             // alert('run');
             $('#sechduleCall').on('submit', function(e) {
                 e.preventDefault();
-                
-                 let $btn = $('.call-schedule');    
+
+                let $btn = $('.call-schedule');
                 $btn.prop('disabled', true).html('Processing....');
 
                 let formData = new FormData(this);
 
                 $.ajax({
-                    url: "{{ route('booking.callschedule') }}", // Replace with your actual route
+                    url: "{{ route('booking.callschedule') }}",
                     type: 'POST',
                     data: formData,
                     contentType: false,
@@ -515,13 +570,13 @@ $(function(){
                     }
                 });
             });
-     
-        
-        // re-schedule call here 
-         $('#re-sechduleCall').on('submit', function(e) {
+
+
+            // re-schedule call here 
+            $('#re-sechduleCall').on('submit', function(e) {
                 e.preventDefault();
-                
-                 let $btn = $('.call-schedule');    
+
+                let $btn = $('.call-schedule');
                 $btn.prop('disabled', true).html('Processing....');
 
                 let formData = new FormData(this);
@@ -541,7 +596,8 @@ $(function(){
 
                             $('#re-sechduleCall')[0].reset(); // Optional: reset the form
 
-                            $('#re_sechduleCall').modal('hide'); // If your modal ID is taskModal
+                            $('#re_sechduleCall').modal(
+                                'hide'); // If your modal ID is taskModal
                             $.toast({
                                 heading: 'Success',
                                 text: response.message,
@@ -624,24 +680,32 @@ $(function(){
             });
 
         });
-        
-        
-// here update project details 
 
- $('#add_project_details').on('submit', function(e) {
+        $('#addproject_details_btn').on('click', function() {
+            var bookingId = $(this).data('id');
+            $('#booking_id').val(bookingId);
+        });
+
+        // here update project details 
+
+        $('#add_project_details').on('submit', function(e) {
             e.preventDefault();
-            
-              let $btn = $('.btn');
-               $btn.prop('disabled', true).text('Processing...');
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+
+            let $btn = $('.btn');
+            $btn.prop('disabled', true).text('Processing...');
 
             $.ajax({
                 url: "{{ route('update.project.details') }}",
+                // url: "{{ route('add.project.details') }}",
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
-                    if (response.success) {
-                        $('#addproject_details').modal('hide');
-                        $btn.prop('disabled', false).text('Save');
+                    $('#addproject_details').modal('hide');
+                    $btn.prop('disabled', false).text('Save');
+                    if (response.success == true) {
 
                         $.toast({
                             heading: 'Success',
@@ -650,10 +714,18 @@ $(function(){
                             icon: 'success',
                             position: 'top-right',
                         });
-                        setTimeout(function () {
+                        setTimeout(function() {
                             location.reload();
                         }, 2000);
                         // Optionally reload part of page or table
+                    } else {
+                        $.toast({
+                            heading: 'Faild',
+                            text: response.message,
+                            showHideTransition: 'slide',
+                            icon: 'warning',
+                            position: 'top-right',
+                        });
                     }
                 },
                 error: function(xhr) {
@@ -667,7 +739,5 @@ $(function(){
                 }
             });
         });
-
-
     </script>
 @endpush

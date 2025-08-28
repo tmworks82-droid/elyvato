@@ -14,7 +14,7 @@
     h2 { font-size: 1.2rem; color: #3f4345; margin-top: 0; }
     p { font-size: 16px; color: #3f4345; line-height: 1.6; }
     .info-box { margin-top: 20px; background: #f7f7f7; padding: 20px; border-radius: 8px; }
-    .footer { text-align: center; margin-top: 40px; color: #ffffff; font-size: 12px; }
+    .footer { text-align: center; margin-top: 40px; color: #000000; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -40,7 +40,7 @@
     <p>You can review this update in the admin dashboard.</p>
 
     <div class="footer">
-      <p>For assistance, contact: <a href="mailto:support@{{ request()->getHost() }}" style="color:#ffffff;">support@{{ request()->getHost() }}</a></p>
+      <p>For assistance, contact: <a href="mailto:support@{{ request()->getHost() }}" style="color:#000000;">support@{{ request()->getHost() }}</a></p>
       <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
     </div>
   </div>

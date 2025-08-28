@@ -15,7 +15,7 @@
     h3 { color: #3f4345; font-weight: normal; }
     p { font-size: 16px; color: #3f4345; line-height: 1.6; }
     .btn { display: inline-block; padding: 12px 30px; background-color: #f97a00; color: #ffffff !important; font-weight: 600; border-radius: 8px; margin-top: 20px; text-decoration: none; }
-    .footer { text-align: center; margin-top: 40px; color: #ffffff; font-size: 12px; }
+    .footer { text-align: center; margin-top: 40px; color: #000000; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -34,8 +34,8 @@
     <a href="{{ url('/user/dashboard') }}" class="btn">Renew Subscription</a>
 
     <div class="footer">
-      <p>Need help? <a href="mailto:support@{{ request()->getHost() }}" style="color:#ffffff;">Contact our support team</a>.</p>
-      <p><a href="#" style="color:#ffffff;">Unsubscribe</a> | <a href="{{ url('/dashboard') }}" style="color:#ffffff;">My Account</a></p>
+      <p>Need help? <a href="mailto:support@{{ request()->getHost() }}" style="color:#000000;">Contact our support team</a>.</p>
+      <p><a href="#" style="color:#000000;">Unsubscribe</a> | <a href="{{ url('/dashboard') }}" style="color:#000000;">My Account</a></p>
       <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
     </div>
   </div>

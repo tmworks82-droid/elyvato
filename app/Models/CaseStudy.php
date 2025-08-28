@@ -15,6 +15,7 @@ class CaseStudy extends Model
         'slug',
         'featured_image',
         'is_featured',
+        
     ];
 
 }

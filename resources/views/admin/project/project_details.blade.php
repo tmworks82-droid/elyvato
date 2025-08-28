@@ -360,8 +360,9 @@ body.adminlte-body {
                                                 <!-- Description -->
                                                 <div class="row mb-3">
                                                     <div class="col-sm-3"><strong>Description:</strong></div>
+                                                 
                                                     <div class="col-sm-9" style="max-height: 150px; overflow-y:auto;">
-                                                        @if (!empty($project->booking->statementOfWork->description))
+                                                        @if(!empty($project->booking->statementOfWork->description))
                                                             {!! $project->booking->statementOfWork->description !!}
                                                         @elseif(!empty($project->description))
                                                             {!! $project->description !!}
@@ -392,7 +393,9 @@ body.adminlte-body {
                                                         {{ $project->accountManager->name ?? 'N/A' }}
                                                         @if (Auth::user('admin')->id == 1 || Auth::user('admin')->id == 2)
                                                             <a href="#" data-id="{{ $project->id }}" data-toggle="modal" data-target="#accouintmanagerModal">
-                                                                @if (!empty($project->account_manager_id)) (Update Manager) @else (Add Manager) @endif
+                                                                @if (!empty($project->account_manager_id))
+                                                                 (Update Manager) 
+                                                                 @else (Add Manager) @endif
                                                             </a>
                                                         @endif
                                                     </div>
@@ -623,9 +626,11 @@ body.adminlte-body {
                                                         <h3 class="text-info">
                                                             @php
                                                                 $totalPaid = 0;
+                                                                
                                                                 if (!empty($project->booking->payments)) {
                                                                     foreach ($project->booking->payments as $pay) {
-                                                                        if ($pay->status == 'completed') {
+                                                                       
+                                                                        if ($pay->status == 'success') {
                                                                             $totalPaid += $pay->amount;
                                                                         }
                                                                     }

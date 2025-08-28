@@ -21,6 +21,7 @@ use App\Models\Booking;
 use App\Models\Payment;
 use App\Models\Task;
 use App\Models\HireTalent;
+use App\Models\Note;
 
 use App\Models\Call;
 use App\Models\CustomeBooking;
@@ -32,30 +33,12 @@ use Illuminate\Support\Facades\Session;
 use DB;
 use Hash;
 
+
 class ProjectController extends Controller
 {
 
     public function ShowProject(Request $request)
     {
-
-    // $templateData = [
-    //     'name' => 'welcome_template',
-    //     'language' => ['code' => 'en']
-    // ];
-
-
-
-    //      $message = "🎉 *You're In! Welcome to Elyvato*\n\n✅ You're officially on board! Dive into Elyvato and explore a world of premium content solutions crafted just for you.";
-       
-    //      $mobile='+919956398635';
-    //     $response=sendWhatsAppTemplate($mobile, $templateData);
-
-    //     if (isset($response['error'])) {
-    //         dd("Error sending message: " . $response['error']);
-    //     }
-    //         dd( $response);
-
-
 
         $userId = Auth::user()->id;
          $userRole = getRoleNamebyId(Auth::user()->role_id)->name_slug;
@@ -109,11 +92,36 @@ class ProjectController extends Controller
         $data['users'] = Admin::get();
         $data['employeeUser'] = Admin::where('role_id', 4)->get();
         $data['account_manager'] = Admin::where('role_id', 3)->get();
+        $data['bookings'] = Booking::orderBy('id','desc')->get();
 
         return view('admin.project.index', $data);
     }
 
+public function CreateProject(Request $request){
+     $request->validate([
+        'booking'=>'required',
+        'account_manager'=>'required',
+        'employee'=>'required',
+        'project_description'=>'required',
+     ]);
 
+     $booking=Booking::where('id',$request->booking)->first();
+
+     $pro=new Project();
+     $pro->booking_id=$booking->id;
+     $pro->account_manager_id=$request->account_manager;
+     $pro->employee_id=$request->employee;
+     $pro->description=$request->project_description;
+     $pro->created_by=Auth::user()->id;
+
+     $pro->project_status=$request->project_status ?? 'not_started';
+
+     if($pro->save()){
+        return response()->json(['success'=>true,'message'=>'Project created successfully']);
+        }else{
+        return response()->json(['success'=>false,'message'=>'Faild to create project!']);
+        }
+}
 
 
     public function ShowBooking()
@@ -167,16 +175,64 @@ class ProjectController extends Controller
         return view('admin.booking.index', $data);
     }
 
+ public function ProjectDetails($project_id){
 
+        // dd($project_id);
+
+        $data['title']="Projects Bookings";
+        $data['project'] = Project::with([
+            'booking.statementOfWork.service',
+            'booking.statementOfWork.subservice',
+            'booking.payments',
+            'booking.user',
+            'booking.notes',
+            'accountManager',
+            'employee',
+
+        ])->findOrFail($project_id);
+
+        $data['account_manager']=Admin::where('role_id',3)->get();
+        $data['employee']=Admin::where('role_id',4)->get();
+        $data['milestone']=Milestone::with('task')->where('project_id',$project_id)->get();
+        // dd($data['project']);
+
+        $data['services'] = Service::all();
+        $data['sub_services'] = SubService::all();
+        $data['users'] = Admin::with('role')->where('role_id',4)->get();
+
+         $query=Task::with('milestones')->where(['is_deleted'=>0,'created_by'=>Auth::user()->id]);
+        // show all task for admin
+
+        if(getRoleNamebyId(Auth::user()->role_id)->name_slug=='super-admin'){
+            // $query->where('')
+            $query->where('is_deleted',0);
+        }
+
+        // show task only created by account manager
+
+        if(getRoleNamebyId(Auth::user()->role_id)->name_slug=='account_manager'){
+            $query->where(['created_by'=>Auth::user()->id]);
+        }
+
+        // here get user employee get own task
+        if(getRoleNamebyId(Auth::user()->role_id)->name_slug=='employee'){
+            $query->where(['created_by'=>Auth::user()->id]);
+        }
+        $data['tasks'] =$query->get();
+
+        // dd($data);
+
+        return view('admin.project.project_details',$data);
+    }
 
 
     public function BookingCalls($id){
         $data['title']="Booking Calls";
         // dd($data);
-        $data['call_booking'] =Call::where('booking_id',$id)->orderBy('id','desc')->first();
+        $data['call_bookings'] =Call::with('booking','booking.project')->where('booking_id',$id)->orderBy('id','desc')->get();
         $data['custom_booking']=CustomeBooking::where('booking_id',$id)->first();
          
-         if (empty($data['call_booking'])) {
+         if (empty($data['call_bookings'])) {
             return redirect()->back()->with('error', 'No manager is assign in this booking.');
         }
         return view('admin.booking.booking_call',$data);
@@ -214,7 +270,7 @@ class ProjectController extends Controller
         ]);
 
         // dd($request->all());
-
+       
         $pro=Project::where('id',$request->project_id)->first();
         // if(empty($pro)){
         //     $pro=Booking::where('id',$request->project_id)->first();
@@ -227,6 +283,30 @@ class ProjectController extends Controller
         $pro->save();
 
         return response()->json(['success' => true, 'message' => 'Details updated successfully.']);
+    }
+
+
+    public function AddProjectDetails(Request $request)
+    {
+        $request->validate([
+            'booking_id' => 'required',
+            'description' => 'required',
+        ]);
+
+        // dd($request->all()); 
+
+        $note=new Note();
+
+        $note->note=$request->description;
+        $note->booking_id=$request->booking_id;
+        $note->updated_at=now();
+        $note->created_by=Auth::user()->id;
+        $note->save();
+        if($note->save()){
+            return response()->json(['success' => true, 'message' => 'Project details saved successfully.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Faild to add details!']);
     }
 
 
@@ -401,54 +481,7 @@ class ProjectController extends Controller
 
     }
 
-    public function ProjectDetails($project_id){
-
-        // dd($project_id);
-
-        $data['title']="Projects Bookings";
-        $data['project'] = Project::with([
-            'booking.statementOfWork.service',
-            'booking.statementOfWork.subservice',
-            'booking.payments',
-            'booking.user',
-            'accountManager',
-            'employee',
-
-        ])->findOrFail($project_id);
-
-        $data['account_manager']=Admin::where('role_id',3)->get();
-        $data['employee']=Admin::where('role_id',4)->get();
-        $data['milestone']=Milestone::with('task')->where('project_id',$project_id)->get();
-        // dd($data['project']);
-
-        $data['services'] = Service::all();
-        $data['sub_services'] = SubService::all();
-        $data['users'] = Admin::with('role')->where('role_id',4)->get();
-
-         $query=Task::with('milestones')->where(['is_deleted'=>0,'created_by'=>Auth::user()->id]);
-        // show all task for admin
-
-        if(getRoleNamebyId(Auth::user()->role_id)->name_slug=='super-admin'){
-            // $query->where('')
-            $query->where('is_deleted',0);
-        }
-
-        // show task only created by account manager
-
-        if(getRoleNamebyId(Auth::user()->role_id)->name_slug=='account_manager'){
-            $query->where(['created_by'=>Auth::user()->id]);
-        }
-
-        // here get user employee get own task
-        if(getRoleNamebyId(Auth::user()->role_id)->name_slug=='employee'){
-            $query->where(['created_by'=>Auth::user()->id]);
-        }
-        $data['tasks'] =$query->get();
-
-        // dd($data);
-
-        return view('admin.project.project_details',$data);
-    }
+   
 
     public function TaskList(){
         $data['title']="Task List";
@@ -620,13 +653,15 @@ class ProjectController extends Controller
         if(!empty($request->id)){
         $task = Task::with('milestone')->findOrFail($request->id);
         
-        $project=Project::where('id',$task->milestone->project_id)->first();
-        $user=GetUser($project->created_by);
+        $project=Project::with('booking')->where('id',$task->milestone->project_id)->first();
+        // dd($project);
+         $task->updated_by = Auth::user()->id;
+        $user=GetUser($project->booking->user_id);
 
          if($task->save()){
 
             // dd($user->email);
-            sendEmail(
+           $che= sendEmail(
                 $user->email,
                 'ELYVATO | Psst... Something Needs Your Attention.',
                 'emails.reminder',   // pending change 
@@ -634,6 +669,7 @@ class ProjectController extends Controller
                     'user' => $user,
                 ]
             );
+            // dd($che,$user->email);
 
             $message = "⏳ *A Quick Nudge — You're Up!*\n\n⏰ Just nudging you! There’s a step waiting for your action to keep things moving.";
             $mobile=$user->mobile;
@@ -891,6 +927,7 @@ class ProjectController extends Controller
 
         // Combine date + time safely
         $scheduledAt = \Carbon\Carbon::parse("{$request->date} {$request->time}");
+        $currentCall=Call::where('id',$request->call_id)->update(['status'=>'cancelled']);
 
         $call = new Call();
         $call->call_link   = $request->call_link;

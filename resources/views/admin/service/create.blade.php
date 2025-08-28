@@ -78,16 +78,30 @@
 
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="is_active" id="active" value="1"
-                      {{ (isset($statement) && $statement->is_active == 1) ? 'checked' : '' }}>
+                      >
                     <label class="form-check-label" for="active">Active</label>
                   </div>
 
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="is_active" id="inactive" value="0"
-                      {{ (isset($statement) && $statement->is_active == 0) ? 'checked' : '' }}>
+                      >
                     <label class="form-check-label" for="inactive">Inactive</label>
                   </div>
                 </div>
+
+                <!-- SEO Title -->
+                <div class="mb-3 col-md-6">
+                    <label for="seo_title" class="form-label">SEO Title</label>
+                    <input type="text" name="seo_title" id="seo_title" class="form-control"
+                        value="{{ old('seo_title', $statement->seo_title ?? '') }}" required>
+                </div>
+
+                 <!-- Meta Description -->
+                <div class="mb-3 col-md-6">
+                    <label for="meta_description" class="form-label">Meta Description</label>
+                    <textarea name="meta_description" id="meta_description" rows="3" class="form-control" required>{{ old('meta_description', $statement->meta_description ?? '') }}</textarea>
+                </div>
+
 
               </div>
 
@@ -117,3 +131,19 @@
   </div>
   <!-- /.content-wrapper -->
 @endsection
+@push('scripts')
+<script>
+  $('#name').on('input', function () {
+        let titleVal = $(this).val();
+      $('#seo_title').val(titleVal);
+      
+    });
+
+     $('#description').on('input', function () {
+        let titleVal = $(this).val();
+      $('#meta_description').val(titleVal);
+      
+    });
+
+</script>
+@endpush

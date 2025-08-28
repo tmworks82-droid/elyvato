@@ -84,6 +84,14 @@
                 transform: translateY(0);
             }
         }
+
+        .content h1,
+.content h3,
+.content a {
+    text-transform: none !important;
+}
+
+
     </style>
 
 @endsection
@@ -95,9 +103,8 @@
 <section class="section-padding-top section-padding-bottom bg-light">
     <div class="container">
         <div class="content">
-            <h1>Comming Soon</h1>
-            <h3>Your Next Hire is Moments Away</h3>
-            <p>We're putting the final touches on our new Instant Hire platform. Get ready for a seamless, faster way to connect with top talent. The future of recruitment is almost here!</p>
+            <h1>Your Next Hire is Moments Away</h1>
+            <h3>We’re putting the final touches on ELYVATO Instant Hire. Soon, hiring top talent will be faster, simpler, and smarter than ever.</h3>
         <a href="{{url('/')}}" class="btn btn-main mt-5 mb-5">Go Back</a>
         </div>
         

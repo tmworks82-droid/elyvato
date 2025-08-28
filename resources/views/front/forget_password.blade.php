@@ -81,7 +81,7 @@
     $(document).ready(function () {
         $('#forgot_password').submit(function (e) {
             e.preventDefault(); // prevent default form submission
-            
+            PleaseWait();
             let $btn = $('#send_otp_btn');
 
             $btn.prop('disabled', true);
@@ -101,6 +101,7 @@
                     $('#otp-message').html('<span style="color: blue;">Processing...</span>');
                 },
                 success: function (response) {
+                    Swal.close();
                     $('#otp-message').html('<span style="color: green;">' + response.message + '</span>');
                     // optionally redirect to OTP page
 
@@ -109,6 +110,7 @@
                     
                 },
                 error: function (xhr) {
+                        Swal.close();
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         let msg = Object.values(errors).map(err => err[0]).join('<br>');

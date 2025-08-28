@@ -249,6 +249,7 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         $data['title'] = $servi->name;
         $data['name'] = $servi->name;
         $data['servicename'] = $servi->name;
+        $data['service_data'] = $servi;
                 // dd($data['sowList']);
         return view('front.sow_list', $data);
     }
@@ -294,7 +295,7 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
 
         // Fetch SOWs with pagination
         $data['sowList'] = $query->with('allFiles')->paginate(12);
-
+        $data['service_data'] = $service ?? $subservice;
         return view('front.sow_list', $data);
     }
 
@@ -429,7 +430,7 @@ public function getDefaultServices()
         $userId = Auth::id(); // Current user
         $isActive = $request->is_active;
 
-        dd($request->all(),Auth::user()->id);
+        // dd($request->all(),Auth::user()->id);
         if ($isActive == 1) {
             // Clock In
             $clock = new TimeSheet();
