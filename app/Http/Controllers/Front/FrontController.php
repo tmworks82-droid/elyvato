@@ -25,10 +25,33 @@ class FrontController extends Controller
     public function index(){
         $data['title']="Home";
 
-                $sowSubset = StatementOfWork::where('featured','yes')
-                    // ->inRandomOrder()
-                    ->take(8)
-                    ->get();
+
+        $welcometemplateData = [
+            'name' => 'registration',
+            'language' => ['code' => 'en'],
+            'components' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        [
+                            'type' => 'text',
+                            'text' => 'Aayushi' // replace with dynamic value
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        
+        // $mobile=$user->mobile;
+        $mobile='+919956398635';
+         $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
+
+
+        $sowSubset = StatementOfWork::where('featured','yes')
+            // ->inRandomOrder()
+            ->take(8)
+            ->get();
 
 
 // Step 1: Get all account manager IDs
