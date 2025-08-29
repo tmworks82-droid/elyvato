@@ -17,6 +17,18 @@
             <h1 class="fw-bold mb-0">My Profile</h1>
         </div>
     </div>
+     @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+    @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
 
     {{-- profile details --}}
     <div class="overflow-x-hidden mb-3 mb-lg-4">
