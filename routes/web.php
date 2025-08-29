@@ -218,6 +218,9 @@ Route::domain(config('app.domain'))->group(function () {
         Route::get('/projects-details/{id}', [ProjectController::class, 'ProjectDetails']);
         Route::post('/mannual-assign-booking', [ProjectController::class, 'MannualAssignToBooking'])->name('mannual.assign.booking');
         Route::post('/update-project-details', [ProjectController::class, 'UpdateProjectDetails'])->name('update.project.details');
+       
+        Route::post('/add-project-details', [ProjectController::class, 'AddProjectDetails'])->name('add.project.details');
+        Route::post('/create-project', [ProjectController::class, 'CreateProject'])->name('create.project.details');
         
 
           // web.php
@@ -286,13 +289,16 @@ Route::domain(config('app.domain'))->group(function () {
         // Route::post('/toggle-clock', [FrontController::class, 'toggleClock']);
         
           // Social Login Routes
-        Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])
+          Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])
             ->where('provider', 'google|facebook')
             ->name('social.redirect');
         
         Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])
             ->where('provider', 'google|facebook')
             ->name('social.callback');
+            
+            Route::get('/auth/facebook', [SocialAuthController::class, 'facebookredirect'])->name('facebook.login');
+            Route::get('/auth/facebook/callback', [SocialAuthController::class, 'facebookcallback'])->name('facebook.callback');
             
             
 

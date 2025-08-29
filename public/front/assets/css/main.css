@@ -889,3 +889,11 @@ swal2-title
     font-family: 'Montserrat', sans-serif !important; /* or 'monster' if it's a custom font */
     font-size: larger !important;
 }
+
+.badge{
+    padding: 4px;
+}
+
+.badge,.text-bg-info{
+    background-color: #61e5ff !important;
+}

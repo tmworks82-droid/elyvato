@@ -31,6 +31,8 @@ class StatementOfWork extends Model
         'subscription_time',
         'created_by',
         'updated_by',
+        'seo_title',
+        'meta_description',
     ];
 
    

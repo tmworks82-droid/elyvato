@@ -97,6 +97,20 @@
                       <label class="form-check-label" for="inactive">Inactive</label>
                     </div>
                   </div>
+
+                  <!-- SEO Title -->
+                <div class="mb-3 col-md-6">
+                    <label for="seo_title" class="form-label">SEO Title</label>
+                    <input type="text" name="seo_title" id="seo_title" class="form-control"
+                        value="{{ old('seo_title', $results->seo_title ?? '') }}" required>
+                </div>
+
+                 <!-- Meta Description -->
+                <div class="mb-3 col-md-6">
+                    <label for="meta_description" class="form-label">Meta Description</label>
+                    <textarea name="meta_description" id="meta_description" rows="3" class="form-control" required>{{ old('meta_description', $results->meta_description ?? '') }}</textarea>
+                </div>
+
                 </div>
               </div>
                 <!-- /.card-body -->
@@ -146,3 +160,19 @@
   </div>
   <!-- /.content-wrapper -->
 @endsection
+@push('scripts')
+<script>
+
+   $('#name').on('input', function () {
+        let titleVal = $(this).val();
+      $('#seo_title').val(titleVal);
+      
+    });
+
+     $('#description').on('input', function () {
+        let titleVal = $(this).val();
+      $('#meta_description').val(titleVal);
+      
+    });
+</script>
+@endpush

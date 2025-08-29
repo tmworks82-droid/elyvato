@@ -87,7 +87,7 @@
             <!-- Title -->
             <div class="mb-3 col-md-4">
               <label for="title" class="form-label">Title</label>
-              <input type="text" name="title" placeholder="Title" class="form-control" value="{{ old('title', $statement->title ?? '') }}" required>
+              <input type="text" name="title" id="title" placeholder="Title" class="form-control" value="{{ old('title', $statement->title ?? '') }}" required>
             </div>
 
             <!-- Price Range -->
@@ -236,6 +236,20 @@
               <label for="description" class="form-label">Description</label>
               <textarea class="form-control" id="description" name="description" rows="4">{{ old('description', $statement->description ?? '') }}</textarea>
             </div>
+
+                <!-- SEO Title -->
+                <div class="mb-3 col-md-6">
+                    <label for="seo_title" class="form-label">SEO Title</label>
+                    <input type="text" name="seo_title" id="seo_title" class="form-control"
+                        value="{{ old('seo_title', $statement->seo_title ?? '') }}" required>
+                </div>
+
+                 <!-- Meta Description -->
+                <div class="mb-3 col-md-6">
+                    <label for="meta_description" class="form-label">Meta Description</label>
+                    <textarea name="meta_description" id="meta_description" rows="3" class="form-control" required>{{ old('meta_description', $statement->meta_description ?? '') }}</textarea>
+                </div>
+
           </div>
 
           <button type="submit" name="button" value="Save Statement of works" class="btn btn-success mt-3">Save Statement of Work</button>
@@ -270,6 +284,25 @@
 
     CKEDITOR.replace('description');
 
+    CKEDITOR.instances.description.on('change', function () {
+        // get HTML from CKEditor
+        let htmlData = CKEDITOR.instances.description.getData();
+
+        // convert to plain text
+        let plainText = $('<div>').html(htmlData).text();
+
+        // only update if meta_description is empty
+        // if ($('#meta_description').val().trim() === '') {
+            $('#meta_description').val(plainText);
+        // }
+    });
+
+     // --- Title to SEO Title ---
+    $('#title').on('input', function () {
+        let titleVal = $(this).val();
+      $('#seo_title').val(titleVal);
+      
+    });
 
     $(document).ready(function() {
     $('#min_price').on('input', function() {
@@ -287,6 +320,8 @@
             $('#min_price').val(min);
         }
     });
+
+
 });
 
 

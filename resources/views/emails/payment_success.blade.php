@@ -87,8 +87,8 @@
 
     <!-- Footer -->
     <div class="footer">
-      <p>Need help? <a href="mailto:support@{{ request()->getHost() }}" style="color:#ffffff;">Contact Support</a></p>
-      <p><a href="#" style="color:#ffffff;">Unsubscribe</a> | <a href="{{ url('/booking-list') }}" style="color:#ffffff;">My Bookings</a></p>
+      <p>Need help? <a href="mailto:support@{{ request()->getHost() }}" style="color:#000000;">Contact Support</a></p>
+      <p><a href="#" style="color:#000000;">Unsubscribe</a> | <a href="{{ url('/booking-list') }}" style="color:#000000;">My Bookings</a></p>
       <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
     </div>
   </div>

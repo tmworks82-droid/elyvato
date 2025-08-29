@@ -18,7 +18,9 @@ class HireTalent extends Model
         'image',
         'is_active',
         'is_available',
-        'content'
+        'content',
+        'seo_title',
+        'meta_description',
     ];
     
      protected static function booted(): void

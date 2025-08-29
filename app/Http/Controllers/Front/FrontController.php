@@ -25,10 +25,33 @@ class FrontController extends Controller
     public function index(){
         $data['title']="Home";
 
-                $sowSubset = StatementOfWork::where('featured','yes')
-                    // ->inRandomOrder()
-                    ->take(8)
-                    ->get();
+
+        $welcometemplateData = [
+            'name' => 'registration',
+            'language' => ['code' => 'en'],
+            'components' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        [
+                            'type' => 'text',
+                            'text' => 'Aayushi' // replace with dynamic value
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        
+        // $mobile=$user->mobile;
+        $mobile='+919956398635';
+         $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
+
+
+        $sowSubset = StatementOfWork::where('featured','yes')
+            // ->inRandomOrder()
+            ->take(8)
+            ->get();
 
 
 // Step 1: Get all account manager IDs
@@ -249,6 +272,7 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         $data['title'] = $servi->name;
         $data['name'] = $servi->name;
         $data['servicename'] = $servi->name;
+        $data['service_data'] = $servi;
                 // dd($data['sowList']);
         return view('front.sow_list', $data);
     }
@@ -294,7 +318,7 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
 
         // Fetch SOWs with pagination
         $data['sowList'] = $query->with('allFiles')->paginate(12);
-
+        $data['service_data'] = $service ?? $subservice;
         return view('front.sow_list', $data);
     }
 
@@ -429,7 +453,7 @@ public function getDefaultServices()
         $userId = Auth::id(); // Current user
         $isActive = $request->is_active;
 
-        dd($request->all(),Auth::user()->id);
+        // dd($request->all(),Auth::user()->id);
         if ($isActive == 1) {
             // Clock In
             $clock = new TimeSheet();

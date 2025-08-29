@@ -107,12 +107,7 @@
                     @endif
                 </div>
 
-                <!-- SEO Title -->
-                <div class="mb-3 col-md-6">
-                    <label for="seo_title" class="form-label">SEO Title</label>
-                    <input type="text" name="seo_title" id="seo_title" class="form-control"
-                        value="{{ old('seo_title', $blog->seo_title ?? '') }}" required>
-                </div>
+                
                 
                 <div class="mb-3 col-md-6">
                   <label class="form-label d-block">Is Active</label>
@@ -131,17 +126,26 @@
         </div>
                 
 
-                <!-- Meta Description -->
-                <div class="mb-3 col-md-6">
-                    <label for="meta_description" class="form-label">Meta Description</label>
-                    <textarea name="meta_description" id="meta_description" rows="3" class="form-control" required>{{ old('meta_description', $blog->meta_description ?? '') }}</textarea>
-                </div>
 
                     <!-- Content -->
                     <div class="mb-3 col-sm-12">
                         <label for="content" class="form-label">Content</label>
                         <textarea name="content" id="content" rows="5" class="form-control" required>{{ old('content', $blog->content ?? '') }}</textarea>
                     </div>
+
+                    <!-- SEO Title -->
+                <div class="mb-3 col-md-6">
+                    <label for="seo_title" class="form-label">SEO Title</label>
+                    <input type="text" name="seo_title" id="seo_title" class="form-control"
+                        value="{{ old('seo_title', $blog->seo_title ?? '') }}" required>
+                </div>
+
+                 <!-- Meta Description -->
+                <div class="mb-3 col-md-6">
+                    <label for="meta_description" class="form-label">Meta Description</label>
+                    <textarea name="meta_description" id="meta_description" rows="3" class="form-control" required>{{ old('meta_description', $blog->meta_description ?? '') }}</textarea>
+                </div>
+
                 </div>
 
 
@@ -175,5 +179,30 @@
 <script>
 
     CKEDITOR.replace('content');
+
+CKEDITOR.instances.content.on('change', function () {
+        // get HTML from CKEditor
+        let htmlData = CKEDITOR.instances.content.getData();
+
+        // convert to plain text
+        let plainText = $('<div>').html(htmlData).text();
+
+        // only update if meta_description is empty
+        // if ($('#meta_description').val().trim() === '') {
+            $('#meta_description').val(plainText);
+        // }
+    });
+
+     // --- Title to SEO Title ---
+    $('#title').on('input', function () {
+        let titleVal = $(this).val();
+
+        // only update if seo_title is empty
+        // if ($('#seo_title').val().trim() === '') {
+            $('#seo_title').val(titleVal);
+        // }
+    });
+
+
 </script>
 @endpush

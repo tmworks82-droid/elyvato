@@ -54,7 +54,7 @@
     .footer {
       text-align: center;
       margin-top: 40px;
-      color: #ffffff;
+      color: #000000;
       font-size: 12px;
     }
     .details {
@@ -85,7 +85,7 @@
 
     <!-- Footer -->
     <div class="footer">
-      Need help? <a href="mailto:support@elyvato.com" style="color:#ffffff;">Contact Us</a><br>
+      Need help? <a href="mailto:support@elyvato.com" style="color:#000000;">Contact Us</a><br>
       &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
     </div>
   </div>

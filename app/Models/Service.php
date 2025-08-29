@@ -26,6 +26,8 @@ class Service extends Model
             'is_active',
             'created_at',
             'updated_at',
+            'seo_title',
+        'meta_description',
     ];
 
     protected $hidden           = [

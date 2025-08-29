@@ -58,7 +58,7 @@
         .footer {
             text-align: center;
             margin-top: 40px;
-            color: #ffffff;
+            color: #000000;
             font-size: 12px;
             text-align: center;
         }
@@ -80,7 +80,7 @@
             </p>
         </div>
         <div class="footer">
-            <p>This message was sent from your website contact form.</p>
+            <p>This message was sent from elyvato.com contact form.</p>
         </div>
     </div>
 </body>

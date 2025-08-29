@@ -50,7 +50,7 @@
     }
 
     a:hover {
-        color: #fff !important;
+        color: #000000 !important;
     }    
 
 </style>
@@ -131,14 +131,14 @@
                              <hr><span class="hr_top_text">OR</span>
                          </div>
                          
-                         <div class="d-md-flex justify-content-around">
+                          <div class="d-md-flex justify-content-around">
                             <!-- Google Button -->
 
                             <a class="social-btn google-btn" href="{{ route('social.redirect','google') }}" id="googlebtn">
                               <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google"> Continue with Google
                             </a>
                             
-                            <a class="social-btn facebook-btn" href="{{ route('social.redirect','facebook') }}">
+                            <a class="social-btn facebook-btn" href="{{ route('facebook.login') }}">
                               <img src="https://www.svgrepo.com/show/452196/facebook-1.svg" id="facebookbtn" alt="Facebook"> Continue with Facebook
                             </a>
 
@@ -184,7 +184,7 @@
 
         $('#user_login_form').on('submit', function(e) {
             e.preventDefault();
-            
+            PleaseWait();
             let $btn = $('.btn-login');
             $btn.prop('disabled', true).text('Processing...');
     
@@ -202,9 +202,7 @@
             },
             
             success: function(response) {
-
-           
-            
+                Swal.close();
             Swal.fire({
                 title: 'Success!',
                 text: response.message,
@@ -220,6 +218,7 @@
 
             },
             error: function(xhr) {
+                Swal.close();
                 let errorText = 'Invalid credentials.';
 
                 if (xhr.status === 422 && xhr.responseJSON.errors) {

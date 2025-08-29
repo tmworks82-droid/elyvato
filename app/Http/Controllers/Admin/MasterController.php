@@ -72,6 +72,8 @@ class MasterController extends Controller
             'estimated_time' => 'nullable|string|max:255',
             'is_active' => 'required|in:1,0',
             'subscription'=>'required',
+            'seo_title'=>'nullable|string|max:255',
+            'meta_description'=>'nullable|string',
         ]);
 
 
@@ -99,6 +101,8 @@ class MasterController extends Controller
         $statement->estimated_time = $request->estimated_time;
         $statement->is_active = $request->is_active;
         $statement->is_subscription = $request->subscription;
+        $statement->seo_title = $request->seo_title;
+        $statement->meta_description = $request->meta_description;
         
         if($request->subscription=='no'){
             $statement->subscription_time =null;
@@ -569,6 +573,8 @@ public function BlogStore(Request $request)
         'featured_image' => 'nullable|image|max:2048',
         'category' => 'nullable|array',
         'is_active'=>'required',
+        'seo_title' =>' nullable|string|max:255',
+        'meta_description' => 'nullable|string|max:255',
     ];
 
     $request->validate($rules);

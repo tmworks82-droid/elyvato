@@ -98,6 +98,11 @@ class Booking extends Model
     }
 
 
+    public function notes()
+{
+    return $this->hasMany(Note::class, 'booking_id');
+}
+
 
     // In App\Models\Booking.php
     public function firstCall()

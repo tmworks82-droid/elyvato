@@ -12,13 +12,14 @@ use App\Models\UserProfile;
 
 class SocialAuthController extends Controller
 {
-   public function redirect(string $provider)
+  public function redirect(string $provider)
     {
         $driver = Socialite::driver($provider)->stateless();
 
         if ($provider === 'facebook') {
             $driver->scopes(['email', 'public_profile']);
         }
+        
 
         // dd($driver);
 
@@ -155,15 +156,10 @@ class SocialAuthController extends Controller
 
         $response=sendWhatsAppTemplate($mobile, $registemplateData);
 
-
-     
-
         $message = "*Elyvato | Registration Success*\n\n🙌 *You’re One of Us Now!*\n\n🚀 We’re pumped to have you! Jump in and unlock powerful, streamlined content services that just make sense.\n\n🔐 *Your Login Credentials:*\n👤 Email: {$user->email}\n🔑 Password: {$password}\n\nLogin here: https://elyvato.com/login";
 
         // $mobile=$user->mobile;
         sendWhatsAppMessage($mobile, $message);
-        
-
 
     }
         Auth::login($new);
@@ -173,7 +169,7 @@ class SocialAuthController extends Controller
 
     private function ok(bool $first = false)
     {
-           $url = session()->pull('url.intended', url('user/profiles'));
+          $url = session()->pull('url.intended', url('user/profiles'));
         if (request()->wantsJson()) {
             return response()->json([
                 'success'=>true,
@@ -184,69 +180,53 @@ class SocialAuthController extends Controller
         return redirect($url)->with('success', $first ? 'Account created successfully.' : 'Logged in.');
     }
     
+  // Redirect user to Facebook
+  // Step 1: Redirect user to Facebook
+    public function facebookredirect()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    // Step 2: Handle callback
+    public function facebookcallback()
+    {
+        try {
+            $facebookUser = Socialite::driver('facebook')->user();
+
+            // Check if admin already exists
+            $admin = Admin::where('provider_id', $facebookUser->id)
+                          ->where('provider_name', 'facebook')
+                          ->first();
+
+            if ($admin) {
+                // Existing admin → login
+                Auth::guard('admin')->login($admin); // ✅ use admin guard
+                return redirect('/dashboard')->with('success', 'Login successful!');
+            } else {
+                // Create new admin record
+          
+                  $password=Str::random(32);
+                    $new = new Admin();
+                    $new->email       = $facebookUser->email;
+                    $new->mobile      = null; // (capture later if you want)
+                    $new->password    = Hash::make($password); // placeholder
+                    $new->type        = 'customer';
+                    $new->name        = $facebookUser->name;
+                    $new->avatar      = $facebookUser->avatar;
+                    $new->provider    = 'facebook';
+                    $new->provider_id = $facebookUser->id;
+                    $new->save();
     
-    
+                 UserProfile::firstOrCreate(['user_id' => $new->id]);
 
-//   public function redirect(string $provider)
-//     {
-//         $driver = Socialite::driver($provider)->stateless();
+                Auth::guard('admin')->login($new);
+                return redirect('/dashboard')->with('success', 'Registered successfully!');
+            }
 
-//         if ($provider === 'facebook') {
-//             $driver->scopes(['email', 'public_profile']);
-//         }
-
-//         return $driver->redirect();
-//     }
-
-//     /**
-//      * Handle provider callback
-//      */
-//     public function callback(string $provider)
-// {
-//     try {
-//         $socialUser = Socialite::driver($provider)->stateless()->user();
-
-//         // First check if user already exists by email
-//         $user = Admin::where('email', $socialUser->getEmail())->first();
-
-//         $plainPassword = Str::random(12); // random 12-character password
-//         $hashedPassword = Hash::make($plainPassword);
-
-//         $username=generateUniqueUsername();
-
-//         if ($user) {
-//             // If user exists, update provider ID if not set
-//             if (empty($user->{$provider . '_id'})) {
-//                 $user->update([
-//                     $provider . '_id' => $socialUser->getId(),
-//                     'avatar' => $socialUser->getAvatar(),
-//                 ]);
-//             }
-//         } else {
-//             // If no user exists, create new one
-//             $user = Admin::create([
-//                 'name'   => $socialUser->getName(),
-//                 'email'  => $socialUser->getEmail(),
-//                 'password'=>$hashedPassword,
-//                 'username'=>
-//                 'avatar' => $socialUser->getAvatar(),
-//                 $provider . '_id' => $socialUser->getId(),
-//             ]);
-//         }
-
-//         // Login the user
-//         Auth::login($user);
-
-//         return redirect('/user/dashboard')->with('success', 'Logged in successfully!');
-
-//     } catch (\Exception $e) {
-//         \Log::error("{$provider} login error: " . $e->getMessage());
-//         dd($e->getMessage());
-//         return redirect('/login')->with('error', 'Unable to login with ' . ucfirst($provider));
-//     }
-// }
-
-
+        } catch (Exception $e) {
+            return redirect('/login')->with('error', 'Facebook login failed: ' . $e->getMessage());
+        }
+    }
 
 }
 
