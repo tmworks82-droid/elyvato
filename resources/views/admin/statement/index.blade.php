@@ -191,6 +191,7 @@
                                           <span class="remove-btn" data-id="{{ $files->id }}" data-type="image">&times;</span>
                                       </div>
                                   @elseif($files->file_type == 'video')
+
                                       {{--<div class="media-wrapper" data-id="{{ $files->id }}">
                                           <a href="{{ $files->video }}" target="_blank"> Video</a>
                                           <span class="remove-btn" data-id="{{ $files->id }}" data-type="video">&times;</span>
@@ -199,7 +200,7 @@
                                       @php
                                         preg_match('/embed\/([a-zA-Z0-9_-]+)/', $files->video, $matches);
                                         $videoId = $matches[1] ?? null;
-                                    @endphp
+                                      @endphp
 
                                     @if($videoId)
                                         <div class="media-wrapper" data-id="{{ $files->id }}">
@@ -207,9 +208,13 @@
                                             <span class="remove-btn" data-id="{{ $files->id }}" data-type="video">&times;</span>
                                         </div>
                                     @else
-                                        <span>Invalid video link</span>
-                                    @endif
+                                        
+                                      <div class="media-wrapper" data-id="{{ $files->id }}">
+                                            <span>Invalid video link </span>
+                                            <span class="remove-btn" data-id="{{ $files->id }}" data-type="video">&times;</span>
+                                      </div>
 
+                                    @endif
                                   @endif
                               @endforeach
                           @else
