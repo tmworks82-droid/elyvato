@@ -24,8 +24,10 @@ class Admin extends Authenticatable
         'username',
         'password',
         'priority',
-        'role_id', // Add role_id to the fillable attributes
+        'role_id', 
         'department_id',
+        'rating',
+        'is_hired',
     ];
 
     protected $hidden = [
@@ -33,15 +35,15 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
-    protected $dates            = [
+    protected $dates= [
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    protected $casts            = [
-        'created_at'            => "datetime:d-M-Y h:i A",
-        'updated_at'            => "datetime:d-M-Y h:i A",
+    protected $casts= [
+        'created_at' => "datetime:d-M-Y h:i A",
+        'updated_at' => "datetime:d-M-Y h:i A",
         'email_verified_at' => 'datetime',
         'password'=>'hashed',
     ];

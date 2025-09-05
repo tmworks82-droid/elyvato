@@ -73,6 +73,17 @@
                         </a>
                     </li>
                 @endif
+                @if (auth()->user()->hasPermission('freelancer'))
+                    <li class="nav-item {{ request()->is('freelancers-list') ? 'menu-open' : '' }}">
+                        <a href="{{ route('freelancers.index') }}"
+                            class="nav-link {{ request()->is('freelancers-list') || request()->is('freelancers-list') || request()->is('talent-rating/*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Freelancer List
+                            </p>
+                        </a>
+                    </li>
+                @endif
 
                 @if (auth()->user()->hasPermission('projects'))
                     <li

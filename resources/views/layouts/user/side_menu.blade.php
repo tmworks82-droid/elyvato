@@ -14,9 +14,11 @@
 
                     <li><p class="fz15 fw400 ff-heading mt30 pl30">Account</p></li>
                     <li class="active"><a href="{{route('user.profiles')}}"><i class="flaticon-photo mr10"></i>My Profile</a></li>
-                    <li>   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
+                    <li>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
+
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="items-center">
                 <i class="flaticon-logout mr15"></i>Logout
             </a></li>

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\DealerLeadController;
 use App\Http\Controllers\Admin\MasterController;
+use App\Http\Controllers\Admin\FreelanceController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\FaqController;
 
@@ -82,6 +83,9 @@ Route::domain(config('app.domain'))->group(function () {
         // Route::post('/proceed-booking', [BookingController::class, 'ProceedToBooking'])->name('user.proceed.booking');
         Route::post('/proceed-to-hire', [BookingController::class, 'ProceedToInstantHire'])->name('user.proceed.hire');
 
+        Route::get('/task-lists', [DashboardController::class, 'TaskList'])->name('user.tasks.list');
+        Route::get('/tasks-details', [DashboardController::class, 'TasksDetails'])->name('user.task.details');
+
         Route::get('/booking-list', [DashboardController::class, 'BookingList'])->name('user.booking.list');
         Route::get('/booking-details/{id}', [DashboardController::class, 'BookingDetails'])->name('user.booking.details');
         Route::get('/user/profiles', [DashboardController::class, 'UserProfile'])->name('user.profiles');
@@ -89,6 +93,11 @@ Route::domain(config('app.domain'))->group(function () {
         Route::get('/get-cities/{state_id}', [DashboardController::class, 'getCities']);
 
         Route::post('/user-update-profile}', [DashboardController::class, 'UpdateProfile'])->name('user.update_user_profile');
+
+        Route::post('/freelance-user-update-profile}', [DashboardController::class, 'UpdateFreelancerProfile'])->name('freelance.user.update_user_profile');
+
+        Route::post('/update-bank-details', [DashboardController::class, 'updateBankDetails'])->name('update.bank.details');
+
 
         Route::post('/change-password', [DashboardController::class, 'changePassword'])->name('user.changePassword');
 
@@ -271,6 +280,13 @@ Route::domain(config('app.domain'))->group(function () {
          Route::get('/edit-blog/{id}', [MasterController::class, 'BlogEdit'])->name('blog.edit');
         Route::delete('/destroy-blog/{id}', [MasterController::class, 'BlogDestroy'])->name('blog.destroy');
 
+        // here freelance routes
+        Route::get('/freelancers-list', [FreelanceController::class, 'index'])->name('freelancers.index');
+        Route::get('/talent-rating/{id}', [FreelanceController::class, 'TalentRating'])->name('talent.rating');
+        Route::post('/update-talent-rating', [FreelanceController::class, 'FreelanceTalentRating'])->name('update.talent.rating');
+        Route::post('/update-hire-talent-rating', [FreelanceController::class, 'HireFreelancer'])->name('update.hire.talent.rating');
+        
+       
     });
 
 
@@ -278,7 +294,8 @@ Route::domain(config('app.domain'))->group(function () {
         Route::post('/contact-store', [FrontController::class, 'store'])->name('contact.store');
 
         Route::get('/comming-soon', [FrontController::class, 'CommingSoon'])->name('comming.soon');
-
+        Route::get('/register-freelance', [FrontController::class, 'RegisterFreelance'])->name('register.freelancer');  
+        Route::post('/freelancers/register', [FrontController::class, 'RegisterAsFreelance'])->name('freelancers.store');
         Route::post('/create-order', [BookingController::class, 'createRazorpayOrder'])->name('razorpay.order.create');
         Route::post('/proceed-booking', [BookingController::class, 'ProceedToBooking'])->name('user.proceed.booking');
         

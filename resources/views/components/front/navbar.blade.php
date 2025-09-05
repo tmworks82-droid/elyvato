@@ -50,10 +50,10 @@
             <div>
               @foreach ($firstHalf as $subservice)
           <li class="px-2">
-          <a class="dropdown-item rounded"
-            href="{{ route('sub-service-sow', ['serviceSlug' => $service->slug, 'subserviceSlug' => $subservice->slug]) }}">
-            {{ $subservice->name }}
-          </a>
+            <a class="dropdown-item rounded"
+              href="{{ route('sub-service-sow', ['serviceSlug' => $service->slug, 'subserviceSlug' => $subservice->slug]) }}">
+              {{ $subservice->name }}
+            </a>
           </li>
           @endforeach
             </div>
@@ -62,10 +62,10 @@
             <div>
               @foreach ($secondHalf as $subservice)
           <li class="px-2">
-          <a class="dropdown-item rounded"
-            href="{{ route('sub-service-sow', ['serviceSlug' => $service->slug, 'subserviceSlug' => $subservice->slug]) }}">
-            {{ $subservice->name }}
-          </a>
+            <a class="dropdown-item rounded"
+              href="{{ route('sub-service-sow', ['serviceSlug' => $service->slug, 'subserviceSlug' => $subservice->slug]) }}">
+              {{ $subservice->name }}
+            </a>
           </li>
           @endforeach
             </div>
@@ -73,8 +73,6 @@
         @endif
           </li>
       @endforeach
-
-
 
           </ul>
         </li>
@@ -103,9 +101,7 @@
                     @endif
                   </li>
                 
-      @endforeach
-
-
+           @endforeach
 
           </ul>
         </li>
@@ -266,22 +262,25 @@
         
       </div> -->
       <div class="d-flex align-items-start ms-3 ms-lg-0 align-items-lg-center flex-column flex-lg-row gap-3 gap-lg-4">
+        
         {{-- search button --}}
+        
         {{--<button class="navbar-search-btn p-0 d-flex align-items-center" type="button" data-bs-toggle="modal"
           data-bs-target="#navSearchModal">
           <i class="ri-search-2-line me-1 me-lg-0"></i><span class="d-inline d-lg-none">Search</span>
         </button>--}}
-        
 
         @if(Auth::check())
-      <a class="btn btn-main" href="{{ url('user/dashboard') }}">Dashboard</a>
-    @else
-      {{-- sign in link --}}
-      <a class="nav-link" href="/login">Sign In</a>
-      {{-- register button --}}
-      <a class="btn btn-main" href="/register">Register</a>
+          <a class="btn btn-main" href="{{ url('user/dashboard') }}">Dashboard</a>
+        @else
+        
+          {{-- sign in link --}}
+          <a class="nav-link" href="/login">Sign In</a>
+          {{-- register button --}}
+          <a class="btn btn-main" href="/register">Register</a>
+          <a class="btn btn-main" href="{{route('register.freelancer')}}">Register as freelancer</a>
 
-    @endif
+        @endif
     
       </div>
     </div>

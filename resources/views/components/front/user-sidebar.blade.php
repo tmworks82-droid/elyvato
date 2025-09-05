@@ -25,6 +25,15 @@
         <li>
             <a href="{{url('user/dashboard')}}" class="{{ Request::is('user/dashboard') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-dashboard-fill"></i> Dashboard</a>
         </li>
+        
+        @if(Auth::user()->type=='user')
+        <li>
+          
+            <a href="{{route('user.tasks.list')}}" class="{{ Request::is('task-lists') ? 'active' : '' }} {{  Request::is('task-lists/*') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-calendar-check-line"></i>Task List</a>
+            
+        </li>
+        @else
+
         <li>
             <a href="{{url('booking-list')}}" class="{{ Request::is('booking-list') ? 'active' : '' }} {{  Request::is('booking-details/*') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-calendar-check-line"></i> My Bookings</a>
         </li>
@@ -36,6 +45,7 @@
         <li>
             <a href="{{url('payment-list')}}" class="{{ Request::is('payment-list') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-wallet-line"></i> Payments</a>
         </li>
+        @endif
         <li>
             <a href="{{route('user.profiles')}}" class="{{ Request::is('user/profiles') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-user-3-line"></i> Profile</a>
         </li>

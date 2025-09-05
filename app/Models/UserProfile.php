@@ -39,8 +39,23 @@ class UserProfile extends Model
         'created_by',
         'updated_at',
         'updated_by',
+        'understanding',
+        'tech_knowledge',
+        'final_score',
+        'talent_definition',
+        'years_experience',
+        'highest_qualification',
+        'languages_spoken',
+        'certification_file',
+        'portfolio_file',
+        'rate_card_file',
+        'account_holder_name',
+        'bank_name',
+        'ifsc_code',
+        'account_number',
     ];
 
+    
     protected $casts = [
         'created_on' => 'datetime',
         'updated_at' => 'datetime',
@@ -54,6 +69,7 @@ class UserProfile extends Model
         return $this->belongsTo(Admin::class, 'user_id');
     }
 
+
     public function admin()
     {
         return $this->belongsTo(Admin::class, 'user_id', 'id');
@@ -65,10 +81,12 @@ class UserProfile extends Model
         return $this->belongsTo(Admin::class, 'created_by');
     }
 
+
     public function updater(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
+
 
     public function designation()
     {

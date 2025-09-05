@@ -14,12 +14,18 @@ class UserAuth
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
+
+    
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->type !== 'customer') {
-            // dd(Auth::guard('admin')->user()->name);
-            return redirect()->route('user_login_form');
-        }
+        // if (!auth()->check() || auth()->user()->type !== 'customer' || auth()->user()->type !== 'user') {
+        //     // dd(Auth::user()->name);
+        //     return redirect()->route('user_login_form');
+        // }
+
+         if (!auth()->check() || !in_array(auth()->user()->type, ['customer', 'user'])) {
+                return redirect()->route('user_login_form');
+            }
 
         return $next($request);
     }

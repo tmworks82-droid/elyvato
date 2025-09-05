@@ -266,6 +266,7 @@ $('#registerForm').on('submit', function(e) {
           }).then(function() {
               window.location.href = "{{ url('login') }}";
           });
+          
         $btn.prop('disabled', false).text('Register');
       }
       $('.swal2-title').css('font-size', '1.5em');

@@ -107,13 +107,6 @@ class FrontAuthController extends Controller
     public function RegisterNow(Request $request)
     {
 
-
-         // Validation if not already exists
-        // $validator = Validator::make($request->all(), [
-        //         'email' => 'required|email:rfc,dns|max:255|unique:admins,email',
-        //         'mobile' => 'required|digits:10|unique:admins,mobile',
-        //     ]);
-
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email:rfc,dns|max:255',
                 'mobile' => 'required|digits:10',
@@ -154,17 +147,6 @@ class FrontAuthController extends Controller
                     ]);
                 }
 
-
-        // if ($existingUser) {
-        //     // return response()->json([
-        //     //     'success' => false,
-        //     //     'message' => 'Your account already registered kindly login.',
-        //     //     'data' => [
-        //     //         'user_id' => $existingUser->id
-        //     //     ]
-        //     // ]);
-        // }
-
         $password = Str::random(8);
 
         // Create the user
@@ -174,7 +156,7 @@ class FrontAuthController extends Controller
         $user->password = Hash::make($password);
         $user->username=generateUniqueUsername($request->email);
         $user->type = 'customer';
-        $user->save(); // Save first to get ID
+        $user->save(); 
 
         // Create profile
         $profile = new UserProfile();
@@ -359,7 +341,8 @@ class FrontAuthController extends Controller
     }
 
 
-public function loginUser(Request $request)
+
+    public function loginUser(Request $request)
 {
     $request->validate([
         'email' => 'required|email',
@@ -379,9 +362,21 @@ public function loginUser(Request $request)
         ], 429);
     }
 
+    // $admin = Admin::where('email', $request->email)
+    //               ->where('type', 'customer')
+    //               ->where('type', 'user')
+    //               ->where('is_hired', 'yes')
+    //               ->first();
+
     $admin = Admin::where('email', $request->email)
-                  ->where('type', 'customer')
-                  ->first();
+              ->where(function ($query) {
+                  $query->where('type', 'customer')
+                        ->orWhere(function ($subQuery) {
+                            $subQuery->where('type', 'user')    
+                                     ->where('is_hired', 'yes');
+                        });
+              })->first();
+              
 
     if (!empty($admin) && \Hash::check($request->password, $admin->password)) {
         Auth::login($admin, $request->remember);

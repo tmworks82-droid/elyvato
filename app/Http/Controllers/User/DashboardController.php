@@ -14,6 +14,10 @@ use App\Models\Admin;
 use App\Models\City;
 use App\Models\RoleDesignation;
 use App\Models\Payment;
+use App\Models\Service;
+use App\Models\SubService;
+use App\Models\Task;
+use App\Models\TaskHistory;
 use App\Models\StatementOfWork;
 use App\Models\RecurringSubscription;
 use Illuminate\Support\Facades\Hash;
@@ -221,6 +225,8 @@ class DashboardController extends Controller
     }
 
 
+    
+
 
 
     public function BookingDetails($id){
@@ -316,53 +322,6 @@ class DashboardController extends Controller
         return response()->json($cities);
     }
 
-    public function UpdateProfile_old(Request $request)
-    {
-
-      
-
-        $user = Admin::where('id',Auth::user()->id)->first();
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->mobile = $request->mobile;
-        $user->role_id = $request->role;
-        $user->save();
-
-
-        $UserProfile=UserProfile::where('user_id',Auth::user()->id)->first();
-
-        if(empty($UserProfile)){
-            $UserProfile=new UserProfile();
-        }
-            // dd($request->hasFile('profile'));
-        if ($request->hasFile('profile')) {
-            $file = $request->file('profile');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            // $file->move(public_path('upload/profile'), $filename);
-            $file->move(base_path('../public_html/upload/profile'), $filename);
-            $UserProfile->image = 'upload/profile/' . $filename;
-        }
-        
-
-        $UserProfile->company_name = $request->company_name;
-        $UserProfile->gst_number = $request->gst_number;
-        $UserProfile->address_line1 = $request->address_line1;
-        $UserProfile->address_line2 = $request->address_line2;
-        $UserProfile->country = $request->country;
-        $UserProfile->state = $request->state;
-        $UserProfile->city = $request->city;
-        $UserProfile->pincode = $request->pincode;
-        $UserProfile->industry_type = $request->industry_type;
-        $UserProfile->role_designation_id = $request->role_designation;
-        $UserProfile->work_strength = $request->work_strength;
-        $UserProfile->created_by = Auth::user()->id;
-        // $UserProfile->save();
-
-        if($UserProfile->save()){
-            return response()->json(['status'=>true,'message' => 'Profile updated']);
-        }
-            return response()->json(['status'=>false,'message' => 'Something went wrong !']);
-    }
 
 public function UpdateProfile(Request $request)
 {
@@ -450,28 +409,125 @@ public function UpdateProfile(Request $request)
 }
 
  
+public function UpdateFreelancerProfile(Request $request)
+{
+    $rules = [
+        'username' => 'required|unique:admins,username,' . Auth::user()->id,
+        'email' => 'required|email|unique:admins,email,' . Auth::user()->id,
+        'mobile' => 'required|numeric|digits:10',
+        'role' => 'required|exists:roles,id',
+        'company_name' => 'required|string|max:255',
+        'address_line1' => 'required|string|max:255',
+        'country' => 'required|exists:countries,id',
+        'state' => 'required',
+        'pincode' => 'required',
+
+        // New validation rules
+        'talent_definition' => 'nullable|string',
+        'years_experience' => 'nullable|min:0',
+        'highest_qualification' => 'nullable|string|max:255',
+        'languages_spoken' => 'nullable|string|max:255',
+        'certification_file' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
+        'portfolio_file' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:4096',
+        'rate_card_file' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
+    ];
+
+    $messages = [
+        'required' => ':attribute is required.',
+        'email' => 'The email must be a valid email address.',
+        'numeric' => ':attribute must be a number.',
+        'exists' => 'The selected :attribute is invalid.',
+        'unique' => ':attribute is already taken, please choose another.',
+        'digits' => ':attribute must be exactly :digits digits.',
+        'string' => ':attribute must be a valid string.',
+        'max' => ':attribute may not be greater than :max characters.',
+        'file' => ':attribute must be a valid file.',
+        'mimes' => ':attribute must be of type: :values.',
+    ];
+
+    $validator = Validator::make($request->all(), $rules, $messages);
+
+    if ($validator->fails()) {
+        return response()->json(['status' => false, 'message' => $validator->errors()], 422);
+    }
+
+    // dd($request->all());
+    // Update Admin basic details
+    $user = Admin::find(Auth::user()->id);
+    $user->username = $request->username;
+    $user->email = $request->email;
+    $user->mobile = $request->mobile;
+    $user->role_id = $request->role;
+    $user->save();
+
+    // Update or create user profile
+    $UserProfile = UserProfile::firstOrNew(['user_id' => Auth::user()->id]);
+
+
+    // $uploadPath = base_path('../public_html/upload/profile');
+    $uploadPath = base_path('../public/upload/profile');
+
+    if ($request->hasFile('profile')) {
+        $file = $request->file('profile');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move($uploadPath, $filename);
+        $UserProfile->image = 'upload/profile/' . $filename;
+    }
+
+    if ($request->hasFile('certification_file')) {
+        $file = $request->file('certification_file');
+        $filename = time() . '_cert_' . $file->getClientOriginalName();
+        $file->move($uploadPath, $filename);
+        $UserProfile->certification_file = 'upload/profile/' . $filename;
+    }
+
+    if ($request->hasFile('portfolio_file')) {
+        $file = $request->file('portfolio_file');
+        $filename = time() . '_portfolio_' . $file->getClientOriginalName();
+        $file->move($uploadPath, $filename);
+        $UserProfile->portfolio_file = 'upload/profile/' . $filename;
+    }
+
+    if ($request->hasFile('rate_card_file')) {
+        $file = $request->file('rate_card_file');
+        $filename = time() . '_ratecard_' . $file->getClientOriginalName();
+        $file->move($uploadPath, $filename);
+        $UserProfile->rate_card_file = 'upload/profile/' . $filename;
+    }
+
+    // Save profile details
+    $UserProfile->company_name = $request->company_name;
+    $UserProfile->gst_number = $request->gst_number;
+    $UserProfile->address_line1 = $request->address_line1;
+    $UserProfile->address_line2 = $request->address_line2;
+    $UserProfile->country = $request->country;
+    $UserProfile->state = $request->state;
+    $UserProfile->city = $request->city;
+    $UserProfile->pincode = $request->pincode;
+    $UserProfile->industry_type = $request->industry_type;
+    $UserProfile->role_designation_id = $request->role_designation;
+    $UserProfile->work_strength = $request->work_strength;
+    $UserProfile->created_by = Auth::user()->id;
+
+    // New fields
+    $UserProfile->talent_definition = $request->talent_definition;
+    $UserProfile->years_experience = $request->years_experience;
+    $UserProfile->highest_qualification = $request->highest_qualification;
+    $UserProfile->languages_spoken = $request->languages_spoken;
+
+    if ($UserProfile->save()) {
+        return response()->json(['status' => true, 'message' => 'Profile updated successfully']);
+    } else {
+        return response()->json(['status' => false, 'message' => 'Something went wrong!']);
+    }
+}
 
 
 
     public function changePassword(Request $request)
     {
         $admin = Admin::where('id',Auth::user()->id)->first();
-        // dd($admin);
-    // dd($request->all());
-        // $validator = Validator::make($request->all(), [
-        //     'old_password' => ['required', 'current_password:admin'],
-        //     'new_password' => ['required', 'min:6', 'confirmed'],
-        // ]);
-    
-        // if ($validator->fails()) {
-        //     return response()->json(['errors' => $validator->errors()], 422);
-        // }
-    
-        // // (Optional: You can remove the Hash::check here because current_password already did it)
-        // $admin->password = Hash::make($request->new_password);
-        // $admin->save();
-    
-        // return response()->json(['message' => 'Password updated successfully.']);
+       
         
         $validator = Validator::make($request->all(), [
     'old_password' => ['required'],
@@ -495,7 +551,94 @@ return response()->json(['message' => 'Password updated successfully.']);
     }
     
     
-    
+// here task list functionn 
 
+ public function TaskList(Request $request)
+    {
+        $data['title'] = "Task List";
+        $data['services'] = Service::all();
+        $data['sub_services'] = SubService::all();
+        $data['users'] = Admin::with('role')->where('role_id', 4)->get();
+
+        // Query now directly fetches non-deleted tasks assigned to the logged-in user.
+        $query = Task::with('milestone')
+                     ->where([
+                         'is_deleted' => 0,
+                         'assigned_to' => auth()->id() // Fetches tasks for the current user
+                     ]);
+
+        $data['tasks'] = $query->paginate(10);
+        
+        return view('user.task_list', $data);
+    }
+
+
+    public function TasksDetails(Request $request)
+    {
+
+        $task = Task::where('id',$request->id)->first();
+
+        $user=GetUser($task->assigned_to);
+        // $task_history=TaskHistory::with('createdBy')->where(['task_id'=>$request->id,'is_commit'=>'yes','created_by'=>Auth::user()->id])->get();
+        $task_history=TaskHistory::with('createdBy')->where(['task_id'=>$request->id,'is_commit'=>'yes'])->get();
+
+        $name='( '.GetUser($task->created_by)->name.' )';
+
+        // dd($name);
+        $status=$task->status;
+
+        return response()->json([
+            'title' => $user->name.' '.$user->email,
+            'status'=>$status,
+            'description' => $task->description,
+            'due_date' => $task->due_date ? date('Y-m-d', strtotime($task->due_date)) : '',
+            'assignee' => $user->name ?? '',
+            'created_by' => $name,
+            'task_history'=>$task_history,
+        ]);
+
+    }
+
+
+
+public function updateBankDetails(Request $request)
+    {
+        $rules = [
+            'account_holder_name' => 'required|string|max:255',
+            'bank_name' => 'required|string|max:255',
+            'ifsc_code' => [
+                'required',
+                'regex:/^[A-Z]{4}0[A-Z0-9]{6}$/',
+                'size:11'
+            ],
+            'account_number' => 'required|numeric|digits_between:9,18',
+        ];
+
+        $messages = [
+            'required' => ':attribute is required.',
+            'regex' => 'The :attribute format is invalid.',
+            'digits_between' => ':attribute must be between :min and :max digits.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => false, 'message' => $validator->errors()], 422);
+        }
+
+        $UserProfile = UserProfile::firstOrNew(['user_id' => Auth::user()->id]);
+
+        $UserProfile->account_holder_name = $request->account_holder_name;
+        $UserProfile->bank_name = $request->bank_name;
+        $UserProfile->ifsc_code = strtoupper($request->ifsc_code);
+        $UserProfile->account_number = $request->account_number;
+        $UserProfile->updated_by = Auth::user()->id;
+
+        if ($UserProfile->save()) {
+            return response()->json(['status' => true, 'message' => 'Bank details updated successfully']);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Something went wrong!']);
+        }
+    }
 
 }
