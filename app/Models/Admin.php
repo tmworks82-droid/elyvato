@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 // use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Department;
+use App\Models\UserProfile;
+use App\Models\BankDetails;
+
 
 class Admin extends Authenticatable
 {
@@ -127,6 +130,9 @@ class Admin extends Authenticatable
         return $this->hasOne(UserProfile::class, 'user_id', 'id');
     }
 
-
+    public function bankDetails()
+    {
+        return $this->hasOne(BankDetails::class, 'user_id');
+    }
 
 }

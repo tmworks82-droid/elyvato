@@ -39,4 +39,9 @@ class HireTalent extends Model
         return $this->hasMany(Booking::class, 'hire_talent_id');
     }
 
+    public function userProfiles()
+    {
+        return $this->hasMany(UserProfile::class, 'talent_definition', 'id');
+    }
+
 }

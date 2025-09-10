@@ -104,6 +104,11 @@ class FrontAuthController extends Controller
     }
 
 
+    public function RegisterChoice(){
+        $data['title']="Elyvato | SignUp";
+        return view('front.register_choice',$data);
+    }
+
     public function RegisterNow(Request $request)
     {
 

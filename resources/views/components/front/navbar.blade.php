@@ -277,8 +277,8 @@
           {{-- sign in link --}}
           <a class="nav-link" href="/login">Sign In</a>
           {{-- register button --}}
-          <a class="btn btn-main" href="/register">Register</a>
-          <a class="btn btn-main" href="{{route('register.freelancer')}}">Register as freelancer</a>
+          <a class="btn btn-main" href="/register-choice">Register</a>
+          {{-- <a class="btn btn-main" href="{{route('register.freelancer')}}">Register as freelancer</a> --}}
 
         @endif
     

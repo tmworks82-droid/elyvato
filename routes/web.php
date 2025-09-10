@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\FaqController;
 
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\PaymentController;
+use App\Http\Controllers\User\ProfileController;
 
 
 use App\Http\Controllers\Front\FrontController;
@@ -95,8 +96,46 @@ Route::domain(config('app.domain'))->group(function () {
         Route::post('/user-update-profile}', [DashboardController::class, 'UpdateProfile'])->name('user.update_user_profile');
 
         Route::post('/freelance-user-update-profile}', [DashboardController::class, 'UpdateFreelancerProfile'])->name('freelance.user.update_user_profile');
+        
 
-        Route::post('/update-bank-details', [DashboardController::class, 'updateBankDetails'])->name('update.bank.details');
+        // Certification upload
+Route::post('/freelance/upload-certification', [ProfileController::class, 'uploadCertification'])
+    ->name('freelance.upload.certification');
+
+
+    Route::post('/profile/upload', [DashboardController::class, 'uploadProfileImage'])
+     ->name('user.profile.upload');
+
+// Portfolio upload
+Route::post('/freelance/upload-portfolio', [ProfileController::class, 'uploadPortfolio'])
+    ->name('freelance.upload.portfolio');
+
+// Rate card upload
+Route::post('/freelance/upload-ratecard', [ProfileController::class, 'uploadRatecard'])
+    ->name('freelance.upload.ratecard');
+
+
+Route::post('/freelance/upload-passport-front', [ProfileController::class, 'uploadPassportFront'])
+    ->name('freelance.upload.passport.front');
+
+Route::post('/freelance/upload-passport-back', [ProfileController::class, 'uploadPassportBack'])
+    ->name('freelance.upload.passport.back');
+
+Route::post('/freelance/upload-driving-license', [ProfileController::class, 'uploadDrivingLicense'])
+    ->name('freelance.upload.driving.license');
+
+// Aadhaar
+Route::post('/freelance/upload-aadhaar-front', [ProfileController::class, 'uploadAadhaarFront'])->name('freelance.upload.aadhaar.front');
+Route::post('/freelance/upload-aadhaar-back', [ProfileController::class, 'uploadAadhaarBack'])->name('freelance.upload.aadhaar.back');
+
+// PAN
+Route::post('/freelance/upload-pan', [ProfileController::class, 'uploadPan'])->name('freelance.upload.pan');
+
+        Route::get('/user/payment-setting', [ProfileController::class, 'PaymentSetting'])->name('user.payment.setting');
+        Route::post('/freelance/upload-cancelled-check', [ProfileController::class, 'uploadCancelledCheck'])
+    ->name('freelance.upload.cancelled.check');
+
+        Route::post('/update-bank-details', [ProfileController::class, 'UpdateBankDetails'])->name('update.bank.details');
 
 
         Route::post('/change-password', [DashboardController::class, 'changePassword'])->name('user.changePassword');
@@ -271,7 +310,6 @@ Route::domain(config('app.domain'))->group(function () {
         Route::delete('/destroy-case/{id}', [MasterController::class, 'CaseDestroy'])->name('case.destroy');
 
 
-
         Route::get('/blogs', [MasterController::class, 'Blog'])->name('post.blog');
         Route::get('/search-blog', [FrontController::class, 'searchBlog'])->name('blog.search');
 
@@ -286,9 +324,11 @@ Route::domain(config('app.domain'))->group(function () {
         Route::post('/update-talent-rating', [FreelanceController::class, 'FreelanceTalentRating'])->name('update.talent.rating');
         Route::post('/update-hire-talent-rating', [FreelanceController::class, 'HireFreelancer'])->name('update.hire.talent.rating');
         
-       
-    });
+        Route::post('/bank-details/update-status', [FreelanceController::class, 'updateBankStatus'])
+    ->name('bank-details.update-status');
 
+
+    });
 
             // here front controller
         Route::post('/contact-store', [FrontController::class, 'store'])->name('contact.store');
@@ -313,12 +353,10 @@ Route::domain(config('app.domain'))->group(function () {
         Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])
             ->where('provider', 'google|facebook')
             ->name('social.callback');
-            
-            Route::get('/auth/facebook', [SocialAuthController::class, 'facebookredirect'])->name('facebook.login');
-            Route::get('/auth/facebook/callback', [SocialAuthController::class, 'facebookcallback'])->name('facebook.callback');
-            
-            
-
+        
+        Route::get('/auth/facebook', [SocialAuthController::class, 'facebookredirect'])->name('facebook.login');
+        Route::get('/auth/facebook/callback', [SocialAuthController::class, 'facebookcallback'])->name('facebook.callback');
+        
         Route::get('/forgot/password', [FrontAuthController::class, 'ForgetPassword'])->name('forget.password');
         Route::post('/send-otp', [FrontAuthController::class, 'sendOtp'])->name('send.otp');
         Route::get('/password/reset/{token}', [FrontAuthController::class, 'showResetForm'])->name('password.reset.form');
@@ -327,6 +365,8 @@ Route::domain(config('app.domain'))->group(function () {
         Route::post('/login-user', [FrontAuthController::class, 'loginUser'])->name('user_login');
 
         Route::get('/register', [FrontAuthController::class, 'Register']);
+        Route::get('/register-choice', [FrontAuthController::class, 'RegisterChoice']);
+
         Route::get('/get-cities', [FrontAuthController::class, 'getCities']);
 
         Route::post('/registeration', [FrontAuthController ::class, 'RegisterNow'])->name('registeration');

@@ -19,7 +19,7 @@
                 data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                 <i class="ri-menu-2-line"></i>
             </button>
-            <h1 class="fw-bold mb-0">My Tak List</h1>
+            <h1 class="fw-bold mb-0">My Task List</h1>
         </div>
     </div>
 

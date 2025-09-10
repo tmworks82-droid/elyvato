@@ -52,6 +52,10 @@
         }
         });
 }
+
+
+
+
 </script>
 @yield('scripts')
 </body>

@@ -28,6 +28,7 @@ use App\Models\HireTalent;
 use App\Models\InitialPaymentSetting;
 use App\Models\Rating;
 use App\Models\TalentRating;
+use App\Models\BankDetails;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -49,10 +50,11 @@ class FreelanceController extends Controller
     {
         $title = "Talent Rating";
         $data['title'] = $title;
-        $data['freelancer'] = Admin::with('profile')->where('id', $id)->first();
+        $data['freelancer'] = Admin::with(['profile','bankDetails','profile.talent'])->where('id', $id)->first();
 
         return view('admin.freelance.talent_rating', $data);
     }
+
 
     public function FreelanceTalentRating(Request $request)
     {
@@ -77,7 +79,6 @@ class FreelanceController extends Controller
         $userProfile->final_score = $request->final_score;
         
         if($userProfile->save()){
-
             return response()->json(['success' => true, 'message' => 'Talent evaluation saved successfully.']);
 
         }else{
@@ -87,6 +88,7 @@ class FreelanceController extends Controller
         return redirect()->back()->with('success', 'Something went wrong. Please try again.');
     }
 
+
     public function HireFreelancer(Request $request){
 
         $hireFreelancer = Admin::find($request->freelancer_id);
@@ -94,15 +96,7 @@ class FreelanceController extends Controller
         $userProfile = UserProfile::where('user_id', $request->freelancer_id)->first();
         $final_score = $userProfile ? $userProfile->final_score : null;
 
-        //   compare here ratings
-        // $ratingTalent=TalentRating::get(); 
-        // foreach($ratingTalent as $rating){
-
-        //     if($final_score >= $rating->from && $final_score <= $rating->to){
-        //         $hireFreelancer->rating =$rating->title;
-        //         break;
-        //     }
-        // }
+    
         $ratingTitle=null;
 
          $matchingRating = TalentRating::where('from', '<=', $final_score)
@@ -124,6 +118,15 @@ class FreelanceController extends Controller
 
         if ($hireFreelancer->save()) {
 
+            sendEmail(
+                $hireFreelancer->email,
+                'ELYVATO | You have been hired as a Freelancer',
+                'emails.hired_freelancer',
+                [
+                    'hireFreelancer' => $hireFreelancer,
+                ]
+            );
+
             return response()->json(['success' => true, 'message' => 'Freelance hired  successfully.']);
 
         }else{
@@ -132,4 +135,39 @@ class FreelanceController extends Controller
         
         }
     }
+
+    public function updateBankStatus(Request $request)
+    {
+
+        $msg='';
+
+        $request->validate([
+            'id' => 'required|exists:bank_details,id',
+            'status' => 'required|in:approved,disapproved'
+        ]);
+
+        $bankDetail = BankDetails::findOrFail($request->id);
+          
+        if($request->status=='approved'){
+            $bankDetail->status ='verified';
+            $msg="Verified successfully";
+        }
+
+        if($request->status=='disapproved'){
+            $bankDetail->status ='rejected';
+            $msg="Rejected successfully";
+        }
+
+        
+        if($bankDetail->save()){
+            return response()->json(['success'=>true,'message' =>$msg]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Faild Something went wrong!',
+        ]);
+    }
+
+
 }

@@ -32,11 +32,13 @@ class DashboardController extends Controller
 
         $userProfile = UserProfile::where('user_id',Auth::user()->id)->first(); 
 
-            $requiredFields = [
+        if(Auth::user()->type=='user'){
+
+                $requiredFields = [
                 'company_name',
                 // 'gst_number',
                 // 'work_strength',
-                'role_designation_id',
+                // 'role_designation_id',
                 'address_line1',
                 // 'address_line2',
                 // 'city',
@@ -44,8 +46,25 @@ class DashboardController extends Controller
                 // 'image',
                 'country',
                 'pincode',
-                'industry_type',
+                // 'industry_type',
             ];
+        }else{
+            $requiredFields = [
+                            'company_name',
+                            // 'gst_number',
+                            // 'work_strength',
+                            'role_designation_id',
+                            'address_line1',
+                            // 'address_line2',
+                            // 'city',
+                            'state',
+                            // 'image',
+                            'country',
+                            'pincode',
+                            'industry_type',
+                        ];
+        }
+            
 
             foreach ($requiredFields as $field) {
                 if (empty($userProfile->$field)) {
@@ -75,11 +94,13 @@ class DashboardController extends Controller
 
         $userProfile = UserProfile::where('user_id',Auth::user()->id)->first(); 
 
-            $requiredFields = [
-               'company_name',
+            if(Auth::user()->type=='user'){
+
+                $requiredFields = [
+                'company_name',
                 // 'gst_number',
                 // 'work_strength',
-                'role_designation_id',
+                // 'role_designation_id',
                 'address_line1',
                 // 'address_line2',
                 // 'city',
@@ -87,8 +108,24 @@ class DashboardController extends Controller
                 // 'image',
                 'country',
                 'pincode',
-                'industry_type',
+                // 'industry_type',
             ];
+        }else{
+            $requiredFields = [
+                            'company_name',
+                            // 'gst_number',
+                            // 'work_strength',
+                            'role_designation_id',
+                            'address_line1',
+                            // 'address_line2',
+                            // 'city',
+                            'state',
+                            // 'image',
+                            'country',
+                            'pincode',
+                            'industry_type',
+                        ];
+        }
 
             foreach ($requiredFields as $field) {
                 if (empty($userProfile->$field)) {
@@ -225,20 +262,18 @@ class DashboardController extends Controller
     }
 
 
-    
-
-
-
     public function BookingDetails($id){
 
         
         $userProfile = UserProfile::where('user_id',Auth::user()->id)->first(); 
 
-            $requiredFields = [
+            if(Auth::user()->type=='user'){
+
+                $requiredFields = [
                 'company_name',
                 // 'gst_number',
                 // 'work_strength',
-                'role_designation_id',
+                // 'role_designation_id',
                 'address_line1',
                 // 'address_line2',
                 // 'city',
@@ -246,8 +281,24 @@ class DashboardController extends Controller
                 // 'image',
                 'country',
                 'pincode',
-                'industry_type',
+                // 'industry_type',
             ];
+        }else{
+            $requiredFields = [
+                            'company_name',
+                            // 'gst_number',
+                            // 'work_strength',
+                            'role_designation_id',
+                            'address_line1',
+                            // 'address_line2',
+                            // 'city',
+                            'state',
+                            // 'image',
+                            'country',
+                            'pincode',
+                            'industry_type',
+                        ];
+        }
 
             foreach ($requiredFields as $field) {
                 if (empty($userProfile->$field)) {
@@ -269,11 +320,13 @@ class DashboardController extends Controller
         
         $userProfile = UserProfile::where('user_id',Auth::user()->id)->first(); 
 
-            $requiredFields = [
+            if(Auth::user()->type=='user'){
+
+                $requiredFields = [
                 'company_name',
                 // 'gst_number',
                 // 'work_strength',
-                'role_designation_id',
+                // 'role_designation_id',
                 'address_line1',
                 // 'address_line2',
                 // 'city',
@@ -281,12 +334,24 @@ class DashboardController extends Controller
                 // 'image',
                 'country',
                 'pincode',
-                'industry_type',
-
-                // username,email,phone,user_role,address1,state,pincode,industrytype
-
-                
+                // 'industry_type',
             ];
+        }else{
+            $requiredFields = [
+                            'company_name',
+                            // 'gst_number',
+                            // 'work_strength',
+                            'role_designation_id',
+                            'address_line1',
+                            // 'address_line2',
+                            // 'city',
+                            'state',
+                            // 'image',
+                            'country',
+                            'pincode',
+                            'industry_type',
+                        ];
+        }
 
             foreach ($requiredFields as $field) {
                 if (empty($userProfile->$field)) {
@@ -409,13 +474,13 @@ public function UpdateProfile(Request $request)
 }
 
  
-public function UpdateFreelancerProfile(Request $request)
+public function UpdateFreelancerProfile_old(Request $request)
 {
+    
     $rules = [
         'username' => 'required|unique:admins,username,' . Auth::user()->id,
         'email' => 'required|email|unique:admins,email,' . Auth::user()->id,
         'mobile' => 'required|numeric|digits:10',
-        'role' => 'required|exists:roles,id',
         'company_name' => 'required|string|max:255',
         'address_line1' => 'required|string|max:255',
         'country' => 'required|exists:countries,id',
@@ -523,6 +588,128 @@ public function UpdateFreelancerProfile(Request $request)
 }
 
 
+public function UpdateFreelancerProfile(Request $request)
+{
+    // dd($request->all());
+   $rules = [
+    'username' => 'required|unique:admins,username,' . Auth::user()->id,
+    'email' => 'required|email|unique:admins,email,' . Auth::user()->id,
+    'mobile' => 'required|numeric|digits:10',
+    'company_name' => 'required|string|max:255',
+    'address_line1' => 'required|string|max:255',
+    'country' => 'required|exists:countries,id',
+    'state' => 'required',
+    'pincode' => 'required',
+
+    // Dropzone uploaded paths (not files)
+    'certification_file' => 'nullable|string|max:255',
+    'portfolio_file' => 'nullable|string|max:255',
+    'rate_card_file' => 'nullable|string|max:255',
+
+    // Government ID
+    'gov_id_type' => 'nullable|string|in:passport,driving_license,aadhaar,pan',
+
+    'passport_front'   => 'required_if:gov_id_type,passport|nullable|string|max:255',
+    'passport_back'    => 'required_if:gov_id_type,passport|nullable|string|max:255',
+
+    'driving_license'  => 'required_if:gov_id_type,driving_license|nullable|string|max:255',
+
+    'aadhaar_front'    => 'required_if:gov_id_type,aadhaar|nullable|string|max:255',
+    'aadhaar_back'     => 'required_if:gov_id_type,aadhaar|nullable|string|max:255',
+
+    'pan'              => 'required_if:gov_id_type,pan|nullable|string|max:255',
+];
+
+$messages = [
+    'required'     => ':attribute is required.',
+    'required_if'  => ':attribute is required when :other is :value.',
+    'email'        => 'The email must be a valid email address.',
+    'numeric'      => ':attribute must be a number.',
+    'exists'       => 'The selected :attribute is invalid.',
+    'unique'       => ':attribute is already taken, please choose another.',
+    'digits'       => ':attribute must be exactly :digits digits.',
+    'string'       => ':attribute must be a valid string.',
+    'max'          => ':attribute may not be greater than :max characters.',
+];
+
+    $validator = Validator::make($request->all(), $rules);
+
+    if ($validator->fails()) {
+        return response()->json(['status' => false, 'message' => $validator->errors()], 422);
+    }
+
+    
+    $user = Admin::find(Auth::user()->id);
+    $user->username = $request->username;
+    $user->email = $request->email;
+    $user->mobile = $request->mobile;
+    $user->role_id = $request->role;
+    $user->save();
+
+    
+    $UserProfile = UserProfile::firstOrNew(['user_id' => Auth::user()->id]);
+
+    
+    if ($request->filled('certification_file')) {
+        $UserProfile->certification_file = $request->certification_file;
+    }
+    if ($request->filled('portfolio_file')) {
+        $UserProfile->portfolio_file = $request->portfolio_file;
+    }
+    if ($request->filled('rate_card_file')) {
+        $UserProfile->rate_card_file = $request->rate_card_file;
+    }
+
+    
+    if ($request->filled('gov_id_type')) {
+        $UserProfile->gov_id_type = $request->gov_id_type;
+    }
+    if ($request->filled('passport_front')) {
+        $UserProfile->passport_front = $request->passport_front;
+    }
+    if ($request->filled('passport_back')) {
+        $UserProfile->passport_back = $request->passport_back;
+    }
+    if ($request->filled('driving_license')) {
+        $UserProfile->driving_license = $request->driving_license;
+    }
+    if ($request->filled('aadhaar_front')) {
+    $UserProfile->aadhaar_front = $request->aadhaar_front;
+    }
+    if ($request->filled('aadhaar_back')) {
+        $UserProfile->aadhaar_back = $request->aadhaar_back;
+    }
+    if ($request->filled('pan')) {
+        $UserProfile->pan = $request->pan;
+    }
+
+    
+    $UserProfile->company_name = $request->company_name;
+    $UserProfile->gst_number = $request->gst_number;
+    $UserProfile->address_line1 = $request->address_line1;
+    $UserProfile->address_line2 = $request->address_line2;
+    $UserProfile->country = $request->country;
+    $UserProfile->state = $request->state;
+    $UserProfile->city = $request->city;
+    $UserProfile->pincode = $request->pincode;
+    $UserProfile->industry_type = $request->industry_type;
+    $UserProfile->work_strength = $request->work_strength;
+    $UserProfile->created_by = Auth::user()->id;
+    $UserProfile->talent_definition = $request->talent_definition;
+    $UserProfile->years_experience = $request->years_experience;
+    $UserProfile->highest_qualification = $request->highest_qualification;
+    $UserProfile->languages_spoken = $request->languages_spoken;
+
+    if ($UserProfile->save()) {
+        return response()->json(['status' => true, 'message' => 'Profile updated successfully']);
+    }
+
+    return response()->json(['status' => false, 'message' => 'Something went wrong!']);
+}
+
+
+
+
 
     public function changePassword(Request $request)
     {
@@ -601,7 +788,8 @@ return response()->json(['message' => 'Password updated successfully.']);
 
 
 
-public function updateBankDetails(Request $request)
+
+    public function updateBankDetails(Request $request)
     {
         $rules = [
             'account_holder_name' => 'required|string|max:255',
@@ -640,5 +828,95 @@ public function updateBankDetails(Request $request)
             return response()->json(['status' => false, 'message' => 'Something went wrong!']);
         }
     }
+
+
+    public function UpdateFreelancerProfileFiles(Request $request)
+    {
+
+
+        // Update Admin basic details
+        $user = Admin::find(Auth::user()->id);
+
+        // Update or create user profile
+        $UserProfile = UserProfile::firstOrNew(['user_id' => Auth::user()->id]);
+
+
+        // $uploadPath = base_path('../public_html/upload/profile');
+        $uploadPath = base_path('../public/upload/profile/new/');
+
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move($uploadPath, $filename);
+            $UserProfile->image = 'upload/profile/new/' . $filename;
+        }
+
+        if ($request->hasFile('certification_file')) {
+            $file = $request->file('certification_file');
+            $filename = time() . '_cert_' . $file->getClientOriginalName();
+            $file->move($uploadPath, $filename);
+            $UserProfile->certification_file = 'upload/profile/new/' . $filename;
+        }
+
+        if ($request->hasFile('portfolio_file')) {
+            $file = $request->file('portfolio_file');
+            $filename = time() . '_portfolio_' . $file->getClientOriginalName();
+            $file->move($uploadPath, $filename);
+            $UserProfile->portfolio_file = 'upload/profile/new/' . $filename;
+        }
+
+        if ($request->hasFile('rate_card_file')) {
+            $file = $request->file('rate_card_file');
+            $filename = time() . '_ratecard_' . $file->getClientOriginalName();
+            $file->move($uploadPath, $filename);
+            $UserProfile->rate_card_file = 'upload/profile/new/' . $filename;
+        }
+       
+        if ($UserProfile->save()) {
+            return response()->json(['status' => true, 'message' => 'Profile updated successfully']);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Something went wrong!']);
+        }
+    }
+
+
+    public function uploadProfileImage(Request $request)
+    {
+        // dd($request->all());
+
+        $request->validate([
+            'profile_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user=UserProfile::where('user_id',Auth::user()->id)->first();
+
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // Destination path
+            $uploadPath = public_path('upload/profile/new/');
+
+            // Create directory if not exists
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            // Move file
+            $file->move($uploadPath, $filename);
+
+            // Save relative path in DB
+            $user->image = 'upload/profile/new/' . $filename;
+            $user->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile picture updated successfully!',
+            'image'   => asset($user->image)
+        ]);
+    }
+
+
 
 }
