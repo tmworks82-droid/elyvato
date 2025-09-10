@@ -12,19 +12,22 @@ use App\Models\ContactUs;
 use App\Models\Blog;
 use App\Models\Faq;
 use App\Models\Admin;
+use App\Models\UserProfile;
 use App\Models\Booking;
 use App\Models\Call;
 use App\Models\CaseStudy;
 use App\Models\Payment;
 use App\Models\HireTalent;
+use App\Models\Freelancer;
 use Auth;
 use Carbon\Carbon;
+use Hash;
+use Str;
 
 class FrontController extends Controller
 {
     public function index(){
         $data['title']="Home";
-
 
         $welcometemplateData = [
             'name' => 'registration',
@@ -44,8 +47,8 @@ class FrontController extends Controller
 
         
         // $mobile=$user->mobile;
-        $mobile='+919956398635';
-         $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
+        // $mobile='+919956398635';
+        //  $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
 
 
         $sowSubset = StatementOfWork::where('featured','yes')
@@ -107,44 +110,42 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
     }
 
 
-
     public function BlogPage($slug)
-        {
-            // Try to find blog first
-            $blog = Blog::where('slug', $slug)->first();
-        
-            if ($blog) {
-                // Blog found → show blog page
-                $previous = Blog::where('id', '<', $blog->id)->orderBy('id', 'desc')->first();
-                $next = Blog::where('id', '>', $blog->id)->orderBy('id')->first();
-        
-                $data['title'] = $blog->seo_title ?? 'Blog';
-                $data['blog'] = $blog;
-                $data['blogs'] = Blog::orderBy('id', 'desc')->take(4)->get();
-                $data['previous'] = $previous;
-                $data['next'] = $next;
-                $data['blogSlug'] = $slug;
-        
-                return view('front.blog.single_page_blog', $data);
-            }
-        
-            // If not a blog, try to find category
-            $category = Service::where('slug', $slug)->first();
-            // dd($category);
-            if ($category) {
-            // Query blogs where the category string contains the selected category ID
-            $data['blogs'] = Blog::where('category', 'LIKE', '%"' . $category->id . '"%') // Use LIKE to find category in the string
-                ->paginate(6); // Paginate results
-        
-            $data['title'] = ''; // Optional: Set a title if needed
-            $data['category'] = $category; // Pass the selected category
-        // dd('r');
-            return view('front.blog.blog_category', $data); // Return the view with the data
+    {
+        // Try to find blog first
+        $blog = Blog::where('slug', $slug)->first();
+    
+        if ($blog) {
+               
+            $previous = Blog::where('id', '<', $blog->id)->orderBy('id', 'desc')->first();
+            $next = Blog::where('id', '>', $blog->id)->orderBy('id')->first();
+    
+            $data['title'] = $blog->seo_title ?? 'Blog';
+            $data['blog'] = $blog;
+            $data['blogs'] = Blog::orderBy('id', 'desc')->take(4)->get();
+            $data['previous'] = $previous;
+            $data['next'] = $next;
+            $data['blogSlug'] = $slug;
+    
+            return view('front.blog.single_page_blog', $data);
         }
+    
+        // If not a blog, try to find category
+        $category = Service::where('slug', $slug)->first();
+       
+        if ($category) {
+       
+        $data['blogs'] = Blog::where('category', 'LIKE', '%"' . $category->id . '"%') // Use LIKE to find category in the string
+            ->paginate(6); // Paginate results
+    
+        $data['title'] = ''; // Optional: Set a title if needed
+        $data['category'] = $category; // Pass the selected category
         
-            // Neither blog nor category found → throw 404 manually
-            abort(404);
-        }
+        return view('front.blog.blog_category', $data); // Return the view with the data
+    }
+        // Neither blog nor category found → throw 404 manually
+        abort(404);
+    }
 
 
     public function BlogCategory($categorySlug,$blogSlug)
@@ -179,7 +180,6 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         return response()->json($blogs);
     }
 
-
     public function About(){
         $data['title']="About";
         $data['faqs']=Faq::where('page_name','about')->get();
@@ -192,12 +192,10 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         return view('front.terms-of-services',$data);
     }
 
-
      public function PrivacyPolicy(){
         $data['title']="Privacy & Policy";
         return view('front.privacy',$data);
     }
-
 
     public function ContactCustomer(){
         $data['title']="Contact";
@@ -206,12 +204,10 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         return view('front.contact-customer',$data);
     }
 
-
     public function ServiceList(Request $request){
         $data['title']="Services";
         // $data['services']=Service::where('is_active',1)->paginate(12);
 
-        
         $query = Service::where('is_active', 1);
 
         if ($request->has('search') && !empty($request->search)) {
@@ -222,7 +218,6 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
 
         return view('front.service',$data);
     }
-
 
     public function InstantHireList(Request $request){
         $data['title']="Elyvato | Instant Hire";
@@ -487,5 +482,69 @@ public function getDefaultServices()
         return view('front.comming_soon',compact('title'));
     }
 
+  public function RegisterFreelance(){
+        $title="Hire as a freelancer - Elyvato";
+        return view('front.register_freelance',compact('title'));
+    }
+
+    public function RegisterAsFreelance(Request $request)
+    {
+        //Validate input
+        // dd($request->all());
+
+        $validated=$request->validate([
+            'name' => 'required', 
+            'email' => 'required', 
+            'phone' => 'required', 
+        ]);
+
+        // Example: Freelancer model
+        $freelancer = new Freelancer();
+        $freelancer->name = $validated['name'];
+        $freelancer->email = $validated['email'];
+        $freelancer->phone = $validated['phone'];
+
+        if($freelancer->save()){
+
+            $password = Str::random(8);
+            
+            $user = new Admin();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->mobile = $request->phone;
+            $user->password = Hash::make($password);
+            $user->username=generateUniqueUsername($request->email);
+            $user->type ='user';
+            $user->role_id = 4;  // is the role ID for freelancers (employees)
+            $user->save();
+            
+            $profile = new UserProfile();
+            $profile->user_id = $user->id;
+            $profile->save();
+
+            sendEmail(
+                $user->email,
+                "You're In! Welcome to Elyvato Freelancers",
+                'emails.freelance_register',
+                    [
+                        'user' => $user->name,
+                        'email' => $user->email,
+                        'password' => $password
+                    ]
+            );
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'You are registered as a freelancer successfully ! We will get back to you soon.',
+                'data'    => array_merge($validated)
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'  => false,
+                'message' => 'Failed to register as a freelancer. Please try again.',
+            ], 500);
+        }
+    }
 
 }

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Admin;
-use App\Models\RoleDesignation;
+use App\Models\HireTalent;
+use App\Models\RoleDesignation; 
 
 
 class UserProfile extends Model
@@ -39,8 +40,27 @@ class UserProfile extends Model
         'created_by',
         'updated_at',
         'updated_by',
+        'understanding',
+        'tech_knowledge',
+        'final_score',
+        'talent_definition',
+        'years_experience',
+        'highest_qualification',
+        'languages_spoken',
+        'certification_file',
+        'portfolio_file',
+        'rate_card_file',
+        'account_holder_name',
+        'bank_name',
+        'ifsc_code',
+        'account_number',
+        'gov_id_type',
+        'passport_back',
+        'passport_front',
+        'driving_license',
     ];
 
+    
     protected $casts = [
         'created_on' => 'datetime',
         'updated_at' => 'datetime',
@@ -54,6 +74,7 @@ class UserProfile extends Model
         return $this->belongsTo(Admin::class, 'user_id');
     }
 
+
     public function admin()
     {
         return $this->belongsTo(Admin::class, 'user_id', 'id');
@@ -65,14 +86,22 @@ class UserProfile extends Model
         return $this->belongsTo(Admin::class, 'created_by');
     }
 
+
     public function updater(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
 
+
     public function designation()
     {
         return $this->belongsTo(RoleDesignation::class, 'role_designation_id');
+    }
+
+
+    public function talent()
+    {
+        return $this->belongsTo(HireTalent::class, 'talent_definition', 'id');
     }
 
 

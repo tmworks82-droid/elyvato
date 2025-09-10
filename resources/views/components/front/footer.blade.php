@@ -98,29 +98,7 @@ function PleaseWait() {
     });
 }
 
-// $(document).ready(function () {
-//     $('#serviceSearchInput').on('keyup', function () {
-//         let query = $(this).val();
 
-//         if (query.length >= 2) {
-//             $.ajax({
-//                 url: "{{route('ajax.search.services')}}",
-//                 type: "GET",
-//                 data: { query: query },
-//                 success: function (res) {
-//                     $('#serviceResults').css({
-//                         'background-color': 'white',
-//                         'padding': '6px',
-//                         'border-radius': '6px'
-//                     });
-//                     $('#serviceResults').html(res.html);
-//                 }
-//             });
-//         } else {
-//             $('#serviceResults').html('');
-//         }
-//     });
-// });
 
 
 $(document).ready(function () {
@@ -173,4 +151,39 @@ $(document).ready(function () {
     });
   });
 
+
+
+$(document).ready(function(){
+    // alert('run');
+    // Click image or overlay → open file input
+    $(".profile-img, .profile-overlay").on("click", function(){
+        
+        $("#profileImageInput").click();
+    });
+
+    // On file select → auto upload
+    $("#profileImageInput").on("change", function(){
+        let formData = new FormData();
+        formData.append("profile_image", this.files[0]);
+        formData.append("_token", "{{ csrf_token() }}");
+
+        $.ajax({  
+            url: "{{ route('user.profile.upload') }}", // 👈 create this route
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res){
+                if(res.success){
+                    location.reload(); // reload to show updated image
+                } else {
+                    alert("Upload failed!");
+                }
+            },
+            error: function(){
+                alert("Something went wrong!");
+            }
+        });
+    });
+});
 </script>

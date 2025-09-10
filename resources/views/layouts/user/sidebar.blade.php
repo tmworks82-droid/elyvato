@@ -23,7 +23,7 @@
         </div>
 
         <div class="sidebar_list_item">
-            <a href="{{url('payment-list')}}" class="items-center  {{ request()->is('payment-list*') ? '-is-active' : '' }}"> <i class="flaticon-dollar mr15"></i> Payments s</a>
+            <a href="{{url('payment-list')}}" class="items-center  {{ request()->is('payment-list*') ? '-is-active' : '' }}"> <i class="flaticon-dollar mr15"></i> Payments</a>
         </div>
 
         {{-- <div class="sidebar_list_item">

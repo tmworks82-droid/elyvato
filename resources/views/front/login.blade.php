@@ -86,16 +86,17 @@
                     <p class="mb-0">Enter your login credentials for accessing Elevate Dashboard.</p>
                 </div>
                 @if (session('success'))
-                                <div style="background-color: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px;">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
+                        <div style="background-color: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-                            @if (session('error'))
-                                <div style="background-color: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 20px;">
-                                    {{ session('error') }}
-                                </div>
-                            @endif
+                    @if (session('error'))
+                        <div style="background-color: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 20px;">
+                            {{ session('error') }}
+                        </div>
+                @endif
+
                 <div class="card bg-white">
                     <div class="card-body p-3 p-md-4">
                         <h5 class="card-title mb-2">We're glad to see you again!</h5>
@@ -141,9 +142,7 @@
                             <a class="social-btn facebook-btn" href="{{ route('facebook.login') }}">
                               <img src="https://www.svgrepo.com/show/452196/facebook-1.svg" id="facebookbtn" alt="Facebook"> Continue with Facebook
                             </a>
-
                         </div>
-                        
                     </div>
                 </div>
             </div>
