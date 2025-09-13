@@ -331,9 +331,9 @@
                                     @else 
                                     Not Updated
                                     @endif
-                                </div>
+                                </div> 
                                 
-                                @if ($freelancer->profile->gov_id_type == 'passport')
+                                @if (!empty($freelancer->bankDetails->gov_id_type) && $freelancer->bankDetails->gov_id_type == 'passport')
                                     <div class="col-sm-3">
                                         <strong><i class="fas fa-file-alt mr-1"></i> Passport Front</strong>
                                         @if (!empty($freelancer->bankDetails->passport_front))
@@ -363,7 +363,7 @@
                                     </div>
 
                                 @endif
-                                @if ($freelancer->bankDetails->gov_id_type == 'driving_license')
+                                @if (!empty($freelancer->bankDetails->gov_id_type) && $freelancer->bankDetails->gov_id_type == 'driving_license')
 
                                     <div class="col-sm-3">
                                         <strong><i class="fas fa-file-alt mr-1"></i> Driving License</strong>
@@ -380,7 +380,7 @@
                                     </div>
 
                                 @endif
-                                @if ($freelancer->bankDetails->gov_id_type == 'aadhaar')
+                                @if (!empty($freelancer->bankDetails->gov_id_type) && $freelancer->bankDetails->gov_id_type == 'aadhaar')
                                     <div class="col-sm-3">
                                         <strong><i class="fas fa-file-alt mr-1"></i> Aadhar Front</strong>
                                         @if (!empty($freelancer->bankDetails->aadhaar_front))
@@ -408,7 +408,7 @@
                                         @endif
                                     </div>
                                 @endif
-                                @if ($freelancer->bankDetails->gov_id_type == 'pan')
+                                @if (!empty($freelancer->bankDetails->gov_id_type) && $freelancer->bankDetails->gov_id_type == 'pan')
                                     <div class="col-sm-3">
                                         <strong><i class="fas fa-file-alt mr-1"></i> Pan Card</strong>
                                         @if (!empty($freelancer->bankDetails->pan))
