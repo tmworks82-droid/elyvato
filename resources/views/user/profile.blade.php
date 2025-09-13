@@ -368,8 +368,14 @@
                             <label for="skill" class="form-label">Skills *</label>
                             <select name="skill[]" id="skill" class="form-select" multiple required>
                                 @if (!empty($skill) && count($skill) > 0)
+                                    @php
+                                        $selectedSkills = explode(',', $profile->skills ?? ''); // turn "1,2,3" into [1,2,3]
+                                    @endphp
                                     @foreach ($skill as $talent)
-                                        <option value="{{ $talent->id }}">{{ ucfirst($talent->name) }}</option>
+                                        <option value="{{ $talent->id }}"
+                                            {{ in_array($talent->id, $selectedSkills) ? 'selected' : '' }}>
+                                            {{ ucfirst($talent->name) }}
+                                        </option>
                                     @endforeach
                                 @endif
                             </select>
@@ -842,9 +848,17 @@
     });
 
 
-        Dropzone.autoDiscover = false;
+Dropzone.autoDiscover = false;
 
 function initDropzone(selector, hiddenInputId, uploadUrl, existingFile) {
+    const element = document.querySelector(selector);
+
+    // 🚀 Skip if element not found
+    if (!element) {
+        console.log("Dropzone not initialized: element " + selector + " not found.");
+        return null;
+    }
+
     let dz = new Dropzone(selector, {
         url: uploadUrl,
         paramName: "file",
@@ -859,13 +873,12 @@ function initDropzone(selector, hiddenInputId, uploadUrl, existingFile) {
         init: function () {
             let dropzoneInstance = this;
 
-           
+            // ✅ Show existing file if passed
             if (existingFile) {
                 let mockFile = { name: existingFile.name, size: existingFile.size || 12345 };
                 dropzoneInstance.emit("addedfile", mockFile);
 
-                // If image → show thumbnail
-                if (existingFile.url.match(/\.(jpg|jpeg|png|gif)$/i)) {
+                if (/\.(jpg|jpeg|png|gif)$/i.test(existingFile.url)) {
                     dropzoneInstance.emit("thumbnail", mockFile, existingFile.url);
                 }
 
@@ -874,7 +887,7 @@ function initDropzone(selector, hiddenInputId, uploadUrl, existingFile) {
                 dropzoneInstance.files.push(mockFile);
             }
 
-         
+            // ✅ On upload success
             this.on("success", function (file, response) {
                 document.getElementById(hiddenInputId).value = response.filepath;
             });
