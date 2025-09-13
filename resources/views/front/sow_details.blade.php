@@ -365,6 +365,7 @@
 							@endforeach
 						</div>
 						<input type="hidden" id="isLoggedIn" value="{{ Auth::check() ? '1' : '0' }}">
+						<input type="hidden" id="UID" value="{{ Auth::check() ? Auth::check() : '0' }}">
 					</div>
 				</div>
 				{{-- right sidebar --}}
@@ -484,6 +485,7 @@
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="bookingModalLabel">Schedule Your Discovery Call</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				   
 				</div>
 				<div class="modal-body">
 
@@ -492,9 +494,11 @@
 							<!--<p class="fs-5 fw-medium mb-0">-->
 								
 							<!--</p>-->
-							<div class="btn-accent p-2" role="alert" style=" border-radius: 6px;">
-                              Book your expert call for just ₹9 — fully adjusted in your project cost.
-                            </div>
+							@if(Config::get('services.payment.enabled')==true)
+								<div class="btn-accent p-2" role="alert" style=" border-radius: 6px;">
+								Book your expert call for just ₹9 — fully adjusted in your project cost.
+								</div>
+							@endif
 
 						<input type="hidden" name="selected_date" id="selectedDateInput">
 					</div>
@@ -518,14 +522,11 @@
 						</div>
 					
 
-					<!-- Time slot buttons container -->
-					<input type="hidden" name="time_slot" id="timeSlot">
-					 
-				        
+						<!-- Time slot buttons container -->
+						<input type="hidden" name="time_slot" id="timeSlot">
                         <div class="col-sm-4" id="timeSlotsContainer" class="time-slots">
                             <h6 class="text-center" id="today_date_show"></h6>
                         </div>
-                    
                 </div>
 
 					@if(!Auth::check())
@@ -544,15 +545,19 @@
 					@endif
 
 
-					<p class="mb-0 text-accent">The ₹9 charge helps us ensure genuine interest and prevent spam. Don’t worry it’s fully adjusted in your project cost.</p>
+					@if(Config::get('services.payment.enabled')==true)
+						<p class="mb-0 text-accent">The ₹9 charge helps us ensure genuine interest and prevent spam. Don’t worry it’s fully adjusted in your project cost.</p>
+					@endif
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-					<button type="button" data-id="{{ $sows->id }}" data-price="9"
+					<button type="button" data-id="{{ $sows->id }}" data-price="{{$price = Config::get('services.payment.price')}}"
 						class="btn btn-main proceed-booking-btn">Book Now</button>
 				</div>
 			</div>
+			<input type="hidden" id="raz_access" value="{{ Config::get('services.payment.enabled')}}">
 		</div>
 	</div>
 
@@ -846,13 +851,14 @@ function getNextInterval(date, interval) {
 
 			let time = $('#timeSlot').val();
 			let day = $('#selectedDateInput').val();
-			//  alert(day); 
+			 
 			//  alert(time);
 			let isLoggedIn = $('#isLoggedIn').val();
 			let sow_id = $(this).data('id');
 			let price = $(this).data('price');
+			let access = $('#raz_access').val();
 
-			if (isLoggedIn == 0) {
+			if(isLoggedIn == 0) {
 
 				let email = $('#email').val();  // Get email
 				let mobile = $('#mobile').val();  // Get mobile
@@ -866,7 +872,20 @@ function getNextInterval(date, interval) {
 				}
 
 			} else {
-				createRazorpayOrder(sow_id, price, time, day, isLoggedIn); // Call the order function
+				if(access==false){
+					
+					uID=$('#UID').val();
+					// alert(uID);
+					var response = {
+					razorpay_payment_id: "pay_2121212",
+					razorpay_order_id: "order_21212121",
+					razorpay_signature: "sig_1212455"
+				};
+
+					storeBooking(response, sow_id, price, time, day, uID); 
+				}else{
+					createRazorpayOrder(sow_id, price, time, day, isLoggedIn); // Call the order function
+				}
 			}
 
 		});
@@ -876,7 +895,7 @@ function getNextInterval(date, interval) {
 		function RegisteUsername(email, mobile,sow_id, price, time, day) {
 		    let $btn = $('.proceed-booking-btn');
             $btn.prop('disabled', true).text('Processing...');
-            
+            let access = $('#raz_access').val();
 			$.ajax({
 				url: "{{ url('registeration') }}",
 				type: 'POST',
@@ -903,7 +922,21 @@ function getNextInterval(date, interval) {
 							timer: 3000,
     						timerProgressBar: true,
 						}).then(() => {
-							createRazorpayOrder(sow_id, price, time, day, userId);
+			
+							if(access==false){
+									var response = {
+											razorpay_payment_id: "pay_2121212",
+											razorpay_order_id: "order_21212121",
+											razorpay_signature: "sig_1212455"
+										};
+										// alert('2');	
+
+								storeBooking(response, sow_id, price, time, day, userId);
+							}else{
+								createRazorpayOrder(sow_id, price, time, day, userId);
+								storeBooking(response, sow_id, price, time, day, user_id);
+							}
+							 
 						});
 
 

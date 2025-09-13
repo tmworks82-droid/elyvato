@@ -80,7 +80,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-7">
                     <div class="text-center d-flex flex-column gap-3 mb-3 mb-md-4">
-                        <h1 class="fs-3 fw-bold mb-0">Register </h1>
+                        <h1 class="fs-3 fw-bold mb-0">Register as a freelancer </h1>
                         <p class="mb-0">Enter your details</p>
                     </div>
                     @if (session('success'))

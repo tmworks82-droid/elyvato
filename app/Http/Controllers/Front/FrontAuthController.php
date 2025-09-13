@@ -377,8 +377,7 @@ class FrontAuthController extends Controller
               ->where(function ($query) {
                   $query->where('type', 'customer')
                         ->orWhere(function ($subQuery) {
-                            $subQuery->where('type', 'user')    
-                                     ->where('is_hired', 'yes');
+                            $subQuery->where('type', 'user')   ;
                         });
               })->first();
               

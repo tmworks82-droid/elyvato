@@ -131,6 +131,8 @@ Route::post('/freelance/upload-aadhaar-back', [ProfileController::class, 'upload
 // PAN
 Route::post('/freelance/upload-pan', [ProfileController::class, 'uploadPan'])->name('freelance.upload.pan');
 
+Route::post('/save/availability-time', [ProfileController::class, 'SaveAvailability'])->name('save.availability.time');
+
         Route::get('/user/payment-setting', [ProfileController::class, 'PaymentSetting'])->name('user.payment.setting');
         Route::post('/freelance/upload-cancelled-check', [ProfileController::class, 'uploadCancelledCheck'])
     ->name('freelance.upload.cancelled.check');
@@ -287,6 +289,8 @@ Route::post('/freelance/upload-pan', [ProfileController::class, 'uploadPan'])->n
 
         Route::post('/milestone/request', [ProjectController::class, 'requestMilestone']);
         Route::post('/reminder/mail', [ProjectController::class, 'ReminderMail'])->name('reminder.mail');
+        
+        Route::post('/employee/filter', [ProjectController::class, 'filterEmployee'])->name('employee.filter');
 
 
         Route::get('/country', [CityController::class, 'Country'])->name('country');

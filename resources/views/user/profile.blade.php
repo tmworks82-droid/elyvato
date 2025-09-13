@@ -6,6 +6,10 @@
 @extends('layouts.front.user-app')
 <!-- Dropzone CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css" />
+<!-- Bootstrap-select CSS -->
+<!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <style>
     /* Progress Bar Styling */
 
@@ -108,7 +112,62 @@
         text-align: center;
         cursor: pointer;
     }
+
+/* here is time availibility css  */
+ /* Custom styling for the filter container */
+        .filter-container {
+            max-width: 600px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        
+        .day-schedule {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr 100px;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .day-label {
+            font-weight: 500;
+        }
+
+        /* Style for the form check label within the dropdown */
+        .form-check-input {
+            cursor: pointer;
+        }
+        
+        #status-indicator {
+            padding: 0.5em 1em;
+            font-weight: 600;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+
+        #availability-result {
+            background-color: #343a40;
+            color: #fff;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            white-space: pre;
+        }
+        /* end here   */
 </style>
+
 @section('pageContent')
     {{-- header --}}
 
@@ -282,6 +341,9 @@
                                 <label for="talent_definition">Define your talent *</label>
                             </div>
                         </div>
+
+                        
+
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="number" class="form-control" name="years_experience" id="years_experience"
@@ -302,6 +364,18 @@
 
                     </div>
                     <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="skill" class="form-label">Skills *</label>
+                            <select name="skill[]" id="skill" class="form-select" multiple required>
+                                @if (!empty($skill) && count($skill) > 0)
+                                    @foreach ($skill as $talent)
+                                        <option value="{{ $talent->id }}">{{ ucfirst($talent->name) }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+
 
                         <div class="col-md-6">
                             <div class="form-floating">
@@ -358,65 +432,65 @@
                           
                         </div>
 
-<!-- Government ID Dropdown -->
-<div class="col-md-6">
-    <label for="gov_id_type" class="form-label">Government ID</label>
-    <select name="gov_id_type" id="gov_id_type" class="form-select">
-        <option value="">-- Select ID Type --</option>
-        <option value="passport" {{ $profile->gov_id_type == 'passport' ? 'selected' : '' }}>Passport</option>
-        <option value="driving_license" {{ $profile->gov_id_type == 'driving_license' ? 'selected' : '' }}>Driving License</option>
-        <option value="aadhaar" {{ $profile->gov_id_type == 'aadhaar' ? 'selected' : '' }}>Aadhaar</option>
-        <option value="pan" {{ $profile->gov_id_type == 'pan' ? 'selected' : '' }}>PAN</option>
-    </select>
-</div>
+                        <!-- Government ID Dropdown -->
+                        {{-- <div class="col-md-6">
+                            <label for="gov_id_type" class="form-label">Government ID</label>
+                            <select name="gov_id_type" id="gov_id_type" class="form-select">
+                                <option value="">-- Select ID Type --</option>
+                                <option value="passport" {{ $profile->gov_id_type == 'passport' ? 'selected' : '' }}>Passport</option>
+                                <option value="driving_license" {{ $profile->gov_id_type == 'driving_license' ? 'selected' : '' }}>Driving License</option>
+                                <option value="aadhaar" {{ $profile->gov_id_type == 'aadhaar' ? 'selected' : '' }}>Aadhaar</option>
+                                <option value="pan" {{ $profile->gov_id_type == 'pan' ? 'selected' : '' }}>PAN</option>
+                            </select>
+                        </div>
 
-<!-- Passport Front -->
-<div class="col-md-3 gov-field {{ $profile->gov_id_type == 'passport' ? '' : 'd-none' }}" id="passport-front-field">
-    <label class="form-label">Passport Front</label>
-    <div class="dropzone" id="passport-front-dropzone"></div>
-    <input type="hidden" name="passport_front" id="passport_front"
-           value="{{ $profile->passport_front ?? '' }}">
-</div>
+                        <!-- Passport Front -->
+                        <div class="col-md-3 gov-field {{ $profile->gov_id_type == 'passport' ? '' : 'd-none' }}" id="passport-front-field">
+                            <label class="form-label">Passport Front</label>
+                            <div class="dropzone" id="passport-front-dropzone"></div>
+                            <input type="hidden" name="passport_front" id="passport_front"
+                                value="{{ $profile->passport_front ?? '' }}">
+                        </div>
 
-<!-- Passport Back -->
-<div class="col-md-3 gov-field {{ $profile->gov_id_type == 'passport' ? '' : 'd-none' }}" id="passport-back-field">
-    <label class="form-label">Passport Back</label>
-    <div class="dropzone" id="passport-back-dropzone"></div>
-    <input type="hidden" name="passport_back" id="passport_back"
-           value="{{ $profile->passport_back ?? '' }}">
-</div>
+                        <!-- Passport Back -->
+                        <div class="col-md-3 gov-field {{ $profile->gov_id_type == 'passport' ? '' : 'd-none' }}" id="passport-back-field">
+                            <label class="form-label">Passport Back</label>
+                            <div class="dropzone" id="passport-back-dropzone"></div>
+                            <input type="hidden" name="passport_back" id="passport_back"
+                                value="{{ $profile->passport_back ?? '' }}">
+                        </div>
 
-<!-- Driving License -->
-<div class="col-md-3 gov-field {{ $profile->gov_id_type == 'driving_license' ? '' : 'd-none' }}" id="dl-field">
-    <label class="form-label">Driving License</label>
-    <div class="dropzone" id="dl-dropzone"></div>
-    <input type="hidden" name="driving_license" id="driving_license"
-           value="{{ $profile->driving_license ?? '' }}">
-</div>
+                        <!-- Driving License -->
+                        <div class="col-md-3 gov-field {{ $profile->gov_id_type == 'driving_license' ? '' : 'd-none' }}" id="dl-field">
+                            <label class="form-label">Driving License</label>
+                            <div class="dropzone" id="dl-dropzone"></div>
+                            <input type="hidden" name="driving_license" id="driving_license"
+                                value="{{ $profile->driving_license ?? '' }}">
+                        </div>
 
-<!-- Aadhaar Front -->
-<div class="col-md-3 gov-field {{ $profile->gov_id_type == 'aadhaar' ? '' : 'd-none' }}" id="aadhaar-front-field">
-    <label class="form-label">Aadhaar Front</label>
-    <div class="dropzone" id="aadhaar-front-dropzone"></div>
-    <input type="hidden" name="aadhaar_front" id="aadhaar_front"
-           value="{{ $profile->aadhaar_front ?? '' }}">
-</div>
+                        <!-- Aadhaar Front -->
+                        <div class="col-md-3 gov-field {{ $profile->gov_id_type == 'aadhaar' ? '' : 'd-none' }}" id="aadhaar-front-field">
+                            <label class="form-label">Aadhaar Front</label>
+                            <div class="dropzone" id="aadhaar-front-dropzone"></div>
+                            <input type="hidden" name="aadhaar_front" id="aadhaar_front"
+                                value="{{ $profile->aadhaar_front ?? '' }}">
+                        </div>
 
-<!-- Aadhaar Back -->
-<div class="col-md-3 gov-field {{ $profile->gov_id_type == 'aadhaar' ? '' : 'd-none' }}" id="aadhaar-back-field">
-    <label class="form-label">Aadhaar Back</label>
-    <div class="dropzone" id="aadhaar-back-dropzone"></div>
-    <input type="hidden" name="aadhaar_back" id="aadhaar_back"
-           value="{{ $profile->aadhaar_back ?? '' }}">
-</div>
+                        <!-- Aadhaar Back -->
+                        <div class="col-md-3 gov-field {{ $profile->gov_id_type == 'aadhaar' ? '' : 'd-none' }}" id="aadhaar-back-field">
+                            <label class="form-label">Aadhaar Back</label>
+                            <div class="dropzone" id="aadhaar-back-dropzone"></div>
+                            <input type="hidden" name="aadhaar_back" id="aadhaar_back"
+                                value="{{ $profile->aadhaar_back ?? '' }}">
+                        </div>
 
-<!-- PAN -->
-<div class="col-md-3 gov-field {{ $profile->gov_id_type == 'pan' ? '' : 'd-none' }}" id="pan-field">
-    <label class="form-label">PAN</label>
-    <div class="dropzone" id="pan-dropzone"></div>
-    <input type="hidden" name="pan" id="pan"
-           value="{{ $profile->pan ?? '' }}">
-</div>
+                        <!-- PAN -->
+                        <div class="col-md-3 gov-field {{ $profile->gov_id_type == 'pan' ? '' : 'd-none' }}" id="pan-field">
+                            <label class="form-label">PAN</label>
+                            <div class="dropzone" id="pan-dropzone"></div>
+                            <input type="hidden" name="pan" id="pan"
+                                value="{{ $profile->pan ?? '' }}">
+                        </div> --}}
 
 
 
@@ -721,6 +795,34 @@
 
             <button type="submit" class="btn btn-main" value="Change Password">Change Password </button>
         </form>
+
+
+         @if (Auth::user()->type == 'user')
+          {{-- here is time availibility --}}
+
+        <div class="filter-container">
+        <h2 class="mb-2 text-center">Select availability time</h2>
+        <p class="text-muted mb-4 text-center">Set the start and end time for each day or mark it as closed.</p>
+
+        <form id="availabilityForm">
+            @csrf
+            <div id="schedule-container"></div>
+            
+            <div class="d-grid gap-2 mt-4">
+                <button class="btn btn-main btn-lg" type="submit">Save Schedule</button>
+            </div>
+        </form>
+
+    <div id="availability-result" class="alert mt-4 p-3" role="alert" style="display:none;"></div>
+
+        
+        <div id="availability-result" class="alert mt-4 p-3" role="alert" style="display: none;">
+            <!-- Result will be shown here -->
+        </div>
+
+    </div>
+    @endif
+
     </div>
 @endsection
 
@@ -728,7 +830,17 @@
     <!-- Dropzone JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+
+    $(document).ready(function() {
+        $('#skill').select2({
+            placeholder: "Select your skills",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+
 
         Dropzone.autoDiscover = false;
 
@@ -812,188 +924,7 @@ initDropzone(
 );
 
 
-// here new 
-Dropzone.autoDiscover = false;
 
-
-function initDropzone(selector, hiddenInputId, uploadUrl, existingFile) {
-    return new Dropzone(selector, {
-        url: uploadUrl,
-        paramName: "file",
-        headers: {
-            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
-        },
-        maxFiles: 1,
-        addRemoveLinks: true,
-        acceptedFiles: "image/*,application/pdf",
-        previewsContainer: selector,
-        init: function () {
-            let dz = this;
-
-            // Show existing file if available
-            if (existingFile) {
-                let mockFile = { name: existingFile.name, size: existingFile.size || 12345 };
-                dz.emit("addedfile", mockFile);
-
-                // If it's an image → show thumbnail
-                if (existingFile.url.match(/\.(jpg|jpeg|png|gif)$/i)) {
-                    dz.emit("thumbnail", mockFile, existingFile.url);
-                }
-
-                dz.emit("complete", mockFile);
-                document.getElementById(hiddenInputId).value = existingFile.path;
-                dz.files.push(mockFile);
-            }
-
-            // On new upload
-            this.on("success", function (file, response) {
-                document.getElementById(hiddenInputId).value = response.filepath;
-            });
-
-            // On remove
-            this.on("removedfile", function () {
-                document.getElementById(hiddenInputId).value = "";
-            });
-        }
-    });
-}
-
-// Initialize Passport
-initDropzone(
-    "#passport-front-dropzone",
-    "passport_front",
-    "{{ route('freelance.upload.passport.front') }}",
-    @json(!empty($profile->passport_front) ? [
-        'name' => basename($profile->passport_front),
-        'url' => asset($profile->passport_front),
-        'path' => $profile->passport_front
-    ] : null)
-);
-
-
-initDropzone(
-    "#passport-back-dropzone",
-    "passport_back",
-    "{{ route('freelance.upload.passport.back') }}",
-    @json(!empty($profile->passport_back) ? [
-        'name' => basename($profile->passport_back),
-        'url' => asset($profile->passport_back),
-        'path' => $profile->passport_back
-    ] : null)
-);
-
-
-// Initialize Driving License
-initDropzone(
-    "#dl-dropzone",
-    "driving_license",
-    "{{ route('freelance.upload.driving.license') }}",
-    @json(!empty($profile->driving_license) ? [
-        'name' => basename($profile->driving_license),
-        'url' => asset($profile->driving_license),
-        'path' => $profile->driving_license
-    ] : null)
-);
-
-
-// Toggle fields based on dropdown
-document.getElementById("gov_id_type").addEventListener("change", function () {
-    // Hide all gov id fields first
-    document.querySelectorAll(".gov-field").forEach(el => el.classList.add("d-none"));
-
-    if (this.value === "passport") {
-        document.getElementById("passport-front-field").classList.remove("d-none");
-        document.getElementById("passport-back-field").classList.remove("d-none");
-    } else if (this.value === "driving_license") {
-        document.getElementById("dl-field").classList.remove("d-none");
-    } else if (this.value === "aadhaar") {
-        document.getElementById("aadhaar-front-field").classList.remove("d-none");
-        document.getElementById("aadhaar-back-field").classList.remove("d-none");
-    } else if (this.value === "pan") {
-        document.getElementById("pan-field").classList.remove("d-none");
-    }
-});
-
-
-// here upload adahr pan 
-
-Dropzone.autoDiscover = false;
-
-function initDropzone(selector, hiddenInputId, uploadUrl, existingFile) {
-    return new Dropzone(selector, {
-        url: uploadUrl,
-        paramName: "file",
-        headers: {
-            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
-        },
-        maxFiles: 1,
-        addRemoveLinks: true,
-        acceptedFiles: "image/*,application/pdf",
-        previewsContainer: selector,
-        init: function () {
-            let dz = this;
-
-            if (existingFile) {
-                let mockFile = { name: existingFile.name, size: existingFile.size || 12345 };
-                dz.emit("addedfile", mockFile);
-                if (existingFile.url.match(/\.(jpg|jpeg|png|gif)$/i)) {
-                    dz.emit("thumbnail", mockFile, existingFile.url);
-                }
-                dz.emit("complete", mockFile);
-                document.getElementById(hiddenInputId).value = existingFile.path;
-                dz.files.push(mockFile);
-            }
-
-            this.on("success", function (file, response) {
-                document.getElementById(hiddenInputId).value = response.filepath;
-            });
-            this.on("removedfile", function () {
-                document.getElementById(hiddenInputId).value = "";
-            });
-        }
-    });
-}
-
-// Aadhaar Front
-initDropzone(
-    "#aadhaar-front-dropzone",
-    "aadhaar_front",
-    "{{ route('freelance.upload.aadhaar.front') }}",
-    @json(!empty($profile->aadhaar_front) ? [
-        'name' => basename($profile->aadhaar_front),
-        'url'  => asset($profile->aadhaar_front),
-        'path' => $profile->aadhaar_front
-    ] : null)
-);
-
-// Aadhaar Back
-initDropzone(
-    "#aadhaar-back-dropzone",
-    "aadhaar_back",
-    "{{ route('freelance.upload.aadhaar.back') }}",
-    @json(!empty($profile->aadhaar_back) ? [
-        'name' => basename($profile->aadhaar_back),
-        'url'  => asset($profile->aadhaar_back),
-        'path' => $profile->aadhaar_back
-    ] : null)
-);
-
-// PAN
-initDropzone(
-    "#pan-dropzone",
-    "pan",
-    "{{ route('freelance.upload.pan') }}",
-    @json(!empty($profile->pan) ? [
-        'name' => basename($profile->pan),
-        'url'  => asset($profile->pan),
-        'path' => $profile->pan
-    ] : null)
-);
-
-
-
-
-        // end heree passpot 
 
         // here progress bar code
 
@@ -1052,25 +983,59 @@ initDropzone(
             });
 
             // Function to validate the current step
+            // function validateStep(stepIndex) {
+            //     let isValid = true;
+            //     const currentStepFields = $(formSteps[stepIndex]).find("input[required], select[required]");
+
+            //     currentStepFields.each(function() {
+            //         if ($(this).val().trim() === "") {
+            //             isValid = false;
+            //             $(this).addClass("is-invalid"); // Add Bootstrap's invalid class
+            //         } else {
+            //             $(this).removeClass("is-invalid");
+            //         }
+            //     });
+
+            //     if (!isValid) {
+            //         alert("Please fill out all required fields marked with *");
+            //     }
+
+            //     return isValid;
+            // }
+
             function validateStep(stepIndex) {
-                let isValid = true;
-                const currentStepFields = $(formSteps[stepIndex]).find("input[required], select[required]");
+    let isValid = true;
+    const currentStepFields = $(formSteps[stepIndex]).find("input[required], select[required]");
 
-                currentStepFields.each(function() {
-                    if ($(this).val().trim() === "") {
-                        isValid = false;
-                        $(this).addClass("is-invalid"); // Add Bootstrap's invalid class
-                    } else {
-                        $(this).removeClass("is-invalid");
-                    }
-                });
+    currentStepFields.each(function() {
+        let value = $(this).val();
 
-                if (!isValid) {
-                    alert("Please fill out all required fields marked with *");
-                }
-
-                return isValid;
+        if ($(this).is("select[multiple]")) {
+            // For multi-select (like Skills)
+            if (!value || value.length === 0) {
+                isValid = false;
+                $(this).addClass("is-invalid");
+            } else {
+                $(this).removeClass("is-invalid");
             }
+        } else {
+            // For normal input/select
+            if (!value || value.trim() === "") {
+                isValid = false;
+                $(this).addClass("is-invalid");
+            } else {
+                $(this).removeClass("is-invalid");
+            }
+        }
+    });
+
+    if (!isValid) {
+        alert("Please fill out all required fields marked with *");
+    }
+
+    return isValid;
+}
+
 
             // Initialize the form
             showStep(currentStep);
@@ -1375,5 +1340,104 @@ initDropzone(
                 });
             });
         });
+
+// here is select time availibility
+const savedAvailability = @json($availability);
+$(function () {
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const scheduleContainer = $('#schedule-container');
+
+    $.each(days, function (index, day) {
+        const dayId = day.toLowerCase();
+
+        // Default values
+        let startTime = "10:00";
+        let endTime   = "19:30";
+        let isOpen    = false; // default closed
+
+        if (savedAvailability && savedAvailability[day]) {
+            startTime = savedAvailability[day].start_time ?? "10:00";
+            endTime   = savedAvailability[day].end_time ?? "19:30";
+
+            // ✅ Use status field
+            isOpen    = savedAvailability[day].status === "open";
+        }
+
+        const rowHTML = `
+            <div class="day-schedule d-flex align-items-center justify-content-between mb-3">
+                <div class="day-label flex-grow-1">${day}</div>
+                
+                <div class="time-input">
+                    <input type="time" id="start-${dayId}" 
+                           class="form-control d-inline-block"
+                           name="schedule[${day}][start_time]" 
+                           value="${startTime}">
+                </div>
+
+                <div class="time-input ms-2">
+                    <input type="time" id="end-${dayId}" 
+                           class="form-control d-inline-block"
+                           name="schedule[${day}][end_time]" 
+                           value="${endTime}">
+                </div>
+
+                <div class="form-check form-switch ms-3">
+                    <input class="form-check-input" type="checkbox" 
+                           name="schedule[${day}][is_closed]" 
+                           id="closed-${dayId}" ${isOpen ? 'checked' : ''}>
+                    <label class="form-check-label ms-1" for="closed-${dayId}">
+                        ${isOpen ? 'Open' : 'Closed'}
+                    </label>
+                </div>
+            </div>
+        `;
+        scheduleContainer.append(rowHTML);
+
+        // Disable times if closed
+        if (!isOpen) {
+            $(`#start-${dayId}, #end-${dayId}`).prop('disabled', true);
+        }
+    });
+
+    // Toggle behaviour
+    scheduleContainer.on('change', '.form-check-input[type="checkbox"]', function () {
+        const dayId = $(this).attr('id').replace('closed-', '');
+        const isOpen = $(this).is(':checked');
+
+        $(`#start-${dayId}, #end-${dayId}`).prop('disabled', !isOpen);
+        $(this).next('label').text(isOpen ? "Open" : "Closed");
+    });
+});
+
+
+
+// here is save availability
+
+// Handle Save → send AJAX
+$("#availabilityForm").on("submit", function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: "{{ route('save.availability.time') }}",
+    method: "POST",
+    data: $(this).serialize(),
+    success: function (res) {
+      $("#availability-result")
+        .removeClass("alert-danger")
+        .addClass("alert-success")
+        .text(res.message)
+        .show();
+      Swal.fire("Success", res.message, "success");
+    },
+    error: function () {
+      $("#availability-result")
+        .removeClass("alert-success")
+        .addClass("alert-danger")
+        .text("Error saving schedule")
+        .show();
+      Swal.fire("Success", res.message, "warning");
+    },
+  });
+});
+
     </script>
 @endsection

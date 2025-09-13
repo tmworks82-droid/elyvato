@@ -31,6 +31,46 @@
 {{-- dashboard cards --}}
 <div class="overflow-x-hidden mb-3 mb-lg-4">
     <div class="row">
+        @if(Auth::user()->type=='user')
+        <div class="col-md-4 mb-3 mb-md-0">
+            <div class="border rounded-2 p-3 h-100">
+                <p class="mb-2">Total Task</p>
+                <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-0">
+                    <h2 class="mb-0 fs-1">{{$total_Task}}</h2>
+                    <div class="dashboard-card-icon-box d-flex align-items-center justify-content-center rounded-circle">
+                        <i class="ri-calendar-2-line text-main fs-2"></i>
+                    </div>
+                </div>
+                {{-- <p class="mb-0"><span class="text-main">{{$recentBookingCount}}</span> Recently Booked</p> --}}
+            </div>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+            <div class="border rounded-2 p-3 h-100">
+                <p class="mb-2">Completed Task</p>
+                <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-0">
+                    <h2 class="mb-0 fs-1">{{$completed_task}}</h2>
+                    <div class="dashboard-card-icon-box d-flex align-items-center justify-content-center rounded-circle">
+                        <i class="ri-calendar-check-line text-main fs-2"></i>
+                    </div>
+                </div>
+                {{-- <p class="mb-0"><span class="text-main">{{ $recentcomplete_BookingCount }}</span> Recently Completed</p> --}}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="border rounded-2 p-3 h-100">
+                <p class="mb-2">Pending Task</p>
+                <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-0">
+                    <h2 class="mb-0 fs-1">{{ $pending_task }}</h2>
+                    <div class="dashboard-card-icon-box d-flex align-items-center justify-content-center rounded-circle">
+                        
+                        <i class="ri-calendar-schedule-line text-main fs-2"></i>
+                    </div>
+                </div>
+                {{-- <p class="mb-0"><span class="text-main">{{ $newlyAddedCount }}</span> Newly Added</p> --}}
+            </div>
+        </div>
+        @else 
+
         <div class="col-md-4 mb-3 mb-md-0">
             <div class="border rounded-2 p-3 h-100">
                 <p class="mb-2">Total Bookings</p>
@@ -68,9 +108,11 @@
                 <p class="mb-0"><span class="text-main">{{ $newlyAddedCount }}</span> Newly Added</p>
             </div>
         </div>
+        @endif 
     </div>
 </div>
 
+@if(Auth::user()->type=='customer')
 {{-- recent bookings --}}
 <div class="overflow-x-hidden">
     <div class="border rounded-2 p-3">
@@ -107,8 +149,8 @@
                             @else
                             <span class="badge text-bg-success">{{ $booking->status }}</span>
                             @endif
-                           
                         </td>
+                        
                         <td>
                            @if($booking->payment_status=='pending')
                             <span class="badge text-bg-warning">{{ $booking->payment_status }}</span>
@@ -123,5 +165,6 @@
         </div>
     </div>
 </div>
+@endif
 
 @endsection

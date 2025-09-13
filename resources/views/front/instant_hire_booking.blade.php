@@ -198,10 +198,12 @@
                     <p class="mb-3 mb-md-4">Your project, your choice – explore skilled professionals ready to work with
                         you.</p>
 
+                    @if(Config::get('services.payment.enabled')==true)
                     <div class="mb-4">
                         <span class="btn-accent p-2 mb-3" style=" border-radius: 6px;"> Book your instant call for just ₹9 —
                             fully adjusted in your project cost. </span>
                     </div>
+                    @endif
 
                     <form id="hire_talent" method="post">
                         @csrf
@@ -213,8 +215,8 @@
 
                                 <div class="form-floating mb-3">
                                     {{-- <input type="text" class="form-control w-100 focus-shadow-none" id="formDate"
-                                placeholder="Select a date" readonly>
-                            <label for="formDate" class="text-sm text-muted mb-1">Select A Date</label> --}}
+                                    placeholder="Select a date" readonly>
+                                    <label for="formDate" class="text-sm text-muted mb-1">Select A Date</label> --}}
 
                                     <div class="calendar">
                                         <div class="calendar-header">
@@ -243,18 +245,10 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-floating mb-3">
-
-                            <select id="timeSlot" name="time_slot" class="form-select focus-shadow-none">
-                                <option value="">Select a time slot</option>
-                            </select>
-
-                            <label for="time-picker">Select a Time Slot</label>
-                        </div> --}}
-                        <input type="hidden" name="call_boking_price" id="call_boking_price" value="9">
+                        <input type="hidden" name="call_boking_price" id="call_boking_price" value="{{Config::get('services.payment.price')}}">
+                        <input type="hidden" id="raz_access" value="{{ Config::get('services.payment.enabled')}}">
 
                         <div class="form-floating mb-3">
-
                             @if (empty($instanthire))
                                 <select class="form-select focus-shadow-none" id="hire_talent" name="hire_talent">
                                     @foreach (Hiretalent() as $talent)
@@ -265,16 +259,12 @@
                                 </select>
                             @else
                                 <select class="form-select focus-shadow-none" id="hire_talent" name="hire_talent">
-
                                     <option value="{{ $instanthire->id }}" selected>{{ $instanthire->name }}</option>
-
                                 </select>
                             @endif
 
                             <label for="role_designation">Hire Talent</label>
                         </div>
-
-
 
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control focus-shadow-none" name="cost_amount" id="cost_amount"
@@ -949,7 +939,219 @@
                         </div>
                     </div>
                 </div>
+
+                          {{-- FAQs --}}
+<h3 class="fw-semibold mb-3 fs-4 mt-5">Frequently Asked Questions</h3>
+<div class="accordion" id="faqaccordion" itemscope itemtype="https://schema.org/FAQPage">
+
+    {{-- Q1 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingA">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseA" aria-expanded="true" aria-controls="collapseA" itemprop="name">
+                What is Instant Hyre on Elyvato?
+            </button>
+        </h3>
+        <div id="collapseA" class="accordion-collapse collapse show"
+            aria-labelledby="headingA" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                Instant Hyre is Elyvato’s flagship feature that lets businesses hire verified content professionals—writers, designers, editors, marketers—within 30 minutes, ensuring unmatched speed and reliability in talent acquisition.
             </div>
+        </div>
+    </div>
+
+    {{-- Q2 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingB">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseB" aria-expanded="false" aria-controls="collapseB" itemprop="name">
+                How does Instant Hyre work?
+            </button>
+        </h3>
+        <div id="collapseB" class="accordion-collapse collapse"
+            aria-labelledby="headingB" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                You post your requirement → Elyvato’s AI-driven system matches you instantly with pre-vetted talent → you can start the project the same day, without long waiting or screening cycles.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q3 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingC">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseC" aria-expanded="false" aria-controls="collapseC" itemprop="name">
+                What kind of professionals can I hire through Instant Hyre?
+            </button>
+        </h3>
+        <div id="collapseC" class="accordion-collapse collapse"
+            aria-labelledby="headingC" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                Elyvato specializes in content-driven talent: copywriters, video editors, graphic designers, translators, content strategists, and digital marketers.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q4 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingD">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseD" aria-expanded="false" aria-controls="collapseD" itemprop="name">
+                How do you ensure the quality of hired professionals?
+            </button>
+        </h3>
+        <div id="collapseD" class="accordion-collapse collapse"
+            aria-labelledby="headingD" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                Every talent on Elyvato is pre-screened and skill-tested. Our AI matching engine plus manual quality checks ensure a 99% success rate in client satisfaction.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q5 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingE">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseE" aria-expanded="false" aria-controls="collapseE" itemprop="name">
+                Is there a minimum or maximum project size for Instant Hyre?
+            </button>
+        </h3>
+        <div id="collapseE" class="accordion-collapse collapse"
+            aria-labelledby="headingE" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                No, Instant Hyre is designed for both quick tasks (like a blog post or a social video) and long-term projects (like ongoing campaigns or multi-language content operations).
+            </div>
+        </div>
+    </div>
+
+    {{-- Q6 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingF">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseF" aria-expanded="false" aria-controls="collapseF" itemprop="name">
+                What makes Instant Hyre different from others?
+            </button>
+        </h3>
+        <div id="collapseF" class="accordion-collapse collapse"
+            aria-labelledby="headingF" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                Unlike gig marketplaces, Elyvato guarantees deployment within 30 minutes, talent is pre-vetted in content niches only, and you get dedicated support + quality assurance.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q7 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingG">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseG" aria-expanded="false" aria-controls="collapseG" itemprop="name">
+                How much does Instant Hyre cost?
+            </button>
+        </h3>
+        <div id="collapseG" class="accordion-collapse collapse"
+            aria-labelledby="headingG" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                Pricing depends on skill, duration, and complexity. You can choose per project, hourly, or retainer models, all designed to be cost-efficient while ensuring premium quality.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q8 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingH">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseH" aria-expanded="false" aria-controls="collapseH" itemprop="name">
+                Can I hire talent for multiple languages?
+            </button>
+        </h3>
+        <div id="collapseH" class="accordion-collapse collapse"
+            aria-labelledby="headingH" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                Yes. Elyvato offers content talent in English, Hindi, and 10+ regional Indian languages, with expansion into global languages through our Dubai office.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q9 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingI">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseI" aria-expanded="false" aria-controls="collapseI" itemprop="name">
+                Is Instant Hyre available 24/7?
+            </button>
+        </h3>
+        <div id="collapseI" class="accordion-collapse collapse"
+            aria-labelledby="headingI" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                Yes. With global operations and multi-time zone coverage, you can raise a request at any time and get connected with a professional within 30 minutes.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q10 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingJ">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseJ" aria-expanded="false" aria-controls="collapseJ" itemprop="name">
+                Do I need to sign long-term contracts?
+            </button>
+        </h3>
+        <div id="collapseJ" class="accordion-collapse collapse"
+            aria-labelledby="headingJ" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                No, Elyvato is on-demand. You can hire for a single task or establish longer partnerships based on your needs.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q11 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingK">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseK" aria-expanded="false" aria-controls="collapseK" itemprop="name">
+                What industries does Instant Hyre cater to?
+            </button>
+        </h3>
+        <div id="collapseK" class="accordion-collapse collapse"
+            aria-labelledby="headingK" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                From e-commerce and media to agriculture, fintech, healthcare, and D2C brands, Elyvato provides specialized content professionals tailored to industry requirements.
+            </div>
+        </div>
+    </div>
+
+    {{-- Q12 --}}
+    <div class="accordion-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="accordion-header" id="headingL">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseL" aria-expanded="false" aria-controls="collapseL" itemprop="name">
+                How secure is my project data?
+            </button>
+        </h3>
+        <div id="collapseL" class="accordion-collapse collapse"
+            aria-labelledby="headingL" data-bs-parent="#faqaccordion"
+            itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="accordion-body" itemprop="text">
+                Elyvato follows strict confidentiality and data protection protocols. NDAs and compliance frameworks are available for enterprise clients.
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+  
+
         </div>
     </section>
 
@@ -1217,10 +1419,7 @@
             }
         }
 
-
-
         // end here 
-
 
         // here start booking 
         $('#hire_talent').on('submit', function(e) {
@@ -1235,6 +1434,7 @@
             let sow_id = $('#sow_id').val();
             let price = $('#call_boking_price').val();
             let = timeSlot = $('#timeSlot').val();
+            let access = $('#raz_access').val();
 
             if (check == 'false') {
                 Swal.fire({
@@ -1257,8 +1457,19 @@
 
                 let formData = new FormData(this);
 
-                //  Instead of saving immediately, trigger Razorpay
-                createRazorpayOrderAndPay(price, formData);
+                if(access==true){
+                    //  Instead of saving immediately, trigger Razorpay
+                    createRazorpayOrderAndPay(price, formData);
+                }else{
+                    var response = {
+						razorpay_payment_id: "pay_2121212",
+						razorpay_order_id: "order_21212121",
+						razorpay_signature: "sig_1212455"
+					};
+
+                     storeCustomBooking(response, formData);
+                }
+               
             }
 
         });

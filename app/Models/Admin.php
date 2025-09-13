@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Department;
 use App\Models\UserProfile;
 use App\Models\BankDetails;
+use App\Models\UserAvailability;
 
 
 class Admin extends Authenticatable
@@ -133,6 +134,11 @@ class Admin extends Authenticatable
     public function bankDetails()
     {
         return $this->hasOne(BankDetails::class, 'user_id');
+    }
+
+    public function availability()
+    {
+        return $this->hasMany(UserAvailability::class, 'user_id');
     }
 
 }

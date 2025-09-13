@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 use Razorpay\Api\Api;
+use Illuminate\Support\Facades\Config;
+
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -187,8 +189,6 @@ $data['bookedSlots'] = $bookedSlots;
     }
 
 
-
-
     public function Booking(){
         $data['title']="Booking";
         return view('front.booking',$data);
@@ -222,8 +222,6 @@ $data['bookedSlots'] = $bookedSlots;
 
     public function createRazorpayOrder(Request $request)
     {
-    
-
         $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         // dd(config('services.razorpay.key'), config('services.razorpay.secret'));
@@ -262,6 +260,11 @@ $data['bookedSlots'] = $bookedSlots;
 
         // dd($request->all());
 
+        $isPaymentEnabled = Config::get('services.payment.enabled');
+
+        // dd($request->all());
+        if($isPaymentEnabled==true){
+
          $generated_signature = hash_hmac(
             'sha256',
             $request->razorpay_order_id . "|" . $request->razorpay_payment_id,
@@ -283,6 +286,9 @@ $data['bookedSlots'] = $bookedSlots;
         }else{
             $status="success";
         }
+    }else{
+        $status="success";
+    }
         $UserId= auth()->check() ? auth()->id() : $request->user_id;
         
          $service = Service::findOrFail($request->service);
@@ -411,30 +417,38 @@ $data['bookedSlots'] = $bookedSlots;
 
 
         $UserId= auth()->check() ? auth()->id() : $request->user_id;
-        // dd($request->all());
+        // 
         //  Step 2: Verify Signature
-        $generated_signature = hash_hmac(
-            'sha256',
-            $request->razorpay_order_id . "|" . $request->razorpay_payment_id,
-            config('services.razorpay.secret')
-        );
 
-        if ($generated_signature !== $request->razorpay_signature) {
-            Log::error(' Razorpay signature mismatch', [
-                'expected' => $generated_signature,
-                'received' => $request->razorpay_signature
-            ]);
+        $isPaymentEnabled = Config::get('services.payment.enabled');
 
-            $status="cancelled";
+        // dd($request->all());
+        if($isPaymentEnabled==true){
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Payment signature verification failed.'
-            ], 400);
+            $generated_signature = hash_hmac(
+                'sha256',
+                $request->razorpay_order_id . "|" . $request->razorpay_payment_id,
+                config('services.razorpay.secret')
+            );
+
+            if ($generated_signature !== $request->razorpay_signature) {
+                Log::error(' Razorpay signature mismatch', [
+                    'expected' => $generated_signature,
+                    'received' => $request->razorpay_signature
+                ]);
+
+                $status="cancelled";
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Payment signature verification failed.'
+                ], 400);
+            }else{
+                $status="success";
+            }
         }else{
             $status="success";
         }
-
         // dd($request->all());
         //  Step 3: Proceed with Booking Creation
         $sow = StatementOfwork::findOrFail($request->sow_id);
@@ -768,6 +782,10 @@ $data['bookedSlots'] = $bookedSlots;
         $UserId= auth()->check() ? auth()->id() : $request->user_id;
         // dd($request->all());
         //  Step 2: Verify Signature
+        $isPaymentEnabled = Config::get('services.payment.enabled');
+
+        // dd($request->all());
+        if($isPaymentEnabled==true){
         $generated_signature = hash_hmac(
             'sha256',
             $request->razorpay_order_id . "|" . $request->razorpay_payment_id,
@@ -789,6 +807,9 @@ $data['bookedSlots'] = $bookedSlots;
         }else{
             $status="success";
         }
+    }else{
+        $status="success";
+    }
 
         // dd($request->all());
         //  Step 3: Proceed with Booking Creation

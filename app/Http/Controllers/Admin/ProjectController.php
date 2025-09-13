@@ -11,9 +11,11 @@ use App\Models\DispatchUpdate;
 use App\Models\Country;
 use App\Models\Role;
 use App\Models\Service;
+use App\Models\TalentRating;
 use App\Models\SubService;
 use App\Models\Project;
 use App\Models\StatementOfWork;
+use App\Models\UserAvailability;
 use App\Models\GstRate;
 use App\Models\Milestone;
 use App\Models\UserProfile;
@@ -22,6 +24,8 @@ use App\Models\Payment;
 use App\Models\Task;
 use App\Models\HireTalent;
 use App\Models\Note;
+use App\Models\Skill;
+use App\Models\Rating;
 
 use App\Models\Call;
 use App\Models\CustomeBooking;
@@ -150,23 +154,57 @@ public function CreateProject(Request $request){
 
         } else {
             // Normal users — show only their assigned bookings
+            // $data['predefinedBookings'] = Booking::with(['user', 'statementOfWork'])
+            //     ->where('booking_type', 'predefined_gig')
+            //     ->where('assign_to', $userId)
+            //     ->orderBy('created_on', 'desc')
+            //     ->get();
+    
+            // $data['customBookings'] = Booking::with(['user', 'statementOfWork'])
+            //     ->where('booking_type', 'custom_gig')
+            //     ->where('assign_to', $userId)
+            //     ->orderBy('created_on', 'desc')
+            //     ->get();
+                
+            // $data['instantHire'] = Booking::with(['user', 'statementOfWork','hireTalent'])
+            //     ->where('booking_type', 'instant_hire')
+            //     ->where('assign_to', $userId)
+            //     ->orderBy('created_on', 'desc')
+            //     ->get();
+
+            // Predefined bookings
             $data['predefinedBookings'] = Booking::with(['user', 'statementOfWork'])
                 ->where('booking_type', 'predefined_gig')
-                ->where('assign_to', $userId)
+                ->where(function ($q) use ($userId) {
+                    $q->where('assign_to', $userId)
+                    ->orWhereNull('assign_to')
+                    ->orWhere('assign_to', 0); // in case you store 0 instead of NULL
+                })
                 ->orderBy('created_on', 'desc')
                 ->get();
-    
+
+            // Custom bookings
             $data['customBookings'] = Booking::with(['user', 'statementOfWork'])
                 ->where('booking_type', 'custom_gig')
-                ->where('assign_to', $userId)
+                ->where(function ($q) use ($userId) {
+                    $q->where('assign_to', $userId)
+                    ->orWhereNull('assign_to')
+                    ->orWhere('assign_to', 0);
+                })
                 ->orderBy('created_on', 'desc')
                 ->get();
-                
+
+            // Instant Hire
             $data['instantHire'] = Booking::with(['user', 'statementOfWork','hireTalent'])
                 ->where('booking_type', 'instant_hire')
-                ->where('assign_to', $userId)
+                ->where(function ($q) use ($userId) {
+                    $q->where('assign_to', $userId)
+                    ->orWhereNull('assign_to')
+                    ->orWhere('assign_to', 0);
+                })
                 ->orderBy('created_on', 'desc')
                 ->get();
+
         }
     
         // Users with role_id 3 (e.g., Account Managers)
@@ -193,6 +231,10 @@ public function CreateProject(Request $request){
 
         $data['account_manager']=Admin::where('role_id',3)->get();
         $data['employee']=Admin::where('role_id',4)->get();
+        $data['skill']=Skill::get();
+        $data['availibility']=UserAvailability::get();
+        $data['ratings']=Rating::get();
+        $data['talent_ratings']=TalentRating::get();
         $data['milestone']=Milestone::with('task')->where('project_id',$project_id)->get();
         // dd($data['project']);
 
@@ -224,6 +266,195 @@ public function CreateProject(Request $request){
 
         return view('admin.project.project_details',$data);
     }
+
+ public function filterEmployee_old(Request $request)
+{
+    $query = Admin::query()->with('profile');
+
+    // ✅ Step 1: Filter by skills first (from user_profiles)
+    if ($request->filled('skill')) {
+        $skills = $request->skill; // array of skill IDs
+
+        // Find matching user_ids from user_profiles
+        $userIds = \DB::table('user_profiles')
+            ->where(function ($q) use ($skills) {
+                foreach ($skills as $skillId) {
+                    $q->orWhereRaw("FIND_IN_SET(?, skills)", [$skillId]);
+                }
+            })
+            ->pluck('user_id')
+            ->toArray();
+    //    dd($userIds);
+        // Apply to Admins query
+        $query->whereIn('id', $userIds);
+    }
+
+    // ✅ Step 2: Filter by availability
+    if ($request->filled('availability_day')) {
+        $query->whereHas('availability', function ($q) use ($request) {
+            $q->where('day', $request->availability_day);
+        });
+    }
+
+    // ✅ Step 3: Filter by time
+    if ($request->filled('time')) {
+        $query->whereHas('availability', function ($q) use ($request) {
+            $q->where('start_time', '<=', $request->time)
+              ->where('end_time', '>=', $request->time);
+        });
+    }
+
+    // ✅ Step 4: Filter by rating
+    if ($request->filled('rating')) {
+        $query->where('talent_rating_id', $request->rating);
+    }
+
+    // ✅ Get final employees
+    $employees = $query->select('id', 'name', 'username')->get();
+    // dd($employees);
+    return response()->json($employees);
+}
+
+
+public function filterEmployee_old1(Request $request)
+{
+    $query = Admin::query()->with('profile');
+
+    // Filter by skills (comma-separated in user_profiles.skills)
+    if ($request->filled('skill')) {
+        $skills = $request->skill; // array of skill IDs
+
+        $query->whereHas('profile', function ($q) use ($skills) {
+            $q->where(function ($sub) use ($skills) {
+                foreach ($skills as $skillId) {
+                    $sub->orWhereRaw("FIND_IN_SET(?, skills)", [$skillId]);
+                }
+            });
+        });
+    }
+
+    // ✅ Filter by availability day
+    if ($request->filled('availability_day')) {
+        $day = $request->availability_day;
+
+        $query->whereHas('availability', function ($q) use ($day) {
+            $q->where('day', $day);
+        });
+    }
+
+    // ✅ Filter by time
+    if ($request->filled('time')) {
+        $time = $request->time;
+
+        $query->whereHas('availability', function ($q) use ($time) {
+            $q->where('start_time', '<=', $time)
+              ->where('end_time', '>=', $time);
+        });
+    }
+
+    // ✅ Filter by rating
+    if ($request->filled('rating')) {
+        $query->where('talent_rating_id', $request->rating);
+    }
+
+    // ✅ Final Employees
+    $employees = $query->select('id', 'name', 'username')->get();
+
+    return response()->json($employees);
+}
+
+
+public function filterEmployee_old2(Request $request)
+    {
+        $query = Admin::query()->with('profile');
+
+        // dd($request->time);
+        //  Skills filter (any one skill match)
+        if ($request->filled('skill')) {
+            $skills = $request->skill;
+            $query->whereHas('profile', function ($q) use ($skills) {
+                $q->where(function ($sub) use ($skills) {
+                    foreach ($skills as $skillId) {
+                        $sub->orWhereRaw("FIND_IN_SET(?, skills)", [$skillId]);
+                    }
+                });
+            });
+        }
+
+        //  Availability day filter
+        if ($request->filled('availability_day')) {
+            $day = $request->availability_day;
+            $query->whereHas('availability', function ($q) use ($day) {
+                $q->where('day', $day);
+            });
+        }
+
+        //  Time filter
+        if ($request->filled('time')) {
+            $time = $request->time;
+            $query->whereHas('availability', function ($q) use ($time) {
+                $q->where('start_time', '<=', $time)
+                ->where('end_time', '>=', $time);
+            });
+        }
+
+        //  Rating filter
+        if ($request->filled('rating')) {
+            $query->where('talent_rating_id', $request->rating);
+        }
+
+        // Final Employees
+        $employees = $query->select('id', 'name', 'username')->get();
+
+        return response()->json($employees);
+    }
+
+
+public function filterEmployee(Request $request)
+{
+    $query = Admin::query()->with('profile');
+
+    // ✅ Skills filter (any one skill match)
+    if ($request->filled('skill')) {
+        $skills = $request->skill;
+        $query->whereHas('profile', function ($q) use ($skills) {
+            $q->where(function ($sub) use ($skills) {
+                foreach ($skills as $skillId) {
+                    $sub->orWhereRaw("FIND_IN_SET(?, skills)", [$skillId]);
+                }
+            });
+        });
+    }
+
+    // ✅ Availability day filter
+    if ($request->filled('availability_day')) {
+        $day = $request->availability_day;
+        $query->whereHas('availability', function ($q) use ($day) {
+            $q->where('day', $day);
+        });
+    }
+
+    // ✅ Time filter
+    if ($request->filled('time')) {
+        $time = $request->time;
+        $query->whereHas('availability', function ($q) use ($time) {
+            $q->where('start_time', '<=', $time)
+              ->where('end_time', '>=', $time);
+        });
+    }
+
+    // ✅ Rating filter (admins.rating column, text like "P1")
+    if ($request->filled('rating')) {
+        $query->where('rating', '=', $request->rating);
+    }
+
+    // ✅ Final Employees
+    $employees = $query->select('id', 'name', 'username', 'rating')->get();
+
+    return response()->json($employees);
+}
+
+
 
 
     public function BookingCalls($id){

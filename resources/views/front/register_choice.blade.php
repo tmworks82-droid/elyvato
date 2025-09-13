@@ -77,7 +77,7 @@
             <input type="radio" name="role" value="client" checked>
             <div class="option-content">
               <i class="bi bi-briefcase mb-2" style="font-size:24px;"></i>
-              <p class="mb-0 fw-bold">Register as a client</p>
+              <p class="mb-0 fw-bold">Register as a client, hire for work</p>
             </div>
           </label>
 
@@ -98,7 +98,7 @@
 
         <p class="mt-3 mb-0">
           Already have an account?
-          <a href="/login" class="text-success fw-bold">Log In</a>
+          <a href="/login" class=" fw-bold">Log In</a>
         </p>
 
       </div>

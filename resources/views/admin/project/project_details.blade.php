@@ -5,36 +5,37 @@
 
 @extends('layouts.main')
 @section('title', 'ElyvatoContent| ' . $page_name . ' list')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <style>
-
     /* AdminLTE v3.2.0 Compatible Styles */
-:root {
-    --adminlte-primary: #007bff;
-    --adminlte-secondary: #6c757d;
-    --adminlte-success: #28a745;
-    --adminlte-info: #17a2b8;
-    --adminlte-warning: #ffc107;
-    --adminlte-danger: #dc3545;
-    --adminlte-light: #f8f9fa;
-    --adminlte-dark: #343a40;
-    --adminlte-sidebar-bg: #343a40;
-    --adminlte-sidebar-text: #c2c7d0;
-    --adminlte-sidebar-hover: #454d55;
-    --adminlte-navbar-bg: #ffffff;
-    --adminlte-content-bg: #f4f6f9;
-}
+    :root {
+        --adminlte-primary: #007bff;
+        --adminlte-secondary: #6c757d;
+        --adminlte-success: #28a745;
+        --adminlte-info: #17a2b8;
+        --adminlte-warning: #ffc107;
+        --adminlte-danger: #dc3545;
+        --adminlte-light: #f8f9fa;
+        --adminlte-dark: #343a40;
+        --adminlte-sidebar-bg: #343a40;
+        --adminlte-sidebar-text: #c2c7d0;
+        --adminlte-sidebar-hover: #454d55;
+        --adminlte-navbar-bg: #ffffff;
+        --adminlte-content-bg: #f4f6f9;
+    }
 
-* {
-    box-sizing: border-box;
-}
+    * {
+        box-sizing: border-box;
+    }
 
-body.adminlte-body {
-    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--adminlte-content-bg);
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+    body.adminlte-body {
+        font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background-color: var(--adminlte-content-bg);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
 
 
     .switch {
@@ -100,82 +101,79 @@ body.adminlte-body {
     /* here is new style  */
 
     /* Cards */
-.card {
-    border: none;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
-    margin-bottom: 1.5rem;
-}
+    .card {
+        border: none;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+        margin-bottom: 1.5rem;
+    }
 
-.card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    padding: 1rem 1.25rem;
-    border-radius: 0.5rem 0.5rem 0 0;
-}
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+        padding: 1rem 1.25rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
 
-.card-title {
-    color: var(--adminlte-dark);
-    font-weight: 600;
-}
+    .card-title {
+        color: var(--adminlte-dark);
+        font-weight: 600;
+    }
 
-.card-body {
-    padding: 1.25rem;
-}
+    .card-body {
+        padding: 1.25rem;
+    }
 
-/* Tables */
-.table {
-    margin-bottom: 0;
-}
+    /* Tables */
+    .table {
+        margin-bottom: 0;
+    }
 
-.table th {
-    border-top: none;
-    font-weight: 600;
-    color: var(--adminlte-dark);
-    background-color: #f8f9fa;
-}
+    .table th {
+        border-top: none;
+        font-weight: 600;
+        color: var(--adminlte-dark);
+        background-color: #f8f9fa;
+    }
 
-.table td {
-    vertical-align: middle;
-}
+    .table td {
+        vertical-align: middle;
+    }
 
-/* Badges */
-.badge {
-    font-size: 0.75rem;
-    padding: 0.375em 0.75em;
-}
+    /* Badges */
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.375em 0.75em;
+    }
 
-/* Buttons */
-.btn {
-    border-radius: 0.25rem;
-    font-weight: 500;
-    padding: 0.375rem 0.75rem;
-}
+    /* Buttons */
+    .btn {
+        border-radius: 0.25rem;
+        font-weight: 500;
+        padding: 0.375rem 0.75rem;
+    }
 
-.btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-}
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
 
-.nav-tabs nav nav-tabs
- {
-    border-bottom: 2px solid #dee2e6;
-}
- 
-.nav-tabs .nav-link.active {
-    background-color: #007bff !important;
-    color: white !important;
-    border-color: #007bff !important;
-}
+    .nav-tabs nav nav-tabs {
+        border-bottom: 2px solid #dee2e6;
+    }
 
-
-.card-title {
-    color: #343a40 !important;
-    font-weight: 600 !important;
-     float: none !important;
-}
+    .nav-tabs .nav-link.active {
+        background-color: #007bff !important;
+        color: white !important;
+        border-color: #007bff !important;
+    }
 
 
+    .card-title {
+        color: #343a40 !important;
+        font-weight: 600 !important;
+        float: none !important;
+    }
 </style>
 
 @section('content')
@@ -201,7 +199,7 @@ body.adminlte-body {
 
         <section class="content">
             <div class="container-fluid">
-               
+
 
                 {{-- here new  --}}
 
@@ -212,7 +210,7 @@ body.adminlte-body {
                             <h3 class="card-title">{{ $page_name }} details</h3>
                             <button type="button" class="btn btn-warning btn-sm float-right ml-2"
                                 data-id="{{ $project->id }}" data-toggle="modal" data-target="#milestoneModal">
-                                Create Milestone 
+                                Create Milestone
                             </button>
                         </div>
 
@@ -246,7 +244,7 @@ body.adminlte-body {
                             <!-- Detail Tab -->
                             <div class="tab-pane fade show active" id="detail" role="tabpanel"
                                 aria-labelledby="detail-tab">
-                                {{--<div class="row">
+                                {{-- <div class="row">
                                     <div class="col-sm-9">
                                         <div class="row mb-3">
 
@@ -328,7 +326,7 @@ body.adminlte-body {
                                                 {{ $project->completed_at ? \Carbon\Carbon::parse($project->completed_at)->format('d M Y') : 'N/A' }}
                                             </div>
                                             <div class="col-md-4 mb-2"><strong>Status:</strong>
-                                                <span class="badge badge-success"> @if($project->project_status=='Not_started') Not Started @elseif($project->project_status=='active') Active @else Completed @endif
+                                                <span class="badge badge-success"> @if ($project->project_status == 'Not_started') Not Started @elseif($project->project_status=='active') Active @else Completed @endif
                                                 </span>
                                                 </div>
                                         </div>
@@ -346,7 +344,7 @@ body.adminlte-body {
                                             </div>
                                         </div>
                                     </div>
-                                </div>--}}
+                                </div> --}}
 
                                 {{-- here new row UI  --}}
                                 <div class="row">
@@ -360,14 +358,15 @@ body.adminlte-body {
                                                 <!-- Description -->
                                                 <div class="row mb-3">
                                                     <div class="col-sm-3"><strong>Description:</strong></div>
-                                                 
+
                                                     <div class="col-sm-9" style="max-height: 150px; overflow-y:auto;">
-                                                        @if(!empty($project->booking->statementOfWork->description))
+                                                        @if (!empty($project->booking->statementOfWork->description))
                                                             {!! $project->booking->statementOfWork->description !!}
                                                         @elseif(!empty($project->description))
                                                             {!! $project->description !!}
                                                         @else
-                                                            <a href="#" data-id="{{ $project->id }}" data-toggle="modal" data-target="#addproject_details">
+                                                            <a href="#" data-id="{{ $project->id }}"
+                                                                data-toggle="modal" data-target="#addproject_details">
                                                                 Update Details
                                                             </a>
                                                         @endif
@@ -377,13 +376,17 @@ body.adminlte-body {
                                                 <!-- Service -->
                                                 <div class="row mb-3">
                                                     <div class="col-sm-3"><strong>Service:</strong></div>
-                                                    <div class="col-sm-9">{{ $project->booking->statementOfWork->service->name ?? 'N/A' }}</div>
+                                                    <div class="col-sm-9">
+                                                        {{ $project->booking->statementOfWork->service->name ?? 'N/A' }}
+                                                    </div>
                                                 </div>
 
                                                 <!-- Sub Service -->
                                                 <div class="row mb-3">
                                                     <div class="col-sm-3"><strong>Sub Service:</strong></div>
-                                                    <div class="col-sm-9">{{ $project->booking->statementOfWork->subservice->name ?? 'N/A' }}</div>
+                                                    <div class="col-sm-9">
+                                                        {{ $project->booking->statementOfWork->subservice->name ?? 'N/A' }}
+                                                    </div>
                                                 </div>
 
                                                 <!-- Account Manager -->
@@ -392,10 +395,13 @@ body.adminlte-body {
                                                     <div class="col-sm-9">
                                                         {{ $project->accountManager->name ?? 'N/A' }}
                                                         @if (Auth::user('admin')->id == 1 || Auth::user('admin')->id == 2)
-                                                            <a href="#" data-id="{{ $project->id }}" data-toggle="modal" data-target="#accouintmanagerModal">
+                                                            <a href="#" data-id="{{ $project->id }}"
+                                                                data-toggle="modal" data-target="#accouintmanagerModal">
                                                                 @if (!empty($project->account_manager_id))
-                                                                 (Update Manager) 
-                                                                 @else (Add Manager) @endif
+                                                                    (Update Manager)
+                                                                @else
+                                                                    (Add Manager)
+                                                                @endif
                                                             </a>
                                                         @endif
                                                     </div>
@@ -406,41 +412,50 @@ body.adminlte-body {
                                                     <div class="col-sm-3"><strong>Employee:</strong></div>
                                                     <div class="col-sm-9">
                                                         {{ $project->employee->name ?? 'N/A' }}
-                                                @if (auth()->user()->hasPermission('assign_employee'))
-                                                    <a href="#" data-id="{{ $project->id }}" data-toggle="modal"
-                                                        data-target="#EmployeeModal">
-                                                        @if (!empty($project->employee_id))
-                                                            (Update Employee)
-                                                        @else
-                                                            (Add Employee)
+                                                        @if (auth()->user()->hasPermission('assign_employee'))
+                                                            <a href="#" data-id="{{ $project->id }}"
+                                                                data-toggle="modal" data-target="#EmployeeModal">
+                                                                @if (!empty($project->employee_id))
+                                                                    (Update Employee)
+                                                                @else
+                                                                    (Add Employee)
+                                                                @endif
+                                                            </a>
                                                         @endif
-                                                    </a>
-                                                @endif
                                                     </div>
                                                 </div>
 
                                                 <!-- Dates -->
                                                 <div class="row mb-3">
                                                     <div class="col-sm-3"><strong>Started At:</strong></div>
-                                                    <div class="col-sm-9">{{ $project->started_at ? \Carbon\Carbon::parse($project->started_at)->format('d M Y') : 'N/A' }}</div>
+                                                    <div class="col-sm-9">
+                                                        {{ $project->started_at ? \Carbon\Carbon::parse($project->started_at)->format('d M Y') : 'N/A' }}
+                                                    </div>
                                                 </div>
 
                                                 <div class="row mb-3">
                                                     <div class="col-sm-3"><strong>Completed At:</strong></div>
-                                                    <div class="col-sm-9">{{ $project->completed_at ? \Carbon\Carbon::parse($project->completed_at)->format('d M Y') : 'N/A' }}</div>
+                                                    <div class="col-sm-9">
+                                                        {{ $project->completed_at ? \Carbon\Carbon::parse($project->completed_at)->format('d M Y') : 'N/A' }}
+                                                    </div>
                                                 </div>
 
                                                 <!-- Status -->
                                                 <div class="row mb-3">
                                                     <div class="col-sm-3"><strong>Status:</strong></div>
                                                     <div class="col-sm-9">
-                                                        <span class="badge 
-                                                            @if($project->project_status=='Not_started') bg-secondary 
-                                                            @elseif($project->project_status=='active') bg-warning 
+                                                        <span
+                                                            class="badge 
+                                                            @if ($project->project_status == 'Not_started') bg-secondary 
+                                                            @elseif($project->project_status == 'active') bg-warning 
                                                             @else bg-success @endif">
-                                                            @if($project->project_status=='Not_started') Not Started 
-                                                            @elseif($project->project_status=='active') Active 
-                                                            @else Completed @endif
+                                                            @if ($project->project_status == 'Not_started')
+                                                                Not Started
+                                                            @elseif($project->project_status == 'active')
+                                                                Active
+                                                            @else
+                                                                Completed
+                                                            @endif
                                                         </span>
                                                     </div>
                                                 </div>
@@ -456,10 +471,17 @@ body.adminlte-body {
                                                 <h5 class="card-title mb-0">Client Information</h5>
                                             </div>
                                             <div class="card-body">
-                                                <p class="mb-2"><strong>Name:</strong> <br> {{ $project->booking->user->name ?? $project->booking->user->username }}</p>
-                                                <p class="mb-2"><strong>Email:</strong> <br> <a href="mailto:{{ $project->booking->user->email }}">{{ $project->booking->user->email }}</a></p>
-                                                <p class="mb-2"><strong>Phone:</strong> <br> <a href="tel:{{ $project->booking->user->mobile }}">{{ $project->booking->user->mobile }}</a></p>
-                                                <p class="mb-0 text-muted"><strong>Member Since:</strong> <br> {{ formatDateReadable($project->booking->user->created_at) }}</p>
+                                                <p class="mb-2"><strong>Name:</strong> <br>
+                                                    {{ $project->booking->user->name ?? $project->booking->user->username }}
+                                                </p>
+                                                <p class="mb-2"><strong>Email:</strong> <br> <a
+                                                        href="mailto:{{ $project->booking->user->email }}">{{ $project->booking->user->email }}</a>
+                                                </p>
+                                                <p class="mb-2"><strong>Phone:</strong> <br> <a
+                                                        href="tel:{{ $project->booking->user->mobile }}">{{ $project->booking->user->mobile }}</a>
+                                                </p>
+                                                <p class="mb-0 text-muted"><strong>Member Since:</strong> <br>
+                                                    {{ formatDateReadable($project->booking->user->created_at) }}</p>
                                             </div>
                                         </div>
 
@@ -469,10 +491,14 @@ body.adminlte-body {
                                                 <h5 class="card-title mb-0">Project Pricing</h5>
                                             </div>
                                             <div class="card-body">
-                                                <p class="mb-2"><strong>Project Price:</strong> <br> ₹ {{ $project->booking->total_price ?? 'N/A' }}</p>
-                                                <p class="mb-2"><strong>Initial Price:</strong> <br>₹ {{ $project->booking->initial_paid_amount ?? 'N/A' }}</p>
-                                                <p class="mb-2"><strong>SOW Min Price:</strong> <br>₹ {{ $project->booking->statementOfWork->min_price ?? 'N/A' }}</p>
-                                                <p class="mb-0"><strong>SOW Max Price:</strong> <br> ₹ {{ $project->booking->statementOfWork->max_price ?? 'N/A' }}</p>
+                                                <p class="mb-2"><strong>Project Price:</strong> <br> ₹
+                                                    {{ $project->booking->total_price ?? 'N/A' }}</p>
+                                                <p class="mb-2"><strong>Initial Price:</strong> <br>₹
+                                                    {{ $project->booking->initial_paid_amount ?? 'N/A' }}</p>
+                                                <p class="mb-2"><strong>SOW Min Price:</strong> <br>₹
+                                                    {{ $project->booking->statementOfWork->min_price ?? 'N/A' }}</p>
+                                                <p class="mb-0"><strong>SOW Max Price:</strong> <br> ₹
+                                                    {{ $project->booking->statementOfWork->max_price ?? 'N/A' }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -482,8 +508,8 @@ body.adminlte-body {
 
                             <!-- Payments Tab -->
                             <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
-                                
-                                {{--<div class="row mt-4">
+
+                                {{-- <div class="row mt-4">
                                     <!-- Left Side: Payment Summary & Milestones -->
                                     <div class="col-md-8">
                                         <!-- Payment Summary -->
@@ -551,7 +577,7 @@ body.adminlte-body {
                                                                         </td>
                                                                         <td>{{ $mile->created_on }}</td>
                                                                         <td>
-                                                                            @if($mile->status=='pending')
+                                                                            @if ($mile->status == 'pending')
                                                                             <input type="button" class="btn btn-sm btn-primary request_milestone" data-id="{{ $mile->id }}" value="Milestone Payment Request">
                                                                             @else 
                                                                             <span class="badge badge-success">{{ ucwords(str_replace('_', ' ', $mile->status)) }}</span>
@@ -590,7 +616,7 @@ body.adminlte-body {
                                             </div>
                                         </div>
                                     </div>
-                                </div>--}}
+                                </div> --}}
 
                                 <div class="row mt-4">
                                     <!-- Left Side: Payment Summary & Milestones -->
@@ -613,7 +639,7 @@ body.adminlte-body {
                                                     <div class="card-body text-center">
                                                         <h5 class="card-title">Project Payment</h5>
                                                         <h3 class="text-primary">
-                                                           ₹ {{ $project->booking->total_price ?? '$0.00' }}
+                                                            ₹ {{ $project->booking->total_price ?? '$0.00' }}
                                                         </h3>
                                                     </div>
                                                 </div>
@@ -626,10 +652,9 @@ body.adminlte-body {
                                                         <h3 class="text-info">
                                                             @php
                                                                 $totalPaid = 0;
-                                                                
+
                                                                 if (!empty($project->booking->payments)) {
                                                                     foreach ($project->booking->payments as $pay) {
-                                                                       
                                                                         if ($pay->status == 'success') {
                                                                             $totalPaid += $pay->amount;
                                                                         }
@@ -666,28 +691,32 @@ body.adminlte-body {
                                                             <tbody>
                                                                 @foreach ($milestone as $mile)
                                                                     <tr>
-                                                                        <td>{{ \Carbon\Carbon::parse($mile->due_date)->format('d M Y') }}</td>
+                                                                        <td>{{ \Carbon\Carbon::parse($mile->due_date)->format('d M Y') }}
+                                                                        </td>
                                                                         <td>{{ $mile->title }}</td>
                                                                         <td>{{ $mile->description }}</td>
                                                                         <td class="text-success">${{ $mile->amount }}</td>
                                                                         <td>
-                                                                            <span class="badge 
-                                                                                @if($mile->status=='pending') bg-warning 
-                                                                                @elseif($mile->status=='completed') bg-success 
+                                                                            <span
+                                                                                class="badge 
+                                                                                @if ($mile->status == 'pending') bg-warning 
+                                                                                @elseif($mile->status == 'completed') bg-success 
                                                                                 @else bg-secondary @endif">
                                                                                 {{ ucwords(str_replace('_', ' ', $mile->status)) }}
                                                                             </span>
                                                                         </td>
-                                                                        <td>{{ \Carbon\Carbon::parse($mile->created_on)->format('d M Y H:i') }}</td>
+                                                                        <td>{{ \Carbon\Carbon::parse($mile->created_on)->format('d M Y H:i') }}
+                                                                        </td>
                                                                         <td>
-                                                                            @if($mile->status=='pending')
-                                                                                <button type="button" 
+                                                                            @if ($mile->status == 'pending')
+                                                                                <button type="button"
                                                                                     class="btn btn-sm btn-primary request_milestone"
                                                                                     data-id="{{ $mile->id }}">
                                                                                     Request Payment
                                                                                 </button>
                                                                             @else
-                                                                                <span class="badge bg-success">Completed</span>
+                                                                                <span
+                                                                                    class="badge bg-success">Completed</span>
                                                                             @endif
                                                                         </td>
                                                                     </tr>
@@ -696,7 +725,8 @@ body.adminlte-body {
                                                         </table>
                                                     @else
                                                         <div class="text-center text-muted">
-                                                            <img src="https://cdn-icons-png.flaticon.com/512/742/742751.png" alt="No milestones" width="64">
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/742/742751.png"
+                                                                alt="No milestones" width="64">
                                                             <p class="mt-2">No created milestones yet.</p>
                                                         </div>
                                                     @endif
@@ -712,7 +742,8 @@ body.adminlte-body {
                                                 <h6 class="card-title">The Client</h6>
                                                 <h6 class="mb-0">{{ $project->booking->user->name }}</h6>
                                                 <span class="text-dark">
-                                                    {{ $project->booking->user->email }} <br> ({{ $project->booking->user->mobile }})
+                                                    {{ $project->booking->user->email }} <br>
+                                                    ({{ $project->booking->user->mobile }})
                                                 </span>
                                                 <div class="mt-2">
                                                     <button class="btn btn-outline-primary btn-sm">Chat</button>
@@ -729,67 +760,71 @@ body.adminlte-body {
                             <!-- Tasklist Tab -->
                             <div class="tab-pane fade" id="tasklist" role="tabpanel" aria-labelledby="tasklist-tab">
                                 <div class="card">
-    <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="card-title mb-0">Task List</h5>
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#taskModal">
-                + Add Task
-            </button>
-        </div>
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h5 class="card-title mb-0">Task List</h5>
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                                data-target="#taskModal">
+                                                + Add Task
+                                            </button>
+                                        </div>
 
-        <div class="table-responsive">
-            <table class="table align-middle">
-                <thead class="bg-light">
-                    <tr>
-                        <th>Title</th>
-                        <th>Due Date</th>
-                        <th>Status</th>
-                        <th>Assign To</th>
-                        <th>Milestone</th>
-                        <th>Created On</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!empty($tasks) && count($tasks) > 0)
-                        @foreach ($tasks as $task)
-                            <tr>
-                                <td>{{ $task->title }}</td>
-                                <td>{{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}</td>
-                                <td>
-                                    <span class="badge 
-                                        @if($task->status == 'review') bg-warning text-dark 
+                                        <div class="table-responsive">
+                                            <table class="table align-middle">
+                                                <thead class="bg-light">
+                                                    <tr>
+                                                        <th>Title</th>
+                                                        <th>Due Date</th>
+                                                        <th>Status</th>
+                                                        <th>Assign To</th>
+                                                        <th>Milestone</th>
+                                                        <th>Created On</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (!empty($tasks) && count($tasks) > 0)
+                                                        @foreach ($tasks as $task)
+                                                            <tr>
+                                                                <td>{{ $task->title }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}
+                                                                </td>
+                                                                <td>
+                                                                    <span
+                                                                        class="badge 
+                                        @if ($task->status == 'review') bg-warning text-dark 
                                         @elseif($task->status == 'completed') bg-success 
                                         @elseif($task->status == 'pending') bg-secondary 
                                         @else bg-info @endif">
-                                        {{ strtolower($task->status) }}
-                                    </span>
-                                </td>
-                                <td>{{ GetUser($task->assigned_to)->name ?? 'N/A' }}</td>
-                                <td>{{ $task->milestone->title ?? 'N/A' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($task->created_at)->format('M d, Y') }}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-light border view-task-btn"
-                                            data-id="{{ $task->id }}"
-                                            data-toggle="modal"
-                                            data-target="#taskDetailsModal">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">
-                                No tasks available.
-                            </td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                                                                        {{ strtolower($task->status) }}
+                                                                    </span>
+                                                                </td>
+                                                                <td>{{ GetUser($task->assigned_to)->name ?? 'N/A' }}</td>
+                                                                <td>{{ $task->milestone->title ?? 'N/A' }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($task->created_at)->format('M d, Y') }}
+                                                                </td>
+                                                                <td>
+                                                                    <button
+                                                                        class="btn btn-sm btn-light border view-task-btn"
+                                                                        data-id="{{ $task->id }}" data-toggle="modal"
+                                                                        data-target="#taskDetailsModal">
+                                                                        <i class="fas fa-eye"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td colspan="7" class="text-center text-muted">
+                                                                No tasks available.
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -813,7 +848,7 @@ body.adminlte-body {
                                 </button> --}}
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                    <span aria-hidden="true">×</span>
                                 </button>
 
                             </div>
@@ -862,7 +897,8 @@ body.adminlte-body {
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                                    <button type="submit" name="button" value="create milestone" class="btn btn-primary btn-response">Save Milestone</button>
+                                    <button type="submit" name="button" value="create milestone"
+                                        class="btn btn-primary btn-response">Save Milestone</button>
 
                                 </div>
                             </form>
@@ -915,7 +951,9 @@ body.adminlte-body {
                                                 <option value="">Select User</option>
                                                 @if (!empty($users) && count($users))
                                                     @foreach ($users as $u)
-                                                        <option value="{{ $u->id }}">{{ $u->name }} ({{$u->role->name}})</option>
+                                                        <option value="{{ $u->id }}">{{ $u->name }}
+                                                            ({{ $u->role->name }})
+                                                        </option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -965,16 +1003,17 @@ body.adminlte-body {
                                 </div>
 
                                 <div class="modal-footer">
-                                    
+
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" name="button" value="create task" class="btn btn-primary btn-response">Save Task</button>
+                                    <button type="submit" name="button" value="create task"
+                                        class="btn btn-primary btn-response">Save Task</button>
                                 </div>
 
                             </div>
                         </form>
                     </div>
                 </div>
-            
+
 
                 <div class="modal fade" id="addproject_details" tabindex="-1" role="dialog"
                     aria-labelledby="addproject_details" aria-hidden="true">
@@ -986,7 +1025,7 @@ body.adminlte-body {
                                     aria-label="Close"></button> --}}
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                    <span aria-hidden="true">×</span>
                                 </button>
 
                             </div>
@@ -999,15 +1038,16 @@ body.adminlte-body {
                                     <!-- Title -->
                                     <div class="mb-3">
                                         <label class="form-label">Description</label> <br>
-                                        
-                                                       
-                                        <textarea rows="8" class="form-control" cols="25" name="description" id="description"> {{$project->description}}</textarea>
+
+
+                                        <textarea rows="8" class="form-control" cols="25" name="description" id="description"> {{ $project->description }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button name="button"  value="Update Project description" type="submit"  class="btn btn-primary btn-save">Save</button>
+                                    <button name="button" value="Update Project description" type="submit"
+                                        class="btn btn-primary btn-save">Save</button>
                                 </div>
                             </form>
 
@@ -1027,7 +1067,7 @@ body.adminlte-body {
                                     aria-label="Close"></button> --}}
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                    <span aria-hidden="true">×</span>
                                 </button>
 
                             </div>
@@ -1047,7 +1087,7 @@ body.adminlte-body {
                                                 @foreach ($account_manager as $manager)
                                                     <option value="{{ $manager->id }}"
                                                         @if ($project->account_manager_id == $manager->id) selected @endif>
-                                                        {{ $manager->name }} ({{$manager->username}})</option>
+                                                        {{ $manager->name }} ({{ $manager->username }})</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -1056,7 +1096,8 @@ body.adminlte-body {
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button name="button" id="button-ac" value="Add account manager" type="submit" class="btn btn-primary">Save</button>
+                                    <button name="button" id="button-ac" value="Add account manager" type="submit"
+                                        class="btn btn-primary">Save</button>
                                 </div>
                             </form>
 
@@ -1064,18 +1105,16 @@ body.adminlte-body {
                     </div>
                 </div>
 
-                <div class="modal fade" id="EmployeeModal" tabindex="-1" role="dialog"
+                {{-- <div class="modal fade" id="EmployeeModal" tabindex="-1" role="dialog"
                     aria-labelledby="EmployeeModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
 
                             <div class="modal-header">
                                 <h5 class="modal-title" id="EmployeeModalLabel">Add Employee</h5>
-
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                    <span aria-hidden="true">×</span>
                                 </button>
-
                             </div>
 
                             <form id="employeeForm" method="POST">
@@ -1083,32 +1122,177 @@ body.adminlte-body {
                                 <input type="hidden" name="project_id" id="project_id" value="{{ $project->id }}">
 
                                 <div class="modal-body">
-                                    <!-- Title -->
+
+                                    <!-- Employee Selection -->
                                     <div class="mb-3">
-                                        <label class="form-label">Add Employee</label>
-                                        <select name="assign_employee" id="assign_employee" class="form-control"
-                                            required>
-                                            <option value="">Select Employee</option>
+                                        <label class="form-label">Assign Employee</label>
+                                        <select name="assign_employee[]" id="assign_employee" class="form-control"
+                                            multiple required>
                                             @if (!empty($employee) && count($employee))
                                                 @foreach ($employee as $emp)
-                                                    <option value="{{ $emp->id }}"
-                                                        @if ($project->employee_id == $emp->id) selected @endif>
-                                                        {{ $emp->name }} ({{$emp->username}})</option>
+                                                    <option value="{{ $emp->id }}">
+                                                        {{ $emp->name }} ({{ $emp->username }})
+                                                    </option>
                                                 @endforeach
                                             @endif
                                         </select>
+                                        <small class="form-text text-muted">Hold Ctrl (Windows) / Cmd (Mac) to select
+                                            multiple.</small>
                                     </div>
+
+                                    <!-- Skill Set -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Skill Set</label>
+                                        <select name="skills[]" id="skills" class="form-control" multiple>
+                                            
+                                        </select>
+                                    </div>
+
+                                    <!-- Priority -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Priority</label>
+                                        <select name="priority" id="priority" class="form-control">
+                                            <option value="">Select Priority</option>
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
+                                        </select>
+                                    </div>
+
+                                    
+
                                 </div>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" name="button" id="button-emp" value="Add Employee" class="btn btn-primary">Save</button>
+                                    <button type="submit" name="button" id="button-emp" value="Add Employee"
+                                        class="btn btn-primary">Save</button>
                                 </div>
                             </form>
 
                         </div>
                     </div>
+                </div> --}}
+
+                <div class="modal fade" id="EmployeeModal" tabindex="-1" role="dialog"
+                    aria-labelledby="EmployeeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="EmployeeModalLabel">Task Details <span
+                                        class="badge badge-success btn_status"></span> </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="form-row">
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <form id="filter_employee" method="POST">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="skill" class="form-label">Skills *</label>
+                                                            <select name="skill[]" id="skill" class="form-select"
+                                                                multiple >
+                                                                @if (!empty($skill) && count($skill) > 0)
+                                                                    @foreach ($skill as $talent)
+                                                                        <option value="{{ $talent->id }}">
+                                                                            {{ ucfirst($talent->name) }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <!-- Availability -->
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Availability</label>
+                                                                <select name="availability_day" id="availability_day"
+                                                                    class="form-control">
+                                                                    <option value="">Select Availability</option>
+                                                                    <option value="sunday">Sunday</option>
+                                                                    <option value="monday">Monday</option>
+                                                                    <option value="tuesday">Tuesday</option>
+                                                                    <option value="wednesday">Wednesday</option>
+                                                                    <option value="thursday">Thursday</option>
+                                                                    <option value="friday">Friday</option>
+                                                                    <option value="saturday">Saturday</option>
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label class="form-label">Time</label>
+                                                            <input type="time" name="time" id="time"
+                                                                class="form-control">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <!-- Rating -->
+                                                            <label class="form-label">Talent Rating</label>
+                                                            <select name="rating" id="rating" class="form-control">
+                                                                <option value="">Select Rating</option>
+                                                                @foreach ($talent_ratings as $rating)
+                                                                    <option value="{{ $rating->title }}">
+                                                                        {{ $rating->title }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="modal-footer col-md-12">
+                                                            <button type="submit"
+                                                                class="btn btn-sm bg-warning">Filter Employee</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <form id="employeeForm" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="project_id" id="project_id"
+                                                        value="{{ $project->id }}">
+
+                                                    <!-- Employee Selection -->
+                                                    <label class="form-label">Assign Employee</label>
+                                                    <select name="assign_employee" id="assign_employee"
+                                                        class="form-control" required>
+                                                        @if (!empty($employee) && count($employee))
+                                                            @foreach ($employee as $emp)
+                                                                <option value="{{ $emp->id }}">
+                                                                    {{ $emp->name }} ({{ $emp->username }})
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                        <button type="submit" name="button" id="button-emp"
+                                                            value="Add Employee" class="btn btn-primary">Assign Employee</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
 
                 {{-- here task details modal  --}}
 
@@ -1118,7 +1302,8 @@ body.adminlte-body {
                     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="taskDetailsLabel">Task Details <span class="badge badge-success btn_status"></span> </h5>
+                                <h5 class="modal-title" id="taskDetailsLabel">Task Details <span
+                                        class="badge badge-success btn_status"></span> </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -1141,7 +1326,7 @@ body.adminlte-body {
 
                                             <div class="form-group col-md-6">
                                                 <label>Due Date</label>
-                                                <input type="text" id="taskDueDate" class="form-control"  readonly>
+                                                <input type="text" id="taskDueDate" class="form-control" readonly>
                                             </div>
 
                                             <div class="form-group col-md-12">
@@ -1157,19 +1342,26 @@ body.adminlte-body {
                                             <h6>Quick actions</h6>
                                             <div class="d-flex flex-column">
                                                 <input type="hidden" name="id" id="task_id">
-                                                
+
                                                 @if (auth()->user()->hasPermission('mark_complete'))
-                                                <button class="btn btn-outline-primary btn-sm mb-2 mark_as_complete" name="button" value="Mark Completed Task">Mark Complete</button>
+                                                    <button class="btn btn-outline-primary btn-sm mb-2 mark_as_complete"
+                                                        name="button" value="Mark Completed Task">Mark Complete</button>
                                                 @endif
                                                 @if (auth()->user()->hasPermission('reminder_mail'))
-                                                <button class="btn btn-outline-primary btn-sm mb-2 reminder_mail" name="button" value="reminder mail Task">Reminder Mail</button>
+                                                    <button class="btn btn-outline-primary btn-sm mb-2 reminder_mail"
+                                                        name="button" value="reminder mail Task">Reminder Mail</button>
                                                 @endif
-                                                 @if (auth()->user()->hasPermission('request_review'))
-                                                <button class="btn btn-outline-danger btn-sm mb-2 delete-task-btn" data-type="review" data-task-id="{{ $task->id ?? '' }}"  name="button" value="Request for Review">Request for Review</button>
+                                                @if (auth()->user()->hasPermission('request_review'))
+                                                    <button class="btn btn-outline-danger btn-sm mb-2 delete-task-btn"
+                                                        data-type="review" data-task-id="{{ $task->id ?? '' }}"
+                                                        name="button" value="Request for Review">Request for
+                                                        Review</button>
                                                 @endif
-                                                
+
                                                 @if (auth()->user()->hasPermission('delete_task'))
-                                                <button class="btn btn-outline-danger btn-sm delete-task-btn" data-type="delete" name="button" value="Delete Task" data-task-id="{{ $task->id ?? '' }}">Delete</button>
+                                                    <button class="btn btn-outline-danger btn-sm delete-task-btn"
+                                                        data-type="delete" name="button" value="Delete Task"
+                                                        data-task-id="{{ $task->id ?? '' }}">Delete</button>
                                                 @endif
 
                                             </div>
@@ -1186,7 +1378,9 @@ body.adminlte-body {
                                     <div class="media mt-2">
                                         <div class="media-body">
                                             <textarea id="commit-comment" class="form-control" rows="2" placeholder="Write a comment..."></textarea>
-                                            <button name="button" id="commit-btn" class="btn btn-sm btn-info float-right mt-2" value="comment in task" data-task-id="{{ $task->id ?? '' }}">Commit</button>
+                                            <button name="button" id="commit-btn"
+                                                class="btn btn-sm btn-info float-right mt-2" value="comment in task"
+                                                data-task-id="{{ $task->id ?? '' }}">Commit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1198,7 +1392,7 @@ body.adminlte-body {
             </div><!-- /.container-fluid -->
         </section>
 
-     
+
 
         <!-- /.content -->
     </div>
@@ -1218,11 +1412,21 @@ body.adminlte-body {
 
 @endsection
 @push('scripts')
-<script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    
     <script>
+        $(document).ready(function() {
+            $('#skill').select2({
+                placeholder: "Select your skills",
+                allowClear: true,
+                width: '100%'
+            });
+        });
 
-  CKEDITOR.replace('description');
-  
+
+        CKEDITOR.replace('description');
+
         // When "Create Milestone" button is clicked
         $(document).on('click', '.btn-primary[data-toggle="modal"]', function() {
             var projectId = $(this).data('id'); // get data-id value
@@ -1279,10 +1483,10 @@ body.adminlte-body {
 
             $('#milestoneForm').on('submit', function(e) {
                 e.preventDefault(); // prevent normal form submit
-    
-               let $btn = $('.btn-response');
-               $btn.prop('disabled', true).text('Processing...');
-            
+
+                let $btn = $('.btn-response');
+                $btn.prop('disabled', true).text('Processing...');
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1302,27 +1506,27 @@ body.adminlte-body {
                         // $('#milestoneModal').modal('hide'); // close modal
                         // $('#milestoneForm')[0].reset(); // clear form
 
-                        if(response.status==true){
+                        if (response.status == true) {
 
                             $('#milestoneModal').modal('hide'); // close modal
                             $('#milestoneForm')[0].reset();
 
-                             $.toast({
+                            $.toast({
                                 heading: 'Success',
                                 text: response.message,
                                 showHideTransition: 'slide',
                                 icon: 'success',
                                 position: 'top-right',
-                                
-                                 afterShown: function () {
-                                    setTimeout(function () {
-                                        location.reload(); 
+
+                                afterShown: function() {
+                                    setTimeout(function() {
+                                        location.reload();
                                     }, 2000);
                                 }
                             })
                             $btn.prop('disabled', false).text('Save Milestone');
 
-                        }else{
+                        } else {
                             $.toast({
                                 heading: 'Error',
                                 text: response.message || 'Something went wrong!',
@@ -1337,7 +1541,7 @@ body.adminlte-body {
                         // Error handling
                         alert('Something went wrong!');
                         console.log(xhr.responseText); // for debugging
-                         $btn.prop('disabled', false).text('Save Milestone');
+                        $btn.prop('disabled', false).text('Save Milestone');
                     }
                 });
             });
@@ -1350,8 +1554,8 @@ body.adminlte-body {
 
             let $btn = $('.btn-response');
             $btn.prop('disabled', true).text('Processing...');
-               
-               
+
+
             var formData = new FormData(this);
 
             $.ajax({
@@ -1378,9 +1582,9 @@ body.adminlte-body {
                         icon: 'success',
                         position: 'top-right',
                     });
-                    setTimeout(function () {
-                            location.reload();
-                        }, 2000);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                 },
                 error: function(xhr) {
                     // Handle errors
@@ -1394,7 +1598,7 @@ body.adminlte-body {
                     }
 
                     alert(errorMessage);
-                     $btn.prop('disabled', false).text('Save Task');
+                    $btn.prop('disabled', false).text('Save Task');
                 },
                 complete: function() {
                     // Enable button again
@@ -1404,12 +1608,12 @@ body.adminlte-body {
         });
 
         // asssign Account manager here
-        $('#accountManagerForm').on('submit', function(e) { 
+        $('#accountManagerForm').on('submit', function(e) {
             e.preventDefault();
-            
+
             let $btn = $('#button-ac');
             $btn.prop('disabled', true).text('Processing...');
-            
+
             $.ajax({
                 url: '{{ route('assign.accountmanager') }}',
                 method: 'POST',
@@ -1426,7 +1630,7 @@ body.adminlte-body {
                             icon: 'success',
                             position: 'top-right',
                         });
-                        setTimeout(function () {
+                        setTimeout(function() {
                             location.reload();
                         }, 2000);
                         // Optionally reload part of page or table
@@ -1447,10 +1651,10 @@ body.adminlte-body {
         // asssign employee here
         $('#employeeForm').on('submit', function(e) {
             e.preventDefault();
-            
+
             let $btn = $('#button-emp');
             $btn.prop('disabled', true).text('Processing...');
-            
+
 
             $.ajax({
                 url: '{{ route('assign.employee') }}',
@@ -1469,7 +1673,7 @@ body.adminlte-body {
                             icon: 'success',
                             position: 'top-right',
                         });
-                        setTimeout(function () {
+                        setTimeout(function() {
                             location.reload();
                         }, 2000);
 
@@ -1490,10 +1694,10 @@ body.adminlte-body {
 
         // here show task details modal
 
-        $(document).ready(function () {
-            $('.view-task-btn').click(function () {
+        $(document).ready(function() {
+            $('.view-task-btn').click(function() {
                 let taskId = $(this).data('id');
-                let button=$(this).val();
+                let button = $(this).val();
                 $("#task_id").val(taskId);
 
                 //  alert(taskId);
@@ -1501,12 +1705,15 @@ body.adminlte-body {
                 $.ajax({
                     url: '{{ route('task.details') }}',
                     method: 'GET',
-                    data: { id: taskId,button:button },
-                    success: function ( response ) {
+                    data: {
+                        id: taskId,
+                        button: button
+                    },
+                    success: function(response) {
                         $('#taskTitle').text(response.title);
                         $('#taskBy').text('By ' + response.created_by);
                         $('#taskAssignee').val(response.assignee);
-                        $( '#taskDueDate' ).val(response.due_date);
+                        $('#taskDueDate').val(response.due_date);
                         $('#taskDescription').val(response.description);
                         $('.btn_status').text(response.status);
 
@@ -1514,11 +1721,11 @@ body.adminlte-body {
 
                         // console.log(c);
 
-                        $('#comment-list').empty();  // Add to top of the list
+                        $('#comment-list').empty(); // Add to top of the list
 
                         let html = '';
 
-                        c.forEach(function(item){
+                        c.forEach(function(item) {
                             html += `
                                 <div class="card mb-2">
                                     <div class="card-body p-2">
@@ -1529,10 +1736,10 @@ body.adminlte-body {
                             `;
                         });
 
-                        $('#comment-list').prepend(html);  // here list comments in the list
-                        $('#commit-comment').val('');      // Clear textarea
+                        $('#comment-list').prepend(html); // here list comments in the list
+                        $('#commit-comment').val(''); // Clear textarea
                     },
-                    error: function () {
+                    error: function() {
                         alert('Failed to fetch task data.');
                     }
                 });
@@ -1541,247 +1748,256 @@ body.adminlte-body {
 
             // here marked as completed
 
-           // Global AJAX setup for CSRF
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('.mark_as_complete').click(function () {
-            let taskId = $("#task_id").val();
-            let button=$(this).val();
-            
-            let $btn = $('.mark_as_complete');
-               $btn.prop('disabled', true).text('Processing...');
-
-            $.ajax({
-                url: '{{ route('marked.complete') }}',
-                method: 'POST',
-                data: { id: taskId,button:button },
-                success: function (response) {
-                    if(response.status==true){
-                            $.toast({
-                            heading: 'Success',
-                            text: response.message,
-                            showHideTransition: 'slide',
-                            icon: 'success',
-                            position: 'top-right',
-                        });
-                        setTimeout(function () {
-                            location.reload();
-                        }, 2000);
-                    }else{
-                        $.toast({
-                            heading: 'faild',
-                            text: response.message,
-                            showHideTransition: 'slide',
-                            icon: 'warning',
-                            position: 'top-right',
-                        });
-                        setTimeout(function () {
-                            location.reload();
-                        }, 2000);
-                    }
-                },
-                error: function () {
-                    alert('Failed to update.');
-                    $btn.prop('disabled', true).text('Request For Payment');
+            // Global AJAX setup for CSRF
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-        });
+
+            $('.mark_as_complete').click(function() {
+                let taskId = $("#task_id").val();
+                let button = $(this).val();
+
+                let $btn = $('.mark_as_complete');
+                $btn.prop('disabled', true).text('Processing...');
+
+                $.ajax({
+                    url: '{{ route('marked.complete') }}',
+                    method: 'POST',
+                    data: {
+                        id: taskId,
+                        button: button
+                    },
+                    success: function(response) {
+                        if (response.status == true) {
+                            $.toast({
+                                heading: 'Success',
+                                text: response.message,
+                                showHideTransition: 'slide',
+                                icon: 'success',
+                                position: 'top-right',
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            $.toast({
+                                heading: 'faild',
+                                text: response.message,
+                                showHideTransition: 'slide',
+                                icon: 'warning',
+                                position: 'top-right',
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to update.');
+                        $btn.prop('disabled', true).text('Request For Payment');
+                    }
+                });
+            });
 
 
- // here send reminder mail 
+            // here send reminder mail 
 
- $('.reminder_mail').click(function () {
-            let $btn = $(this);
-            let taskId = $("#task_id").val();
-            let button=$(this).val();
+            $('.reminder_mail').click(function() {
+                let $btn = $(this);
+                let taskId = $("#task_id").val();
+                let button = $(this).val();
                 $btn.prop('disabled', true).html('Processing...');
 
-            $.ajax({
-                url: '{{ route('reminder.mail') }}',
-                method: 'POST',
-                data: { id: taskId,button:button },
-                success: function (response) {
-                    if(response.status==true){
+                $.ajax({
+                    url: '{{ route('reminder.mail') }}',
+                    method: 'POST',
+                    data: {
+                        id: taskId,
+                        button: button
+                    },
+                    success: function(response) {
+                        if (response.status == true) {
                             $.toast({
-                            heading: 'Success',
-                            text: response.message,
-                            showHideTransition: 'slide',
-                            icon: 'success',
-                            position: 'top-right',
-                        });
-                        setTimeout(function () {
-                            location.reload();
-                        }, 2000);
-                    }else{
-                        $.toast({
-                            heading: 'faild',
-                            text: response.message,
-                            showHideTransition: 'slide',
-                            icon: 'warning',
-                            position: 'top-right',
-                        });
-                        setTimeout(function () {
-                            location.reload();
-                        }, 2000);
+                                heading: 'Success',
+                                text: response.message,
+                                showHideTransition: 'slide',
+                                icon: 'success',
+                                position: 'top-right',
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            $.toast({
+                                heading: 'faild',
+                                text: response.message,
+                                showHideTransition: 'slide',
+                                icon: 'warning',
+                                position: 'top-right',
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to update.');
                     }
-                },
-                error: function () {
-                    alert('Failed to update.');
-                }
+                });
             });
-        });
 
 
         });
 
         // here commint
-    $(document).on('click', '#commit-btn', function () {
-        
-        let $btn = $('#commit-btn');
-               $btn.prop('disabled', true).text('Processing...');
+        $(document).on('click', '#commit-btn', function() {
+
+            let $btn = $('#commit-btn');
+            $btn.prop('disabled', true).text('Processing...');
             let comment = $('#commit-comment').val();
             let taskId = $(this).data('task-id');
-            let button=$(this).val();
+            let button = $(this).val();
 
             if (comment.trim() === '') {
                 alert('Please enter a comment.');
-                 $btn.prop('disabled', false).text('Commit');
+                $btn.prop('disabled', false).text('Commit');
                 return;
             }
 
             $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-        $.ajax({
-            url: '/task-history/commit', // Laravel route
-            method: 'POST',
-            data: {
-                task_id: taskId,
-                comment: comment,
-                button:button,
-                is_commit: 'yes',
-                tsk_status: 'committed',
-                _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
-            },
-            success: function (response) {
-                // alert('Comment committed!');
-                $btn.prop('disabled', false).text('Commit');
-                if(response.status==true){
-                    $.toast({
+            $.ajax({
+                url: '/task-history/commit', // Laravel route
+                method: 'POST',
+                data: {
+                    task_id: taskId,
+                    comment: comment,
+                    button: button,
+                    is_commit: 'yes',
+                    tsk_status: 'committed',
+                    _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
+                },
+                success: function(response) {
+                    // alert('Comment committed!');
+                    $btn.prop('disabled', false).text('Commit');
+                    if (response.status == true) {
+                        $.toast({
                             heading: 'Success',
                             text: response.message,
                             showHideTransition: 'slide',
                             icon: 'success',
                             position: 'top-right',
                         });
-                        setTimeout(function () {
+                        setTimeout(function() {
                             location.reload();
                         }, 2000);
+                    }
+                    $('#commit-comment').val(''); // clear textarea
+                },
+                error: function() {
+                    alert('Failed to save comment.');
+                    $btn.prop('disabled', false).text('Commit');
                 }
-                $('#commit-comment').val(''); // clear textarea
-            },
-            error: function () {
-                alert('Failed to save comment.');
-                $btn.prop('disabled', false).text('Commit');
-            }
+            });
         });
-    });
 
-// here delte task
+        // here delte task
 
-$(document).on('click', '.delete-task-btn', function () {
-    let taskId = $(this).data('task-id');
-    let type = $(this).data('type');
-    let button=$(this).val();
-    let $btn = $('.delete-task-btn');
-    $btn.prop('disabled', true).text('Processing...');
+        $(document).on('click', '.delete-task-btn', function() {
+            let taskId = $(this).data('task-id');
+            let type = $(this).data('type');
+            let button = $(this).val();
+            let $btn = $('.delete-task-btn');
+            $btn.prop('disabled', true).text('Processing...');
 
-    if (!confirm('Are you sure you want to ' + type +' this task comment?')) return;
+            if (!confirm('Are you sure you want to ' + type + ' this task comment?')) return;
 
-    $.ajax({
-        url: '/task-history/delete',
-        method: 'POST',
-        data: {
-            task_id: taskId,type:type,button:button,
-            _token: $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response) {
-        $btn.prop('disabled', false).text('Delete Task');
-            if(response.status==true){
-                $.toast({
-                    heading: 'Success',
-                    text: response.message,
-                    showHideTransition: 'slide',
-                    icon: 'success',
-                    position: 'top-right',
-                });
-                setTimeout(function () {
-                    location.reload();
-                }, 2000);
-            }
-        },
-        error: function () {
-            alert('Failed to delete.');
-            $btn.prop('disabled', false).text('Delete Task');
-        }
-    });
-});
+            $.ajax({
+                url: '/task-history/delete',
+                method: 'POST',
+                data: {
+                    task_id: taskId,
+                    type: type,
+                    button: button,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $btn.prop('disabled', false).text('Delete Task');
+                    if (response.status == true) {
+                        $.toast({
+                            heading: 'Success',
+                            text: response.message,
+                            showHideTransition: 'slide',
+                            icon: 'success',
+                            position: 'top-right',
+                        });
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    }
+                },
+                error: function() {
+                    alert('Failed to delete.');
+                    $btn.prop('disabled', false).text('Delete Task');
+                }
+            });
+        });
 
 
 
-// request milestone payment
-$(document).on('click', '.request_milestone', function () {
-    let dataId = $(this).data('id');
-    button=$(this).val();
-        let $btn = $('.request_milestone');
-         $btn.prop('disabled', true).text('Processing...');
+        // request milestone payment
+        $(document).on('click', '.request_milestone', function() {
+            let dataId = $(this).data('id');
+            button = $(this).val();
+            let $btn = $('.request_milestone');
+            $btn.prop('disabled', true).text('Processing...');
 
-    // alert(dataId);
-    if (!confirm('Are you sure you want to Send Payment request ?')) return;
+            // alert(dataId);
+            if (!confirm('Are you sure you want to Send Payment request ?')) return;
 
-    $.ajax({
-        url: '/milestone/request',  // Adjust this route if needed
-        method: 'POST',
-        data: {
-            id: dataId,button:button,
-            _token: $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response) {
-            $btn.prop('disabled', true).text('Request Milestone Payment ');
-            if(response.status==true){
-                $.toast({
-                    heading: 'Success',
-                    text: response.message,
-                    showHideTransition: 'slide',
-                    icon: 'success',
-                    position: 'top-right',
-                });
-                setTimeout(function () {
-                    location.reload();
-                }, 2000);
-            }
-        },
-        error: function () {
-            alert('Failed to request.');
-              $btn.prop('disabled', true).text('Request Milestone Payment ');
-        }
-    });
-});
+            $.ajax({
+                url: '/milestone/request', // Adjust this route if needed
+                method: 'POST',
+                data: {
+                    id: dataId,
+                    button: button,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $btn.prop('disabled', true).text('Request Milestone Payment ');
+                    if (response.status == true) {
+                        $.toast({
+                            heading: 'Success',
+                            text: response.message,
+                            showHideTransition: 'slide',
+                            icon: 'success',
+                            position: 'top-right',
+                        });
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    }
+                },
+                error: function() {
+                    alert('Failed to request.');
+                    $btn.prop('disabled', true).text('Request Milestone Payment ');
+                }
+            });
+        });
 
-// here update project details 
+        // here update project details 
 
- $('#add_project_details').on('submit', function(e) {
+        $('#add_project_details').on('submit', function(e) {
             e.preventDefault();
-            
-              let $btn = $('.btn');
-               $btn.prop('disabled', true).text('Processing...');
+
+            let $btn = $('.btn');
+            $btn.prop('disabled', true).text('Processing...');
 
             $.ajax({
                 url: "{{ route('update.project.details') }}",
@@ -1799,7 +2015,7 @@ $(document).on('click', '.request_milestone', function () {
                             icon: 'success',
                             position: 'top-right',
                         });
-                        setTimeout(function () {
+                        setTimeout(function() {
                             location.reload();
                         }, 2000);
                         // Optionally reload part of page or table
@@ -1817,6 +2033,33 @@ $(document).on('click', '.request_milestone', function () {
             });
         });
 
+    // here filter employee 
+    $(document).on('submit', '#filter_employee', function (e) {
+    e.preventDefault();
 
-</script>
+    $.ajax({
+        url: "{{ route('employee.filter') }}",   // <-- your route for filtering
+        type: "POST",
+        data: $(this).serialize(),
+        success: function (response) {
+            let $assignDropdown = $('#assign_employee');
+            $assignDropdown.empty(); // clear old options
+
+            if (response.length > 0) {
+                $.each(response, function (index, emp) {
+                    $assignDropdown.append(
+                        `<option value="${emp.id}">${emp.name} (${emp.username})</option>`
+                    );
+                });
+            } else {
+                $assignDropdown.append('<option value="">No employees found</option>');
+            }
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
+        }
+    });
+});
+
+    </script>
 @endpush
