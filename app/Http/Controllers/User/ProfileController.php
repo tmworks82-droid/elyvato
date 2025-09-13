@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\Role;
 use App\Models\Admin;
+use App\Models\UserAvailability;
 use App\Models\BankDetails;
 use App\Models\City;
 use App\Models\RoleDesignation;
@@ -143,7 +144,6 @@ public function uploadCancelledCheck(Request $request)
 
  public function UpdateBankDetails(Request $request)
     {
-        // dd($request->all());
 
         $request->validate([
             'account_no' => 'required|string|max:50',
@@ -162,12 +162,34 @@ public function uploadCancelledCheck(Request $request)
         $bankDetail->account_no = $request->account_no;
         $bankDetail->ifsc_code = $request->ifsc_code;
         $bankDetail->bank_name = $request->bank_name;
+
         $bankDetail->status = 'pending';
         
         if ($request->filled('cancelled_check_image')) {
             $bankDetail->cancelled_check_image = $request->cancelled_check_image;
         }
 
+        if ($request->filled('gov_id_type')) {
+            $bankDetail->gov_id_type = $request->gov_id_type;
+        }
+        if ($request->filled('passport_front')) {
+            $bankDetail->passport_front = $request->passport_front;
+        }
+        if ($request->filled('passport_back')) {
+            $bankDetail->passport_back = $request->passport_back;
+        }
+        if ($request->filled('driving_license')) {
+            $bankDetail->driving_license = $request->driving_license;
+        }
+        if ($request->filled('aadhaar_front')) {
+            $bankDetail->aadhaar_front = $request->aadhaar_front;
+        }
+        if ($request->filled('aadhaar_back')) {
+            $bankDetail->aadhaar_back = $request->aadhaar_back;
+        }
+        if ($request->filled('pan')) {
+            $bankDetail->pan = $request->pan;
+        }
 
         $bankDetail->save();
 
@@ -175,6 +197,34 @@ public function uploadCancelledCheck(Request $request)
             'success' => true,
             'message' => 'Bank details saved successfully!',
         ]);
+        
     }
+
+
+    public function SaveAvailability(Request $request)
+    {
+        $days = $request->input('schedule', []);
+
+        // 1. Delete all old availability records for this user
+        UserAvailability::where('user_id', Auth::id())->delete();
+
+        // 2. Insert fresh ones
+        foreach ($days as $day => $schedule) {
+            UserAvailability::create([
+                'user_id'    => Auth::id(),
+                'day'        => $day,
+                'start_time' => $schedule['start_time'] ?? null,
+                'end_time'   => $schedule['end_time'] ?? null,
+                'is_closed'  => isset($schedule['is_closed']) ? 1 : 0,
+                'status'     => 'open',
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Schedule saved successfully!',
+        ]);
+    }
+
 
 }

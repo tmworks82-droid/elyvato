@@ -189,9 +189,11 @@
                     <p class="mb-3 mb-md-4">Please fill the below details for requesting a customized gig for your
                         requirements.</p>
                         
+						@if(Config::get('services.payment.enabled')==true)
                         	<div class="mb-4">
                         	    <span class="btn-accent p-2 mb-3" style=" border-radius: 6px;"> Book your expert call for just ₹9 — fully adjusted in your project cost. </span>
                             </div>
+						@endif
                             
                     <form id="custom_booking" method="post">
                         @csrf
@@ -244,7 +246,9 @@
 
                             <label for="time-picker">Select a Time Slot</label>
                         </div>--}}
-                        <input type="hidden" name="call_boking_price" id="call_boking_price" value="9">
+
+                        <input type="hidden" name="call_boking_price" id="call_boking_price" value="{{Config::get('services.payment.price')}}">
+			           <input type="hidden" id="raz_access" value="{{ Config::get('services.payment.enabled')}}">
                         
                          <div class="form-floating mb-3">
                             <select class="form-select focus-shadow-none" id="service" name="service">
@@ -263,6 +267,7 @@
                             </select>
                             <label for="role_designation">Service</label>
                         </div>
+						
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control focus-shadow-none" name="cost_amount" id="cost_amount"
                                 placeholder="4500">
@@ -1173,15 +1178,24 @@ function getNextInterval(date, interval) {
             
             let sow_id = $('#sow_id').val();
             let price = $('#call_boking_price').val();
+			let access = $('#raz_access').val();
             
             if(costAdmount>0 && $.isNumeric(costAdmount)){
                 let formData = new FormData(this);
-
-            //  Instead of saving immediately, trigger Razorpay
-            createRazorpayOrderAndPay(sow_id, price, formData);
+				//  Instead of saving immediately, trigger Razorpay
+				if(access==true){
+				createRazorpayOrderAndPay(sow_id, price, formData);
+				}else{
+					var response = {
+						razorpay_payment_id: "pay_2121212",
+						razorpay_order_id: "order_21212121",
+						razorpay_signature: "sig_1212455"
+					};
+					storeCustomBooking(response, formData);
+				}
             }else{
-                 Swal.fire("Error", "Budget amount must be a non-empty number.", "error");
-                 $btn.prop('disabled', false).text('Post Custom Gig');
+				Swal.fire("Error", "Budget amount must be a non-empty number.", "error");
+				$btn.prop('disabled', false).text('Post Custom Gig');
             }
 
         });

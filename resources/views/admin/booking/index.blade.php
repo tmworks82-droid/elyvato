@@ -109,27 +109,31 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+                        
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
                         @endif
+
                         @if (session('error'))
                             <div class="alert alert-danger">
                                 {{ session('error') }}
                             </div>
                         @endif
+
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">{{ $page_name }} data</h3>
                             </div>
+
                             <div class="card">
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" id="bookingTabs" role="tablist">
+
                                     <li class="nav-item">
                                         <a class="nav-link active" id="predefined-tab" data-toggle="tab" href="#predefined"
                                             role="tab" aria-controls="predefined" aria-selected="true">
-                                       
                                             Predefined
                                             Booking 
                                             @if( $predefinedBookings->where('is_visited', 'no')->count())
@@ -137,6 +141,7 @@
                                        @endif
                                             </a>
                                     </li>
+                                    
                                     <li class="nav-item">
                                         <a class="nav-link" id="custom-tab" data-toggle="tab" href="#custom" role="tab"
                                             aria-controls="custom" aria-selected="false">
@@ -146,6 +151,7 @@
                                        @endif
                                             </a>
                                     </li>
+
                                     <li class="nav-item">
                                         <a class="nav-link" id="instant-tab" data-toggle="tab" href="#instantHire" role="tab"
                                             aria-controls="instant" aria-selected="false">
@@ -156,6 +162,7 @@
                                        @endif
                                             </a>
                                     </li>
+
                                 </ul>
 
                                 <!-- Tab panes -->
@@ -168,7 +175,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>User</th>
+                                                    <th>User Info</th>
                                                     <th>Gig</th>
                                                     <th>Status</th>
                                                     <th>Payment Status</th>
@@ -193,7 +200,7 @@
                                                         @if($booking->is_visited=='no')
                                                             <a href="{{ url('booking-calls', $booking->id) }}" class="project-link" data-type="booking" data-id="{{$booking->id}}">{{ $booking->user->username ?? 'Name' }}</a>
                                                             @else 
-                                                            <a href="{{ url('booking-calls', $booking->id) }}">{{ $booking->user->username ?? 'Name' }}</a>
+                                                            <a href="{{ url('booking-calls', $booking->id) }}">{{ $booking->user->username ?? 'Name' }} <br> <span class="badge badge-dark text-light booking-ids">{{ $booking->user->mobile ?? 'N/A' }}</span> </a>
                                                             @endif 
                                                         @else
                                                         <span class="badge badge-warning text-light booking-ids" data-id="{{ $booking->id }}" data-toggle="modal"
@@ -246,14 +253,14 @@
                                                             @if($booking->booking_subscription_status=='live')
                                                             <span class="badge badge-success">{{ucfirst($booking->booking_subscription_status)}}</span>
                                                             @else 
-                                                            <span class="badge badge-danger">Yes({{ ucfirst($booking->booking_subscription_status)}}</span>
+                                                            <span class="badge badge-danger">Yes({{ ucfirst($booking->booking_subscription_status)}})</span>
                                                             @endif
                                                             @else 
                                                             <span class="badge badge-dark text-light">No</span>
                                                             @endif
                                                             </td>
                                                         
-                                                        <td>{{ formatDateReadable($booking->created_at) }}</td>
+                                                        <td>{{ formatDateReadable($booking->created_on) }}</td>
                                                         <td> 
                                                            @php 
                                                               $call=\App\Models\Call::where('booking_id',$booking->id)->first();
@@ -449,6 +456,7 @@
 
                                 </ul>
                             </div>
+
                         </div>
                         <!-- /.card -->
 

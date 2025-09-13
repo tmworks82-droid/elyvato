@@ -52,6 +52,10 @@ return [
         'redirect'      => env('FACEBOOK_REDIRECT_URI'),
     ],
 
+    'payment' => [
+        'enabled' => env('ENABLE_PAYMENT_GATEWAY', true),
+        'price'   => env('DEFAULT_PRICE', 0),
+    ],
 
 
 ];

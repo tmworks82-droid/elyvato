@@ -208,71 +208,7 @@
                                     @endif
                                 </div>
 
-                                @if ($freelancer->profile->gov_id_type == 'passport')
-                                    <div class="col-sm-3">
-                                        <strong><i class="fas fa-file-alt mr-1"></i> Passport Front</strong>
-                                        @if (!empty($freelancer->profile->passport_front))
-                                            <a href="{{ url($freelancer->profile->passport_front) }}"
-                                                target="_blank">View</a>
-                                        @else
-                                            <p class="text-muted">Not Uploaded</p>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-sm-3">
-                                        <strong><i class="fas fa-file-alt mr-1"></i> Passport Back</strong>
-                                        @if (!empty($freelancer->profile->passport_back))
-                                            <a href="{{ url($freelancer->profile->passport_back) }}"
-                                                target="_blank">View</a>
-                                        @else
-                                            <p class="text-muted">Not Uploaded</p>
-                                        @endif
-                                    </div>
-
-                                @endif
-                                @if ($freelancer->profile->gov_id_type == 'driving_license')
-
-                                    <div class="col-sm-3">
-                                        <strong><i class="fas fa-file-alt mr-1"></i> Driving License</strong>
-                                        @if (!empty($freelancer->profile->driving_license))
-                                            <a href="{{ url($freelancer->profile->driving_license) }}"
-                                                target="_blank">View</a>
-                                        @else
-                                            <p class="text-muted">Not Uploaded</p>
-                                        @endif
-                                    </div>
-
-                                @endif
-                                @if ($freelancer->profile->gov_id_type == 'aadhaar')
-                                    <div class="col-sm-3">
-                                        <strong><i class="fas fa-file-alt mr-1"></i> Aadhar Front</strong>
-                                        @if (!empty($freelancer->profile->aadhaar_front))
-                                            <a href="{{ url($freelancer->profile->aadhaar_front) }}"
-                                                target="_blank">View</a>
-                                        @else
-                                            <p class="text-muted">Not Uploaded</p>
-                                        @endif
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <strong><i class="fas fa-file-alt mr-1"></i> Aadhar Back</strong>
-                                        @if (!empty($freelancer->profile->aadhaar_back))
-                                            <a href="{{ url($freelancer->profile->aadhaar_back) }}"
-                                                target="_blank">View</a>
-                                        @else
-                                            <p class="text-muted">Not Uploaded</p>
-                                        @endif
-                                    </div>
-                                @endif
-                                @if ($freelancer->profile->gov_id_type == 'pan')
-                                    <div class="col-sm-3">
-                                        <strong><i class="fas fa-file-alt mr-1"></i> Pan Card</strong>
-                                        @if (!empty($freelancer->profile->pan))
-                                            <a href="{{ url($freelancer->profile->pan) }}" target="_blank">View</a>
-                                        @else
-                                            <p class="text-muted">Not Uploaded</p>
-                                        @endif
-                                    </div>
-                                @endif
+                                
 
 
                                 <div class="col-sm-3">
@@ -297,6 +233,7 @@
 
                             <form id="talent_rating_form" method="POST" action="#">
                                 @csrf
+
                                 <div class="card-body">
                                     <input type="hidden" name="user_id" value="{{ $freelancer->id }}">
 
@@ -332,6 +269,7 @@
                                     </div>
 
                                 </div>
+
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-success btn-save">Save Evaluation</button>
                                     @if (
@@ -381,17 +319,110 @@
                                 </dl>
 
                                 <!-- Checkbook / Cancelled Cheque Preview -->
-                                <div class="text-center mb-3">
+                                <div class="row">
+                                <div class="text-center mb-3 col-sm-3">
                                     <label class="d-block font-weight-bold">Cancelled Cheque</label>
                                     @if(!empty($freelancer->bankDetails->cancelled_check_image))
                                     <a href="{{ url($freelancer->bankDetails->cancelled_check_image) }}" target="_blank">
                                         <img src="{{ url($freelancer->bankDetails->cancelled_check_image ?? 'Not Updated') }}"
                                             alt="Cancelled Cheque" class="img-fluid img-thumbnail"
-                                            style="max-height: 100px;">
+                                            style="max-height: 50px;">
                                     </a>
                                     @else 
                                     Not Updated
                                     @endif
+                                </div>
+                                
+                                @if ($freelancer->profile->gov_id_type == 'passport')
+                                    <div class="col-sm-3">
+                                        <strong><i class="fas fa-file-alt mr-1"></i> Passport Front</strong>
+                                        @if (!empty($freelancer->bankDetails->passport_front))
+                                            <a href="{{ url($freelancer->bankDetails->passport_front) }}"
+                                                target="_blank">
+                                                <img src="{{ url($freelancer->bankDetails->passport_front ?? 'Not Updated') }}"
+                                            alt="Cancelled Cheque" class="img-fluid img-thumbnail"
+                                            style="max-height: 50px;">
+                                            </a>
+                                        @else
+                                            <p class="text-muted">Not Uploaded</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <strong><i class="fas fa-file-alt mr-1"></i> Passport Back</strong>
+                                        @if (!empty($freelancer->bankDetails->passport_back))
+                                            <a href="{{ url($freelancer->bankDetails->passport_back) }}"
+                                                target="_blank">
+                                            <img src="{{ url($freelancer->bankDetails->passport_back ?? 'Not Updated') }}"
+                                            alt="Cancelled Cheque" class="img-fluid img-thumbnail"
+                                            style="max-height: 50px;">
+                                            </a>
+                                        @else
+                                            <p class="text-muted">Not Uploaded</p>
+                                        @endif
+                                    </div>
+
+                                @endif
+                                @if ($freelancer->bankDetails->gov_id_type == 'driving_license')
+
+                                    <div class="col-sm-3">
+                                        <strong><i class="fas fa-file-alt mr-1"></i> Driving License</strong>
+                                        @if (!empty($freelancer->bankDetails->driving_license))
+                                            <a href="{{ url($freelancer->bankDetails->driving_license) }}"
+                                                target="_blank">
+                                                <img src="{{ url($freelancer->bankDetails->driving_license ?? 'Not Updated') }}"
+                                            alt="Cancelled Cheque" class="img-fluid img-thumbnail"
+                                            style="max-height: 50px;">
+                                            </a>
+                                        @else
+                                            <p class="text-muted">Not Uploaded</p>
+                                        @endif
+                                    </div>
+
+                                @endif
+                                @if ($freelancer->bankDetails->gov_id_type == 'aadhaar')
+                                    <div class="col-sm-3">
+                                        <strong><i class="fas fa-file-alt mr-1"></i> Aadhar Front</strong>
+                                        @if (!empty($freelancer->bankDetails->aadhaar_front))
+                                            <a href="{{ url($freelancer->bankDetails->aadhaar_front) }}"
+                                                target="_blank">
+                                            <img src="{{ url($freelancer->bankDetails->aadhaar_front ?? 'Not Updated') }}"
+                                            alt="Cancelled Cheque" class="img-fluid img-thumbnail"
+                                            style="max-height: 50px;">
+                                            </a>
+                                        @else
+                                            <p class="text-muted">Not Uploaded</p>
+                                        @endif
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <strong><i class="fas fa-file-alt mr-1"></i> Aadhar Back</strong>
+                                        @if (!empty($freelancer->bankDetails->aadhaar_back))
+                                            <a href="{{ url($freelancer->bankDetails->aadhaar_back) }}"
+                                                target="_blank">
+                                            <img src="{{ url($freelancer->bankDetails->aadhaar_back ?? 'Not Updated') }}"
+                                            alt="Cancelled Cheque" class="img-fluid img-thumbnail"
+                                            style="max-height: 50px;">
+                                            </a>
+                                        @else
+                                            <p class="text-muted">Not Uploaded</p>
+                                        @endif
+                                    </div>
+                                @endif
+                                @if ($freelancer->bankDetails->gov_id_type == 'pan')
+                                    <div class="col-sm-3">
+                                        <strong><i class="fas fa-file-alt mr-1"></i> Pan Card</strong>
+                                        @if (!empty($freelancer->bankDetails->pan))
+                                            <a href="{{ url($freelancer->bankDetails->pan) }}" target="_blank">
+                                            <img src="{{ url($freelancer->bankDetails->pan ?? 'Not Updated') }}"
+                                            alt="Cancelled Cheque" class="img-fluid img-thumbnail"
+                                            style="max-height: 50px;">
+                                            </a>
+                                        @else
+                                            <p class="text-muted">Not Uploaded</p>
+                                        @endif
+                                    </div>
+                                @endif
+                              
                                 </div>
 
                                 @if(!empty($freelancer->bankDetails))

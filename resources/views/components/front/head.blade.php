@@ -16,6 +16,7 @@
 <meta property="og:url" content="{{ url()->current() }}" />
 <meta property="og:site_name" content="{{ config('app.name') }}" />
 <meta property="og:image" content="{{ url('/') . $featuredImage }}" />
+
 {{-- twitter card meta --}}
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@elyvato" />
@@ -44,6 +45,7 @@
 <link rel="stylesheet" href="{{ asset('front/assets/css/sweetalert2.min.css') }}">
 {{-- styles custom --}}
 <link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
+
 <style>
     .searchdiv {
   /*width: 91%;*/

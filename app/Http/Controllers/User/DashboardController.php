@@ -11,6 +11,7 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\Role;
 use App\Models\Admin;
+use App\Models\Skill;
 use App\Models\City;
 use App\Models\RoleDesignation;
 use App\Models\Payment;
@@ -18,6 +19,7 @@ use App\Models\Service;
 use App\Models\SubService;
 use App\Models\Task;
 use App\Models\TaskHistory;
+use App\Models\UserAvailability;
 use App\Models\StatementOfWork;
 use App\Models\RecurringSubscription;
 use Illuminate\Support\Facades\Hash;
@@ -34,7 +36,7 @@ class DashboardController extends Controller
 
         if(Auth::user()->type=='user'){
 
-                $requiredFields = [
+            $requiredFields = [
                 'company_name',
                 // 'gst_number',
                 // 'work_strength',
@@ -48,6 +50,7 @@ class DashboardController extends Controller
                 'pincode',
                 // 'industry_type',
             ];
+
         }else{
             $requiredFields = [
                             'company_name',
@@ -73,6 +76,10 @@ class DashboardController extends Controller
             }
 
         // dd(Auth::user()->name);
+        $data['total_Task']=Task::where('assigned_to',Auth::user()->id)->count();
+        $data['completed_task']=Task::where(['assigned_to'=>Auth::user()->id,'status'=>'approved'])->count();
+        $data['pending_task']=Task::where(['assigned_to'=>Auth::user()->id,'status'=>'in_progress'])->count();
+        
         $data['bookings']=Booking::with(['statementOfWork','statementOfWork.service', 'statementOfWork.subservice'])->where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
         $data['complete_booking']=Booking::where(['user_id'=>Auth::user()->id,'status'=>'success'])->count();
         $data['pending_booking']=Booking::where(['user_id'=>Auth::user()->id,'status'=>'pending'])->count();
@@ -373,6 +380,8 @@ class DashboardController extends Controller
        
         // dd($data['profile']);
         $data['roles']=Role::whereIn('id',[5,6,7])->get();
+        $data['skill']=Skill::get();
+        $data['availability']=UserAvailability::where('user_id',Auth::user()->id)->get()->keyBy('day');
        $data['role_designation']=RoleDesignation::where('is_active',1)->get();
       
 
@@ -618,6 +627,7 @@ public function UpdateFreelancerProfile(Request $request)
     'aadhaar_back'     => 'required_if:gov_id_type,aadhaar|nullable|string|max:255',
 
     'pan'              => 'required_if:gov_id_type,pan|nullable|string|max:255',
+    'skill'=>'required',
 ];
 
 $messages = [
@@ -630,6 +640,7 @@ $messages = [
     'digits'       => ':attribute must be exactly :digits digits.',
     'string'       => ':attribute must be a valid string.',
     'max'          => ':attribute may not be greater than :max characters.',
+    'skill'         =>':skill is required',
 ];
 
     $validator = Validator::make($request->all(), $rules);
@@ -637,6 +648,8 @@ $messages = [
     if ($validator->fails()) {
         return response()->json(['status' => false, 'message' => $validator->errors()], 422);
     }
+
+    // dd($request->all());
 
     
     $user = Admin::find(Auth::user()->id);
@@ -661,26 +674,10 @@ $messages = [
     }
 
     
-    if ($request->filled('gov_id_type')) {
-        $UserProfile->gov_id_type = $request->gov_id_type;
-    }
-    if ($request->filled('passport_front')) {
-        $UserProfile->passport_front = $request->passport_front;
-    }
-    if ($request->filled('passport_back')) {
-        $UserProfile->passport_back = $request->passport_back;
-    }
-    if ($request->filled('driving_license')) {
-        $UserProfile->driving_license = $request->driving_license;
-    }
-    if ($request->filled('aadhaar_front')) {
-    $UserProfile->aadhaar_front = $request->aadhaar_front;
-    }
-    if ($request->filled('aadhaar_back')) {
-        $UserProfile->aadhaar_back = $request->aadhaar_back;
-    }
-    if ($request->filled('pan')) {
-        $UserProfile->pan = $request->pan;
+    
+
+    if ($request->filled('skill')) {
+        $UserProfile->skills = implode(',', $request->skill);
     }
 
     
@@ -839,7 +836,6 @@ return response()->json(['message' => 'Password updated successfully.']);
 
         // Update or create user profile
         $UserProfile = UserProfile::firstOrNew(['user_id' => Auth::user()->id]);
-
 
         // $uploadPath = base_path('../public_html/upload/profile');
         $uploadPath = base_path('../public/upload/profile/new/');

@@ -111,21 +111,21 @@
 
 {{--------banner ---}}
 
-{{--<div class="container rounded-1 ">
-    <img src="https://elyvato.com/front/assets/images/home-freelancer.jpg" class="img-fluid w-100 mt-3
+<div class="container rounded-1 ">
+    <img src="https://elyvato.com/front/assets/images/30min Banner.jpg" class="img-fluid w-100 mt-3
     " alt="elyvato banner" style="height: 500px; border-radius:5px;">
-</div>--}}
+</div>
 
 {{-- ============================= hero section ============================= --}}
 <section class="section-padding-top section-padding-bottom home-hero">
 	<div class="container py-md-3 py-lg-5">
 		<div class="row align-items-center">
+
 			<div class="col-lg-7 pe-lg-5">
 				<h1 class="fw-bold mb-3 mb-md-4">Freelance Marketplace for Smart Hiring</h1>
 				<p class="mb-3 mb-md-5"> Where businesses connect with India's elite & AI-trained freelance talent - creative, dependable, and globally aligned. Unlike others, we take full ownership of quality. Behind every project is a system that ensures consistency, timeliness, and results you can truly count on.</p>
+				
 				<div class="mb-4 mb-md-5">
-				    
-				   
 					<form class="col-md-10 bg-body border rounded-2 position-relative p-2" method="GET" action="{{ url('services') }}">
 						<div class="input-group dropdown home-hero-search-dropdown">
 							<input class="form-control focus-shadow-none border-0 me-1" id="SearchInputs" name="search" type="text" placeholder="What are you looking for?" data-bs-toggle="dropdown" aria-expanded="false" autocomplete="off">
@@ -138,6 +138,7 @@
 						</div>
 					</form>
 				</div>
+
 				<div class="row home-hero-stats">
 					<div class="col-sm-6 d-flex align-items-center mb-3 mb-sm-0">
 						<i class="ri-focus-2-line fs-2 me-3 text-main"></i>
@@ -155,6 +156,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="col-lg-5 position-relative mt-3 mt-lg-0">
 				<img src="{{ asset('front/assets/images/home-hero.png') }}" alt="elevated content delivered expertly" class="w-100 img-fluid">
 				<div class="floating-vertical d-none d-lg-inline-block bg-accent rounded-4 position-absolute start-0 mb-md-4 ms-md-n5 p-3" style="bottom: -40px;">
