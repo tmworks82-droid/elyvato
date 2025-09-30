@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="position: fixed;">
     <!-- Brand Logo -->
 
     <!-- <img src="{{ URL::asset('') }}" alt="City Cab" class="brand-image img-circle elevation-3" style="opacity: .8" width= "163px;"> -->
@@ -15,11 +15,28 @@
             font-weight: bold;
             line-height: 1;
         }
+
+        .main-sidebar {
+            position: fixed;      /* keep sidebar fixed */
+            top: 0;
+            bottom: 0;
+            height: 100vh;        /* full viewport height */
+            overflow: hidden;     /* prevent double scrollbars */
+            }
+
+            .main-sidebar .custom-scroll {
+            height: 100%;         /* take full height */
+            overflow-y: auto;     /* vertical scroll inside sidebar */
+            overflow-x: hidden;   /* prevent horizontal scroll */
+            padding-bottom: 60px; /* space so content isn't cut */
+            }
+
+
     </Style>
     <p style="margin-left: 25%; color: #FFFFFF; margin-top: 2%;">Elyvato Content</p>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar custom-scroll">
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
@@ -50,13 +67,37 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-                @if (auth()->user()->hasPermission('manage_dashboard'))
+                @if(auth()->user()->hasPermission('manage_dashboard'))
                     <li class="nav-item {{ request()->is('dashboard') ? 'menu-open' : '' }}">
                         <a href="{{ route('admin.dashboard') }}"
                             class="nav-link {{ request()->is('dashboard') || request()->is('dasboard') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
+                @if (auth()->user()->hasPermission('enquiry'))
+                    <li class="nav-item {{ request()->is('enquiry-list') ? 'menu-open' : '' }}">
+                        <a href="{{ route('enquiry.list') }}"
+                            class="nav-link {{ request()->is('enquiry-list') || request()->is('enquiry-list') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Enquiry
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
+                @if (auth()->user()->hasPermission('ticket'))
+                    <li class="nav-item {{ request()->is('ticket-list') ? 'menu-open' : '' }}">
+                        <a href="{{ route('admin.ticket.list') }}"
+                            class="nav-link {{ request()->is('ticket-list') || request()->is('ticket-list') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Tickets
                             </p>
                         </a>
                     </li>
@@ -183,6 +224,8 @@
                         request()->is('edit-blog/*') ||
                         request()->is('faq') ||
                         request()->is('faq/*') ||
+                        request()->is('support-department/*') ||
+                        request()->is('support-department') ||
                         request()->is('create-faq/*') ||
                         request()->is('create-faq') ||
                         request()->is('edit-faq/*') ||
@@ -238,6 +281,8 @@
                             request()->is('create-faq') ||
                             request()->is('edit-faq/*') ||
                             request()->is('edit-faq') ||
+                            request()->is('support-department/*') ||
+                        request()->is('support-department') ||
                             request()->is('hire-talent/*') ||
                             request()->is('hire-talent') ||
                             request()->is('edit-hire-talent/*') ||
@@ -255,7 +300,7 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="{{ route('admin_user.index') }}"
-                                    class="nav-link {{ request()->is('admin_user') || request()->is('admin_user/*') || request()->is('case-study/*') || request()->is('case-study/*') ? 'active' : '' }}">
+                                    class="nav-link {{ request()->is('admin_user') || request()->is('admin_user/*') || request()->is('case-study/*') || request()->is('case-study/*') || request()->is('support-department/')|| request()->is('support-department/*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Manage Users</p>
                                 </a>
@@ -376,6 +421,8 @@
                             request()->is('case-study') ||
                             request()->is('blogs/*') ||
                             request()->is('blogs') ||
+                            request()->is('support-department/*') ||
+                            request()->is('support-department') ||
                             request()->is('faq') ||
                             request()->is('create-faq') ||
                             request()->is('edit-faq/*') ||
@@ -452,6 +499,16 @@
                                         class="nav-link {{ request()->is('blogs') || request()->is('create-blog') || request()->is('edit-blog/*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Blog</p>
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if (auth()->user()->hasPermission('support_department'))
+                                <li class="nav-item">
+                                    <a href="{{ url('support-department') }}"
+                                        class="nav-link {{ request()->is('support-department') || request()->is('create-department') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Support Department</p>
                                     </a>
                                 </li>
                             @endif

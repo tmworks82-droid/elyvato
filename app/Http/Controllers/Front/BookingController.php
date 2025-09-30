@@ -314,6 +314,8 @@ $data['bookedSlots'] = $bookedSlots;
             'payment_status' =>$status, //  Mark as paid
             'created_by'=>$UserId,
             'user_id' => $UserId,
+            'created_on'    =>now(),
+            'updated_at'    =>now(),
         ]);
 
 
@@ -322,7 +324,7 @@ $data['bookedSlots'] = $bookedSlots;
         // Call::create([
         //     'booking_id'=>$booking->id,
         //     'scheduled_at'=>$scheduledAt,
-        //     'created_by'=>Auth::user()->id,
+        //     'created_by'=>Auth::user()->id,  
         //     'status'=>'pending',
         // ]);
 
@@ -371,28 +373,17 @@ $data['bookedSlots'] = $bookedSlots;
             ]
         );
 
-        $message = "📅 *Your Strategy Call Is Locked In!*\n\n📞 Your discovery call is locked. Time to share your vision — we’re here to build solutions around it.";
+        // $message = "📅 *Your Strategy Call Is Locked In!*\n\n📞 Your discovery call is locked. Time to share your vision — we’re here to build solutions around it.";
         $mobile=$user->mobile;
-        sendWhatsAppMessage($mobile, $message);
-
+        // sendWhatsAppMessage($mobile, $message);
 
         $bookingtemplateData = [
-            'name' => 'discovery_call_booking',
+            'name' => 'discover_call',
             'language' => ['code' => 'en'],
-            'components' => [
-                [
-                    'type' => 'body',
-                    'parameters' => [
-                        [
-                            'type' => 'text',
-                            'text' => $scheduledAt
-                        ]
-                    ]
-                ]
-            ]
         ];
 
         sendWhatsAppTemplate($mobile, $bookingtemplateData);
+
        $bookingID=encrypt($booking->id);
 
         return response()->json([
@@ -544,28 +535,18 @@ $data['bookedSlots'] = $bookedSlots;
             ]
         );
 
-        $message = "📅 *Your Strategy Call Is Locked In!*\n\n📞 Your discovery call is locked. Time to share your vision — we’re here to build solutions around it.";
+        // $message = "📅 *Your Strategy Call Is Locked In!*\n\n📞 Your discovery call is locked. Time to share your vision — we’re here to build solutions around it.";
         $mobile=$user->mobile;
-        sendWhatsAppMessage($mobile, $message);
+        // sendWhatsAppMessage($mobile, $message);
 
 
-        $bookingtemplateData = [
-            'name' => 'discovery_call_booking',
+       $bookingtemplateData = [
+            'name' => 'discover_call',
             'language' => ['code' => 'en'],
-            'components' => [
-                [
-                    'type' => 'body',
-                    'parameters' => [
-                        [
-                            'type' => 'text',
-                            'text' => $scheduledAt
-                        ]
-                    ]
-                ]
-            ]
-        ];
+        ];    
 
         sendWhatsAppTemplate($mobile, $bookingtemplateData);
+
       $bookingID=encrypt($booking->id);
 
         return response()->json([
@@ -758,6 +739,7 @@ $data['bookedSlots'] = $bookedSlots;
             
             $data['liveStartTime'] = $activeTimesheet ? true : false;
             // dd('hire booking');
+            $data['faqs']=Faq::where('page_name','instant-hire')->get();
         return view('front.instant_hire_booking', $data);
     }
 
@@ -853,7 +835,6 @@ $data['bookedSlots'] = $bookedSlots;
         // here asign booking to account manager 
         assignBookingToAccountManager($booking->id, $scheduledAt,$UserId);
 
-        
 
         Payment::create([
             'booking_id' => $booking->id,
@@ -886,31 +867,21 @@ $data['bookedSlots'] = $bookedSlots;
             ]
         );
 
-        $message = "📅 *Your Instant hire Call Is Locked In!*\n\n📞 Your Instant Hire call is locked. Time to share your vision — we’re here to build solutions around it.";
+
+
+        // $message = "📅 *Your Instant hire Call Is Locked In!*\n\n📞 Your Instant Hire call is locked. Time to share your vision — we’re here to build solutions around it.";
         $mobile=$user->mobile;
         // $mobile='+919956398635';
-        sendWhatsAppMessage($mobile, $message);
+        // sendWhatsAppMessage($mobile, $message);
 
 
         $bookingtemplateData = [
-            'name' => 'discovery_call_booking',
+            'name' => 'instant_hire',
             'language' => ['code' => 'en'],
-            'components' => [
-                [
-                    'type' => 'body',
-                    'parameters' => [
-                        [
-                            'type' => 'text',
-                            'text' => $scheduledAt
-                        ]
-                    ]
-                ]
-            ]
         ];
 
         sendWhatsAppTemplate($mobile, $bookingtemplateData);
         $bookingID=encrypt($booking->id);
-
 
 
         return response()->json([

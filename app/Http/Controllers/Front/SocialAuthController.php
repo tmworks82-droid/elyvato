@@ -95,7 +95,9 @@ class SocialAuthController extends Controller
     
     if(!empty($new)){
         $user=$new;
-        
+        $mobile=$user->mobile;
+        // $mobile='+919956398635';
+
           sendEmail(
             $user->email,
             "You're In! Let the Magic Begins with Elyvato",
@@ -118,18 +120,16 @@ class SocialAuthController extends Controller
 
 
         $welcometemplateData = [
-                'name' => 'welcome_template',
+                'name' => 'welcome_registration',
                 'language' => ['code' => 'en']
             ];
 
-            
-         $message = "🎉 *You're In! Welcome to Elyvato*\n\n✅ You're officially on board! Dive into Elyvato and explore a world of premium content solutions crafted just for you.";
-        
-        $mobile=$user->mobile;
-        // $mobile='+919956398635';
-         $response=sendWhatsAppMessage($mobile, $message);
 
         $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
+        $message = "🎉 *You're In! Welcome to Elyvato*\n\n✅ You're officially on board! Dive into Elyvato and explore a world of premium content solutions crafted just for you.";
+        
+        $response=sendWhatsAppMessage($mobile, $message);
+
 
         // here send registration template  
           $registemplateData = [

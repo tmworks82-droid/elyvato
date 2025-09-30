@@ -23,27 +23,28 @@
     }
 
     .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #d12323;
-    -webkit-transition: .4s;
-    transition: .4s;
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #d12323;
+      -webkit-transition: .4s;
+      transition: .4s;
     }
 
+
     .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: #fff;
-    -webkit-transition: .4s;
-    transition: .4s;
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: #fff;
+      -webkit-transition: .4s;
+      transition: .4s;
     }
 
     input:checked+.slider {

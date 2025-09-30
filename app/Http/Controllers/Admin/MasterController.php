@@ -25,6 +25,7 @@ use App\Models\Blog;
 use App\Models\TimeSheet;
 use App\Models\CaseStudy;
 use App\Models\HireTalent;
+use App\Models\Department;
 use App\Models\InitialPaymentSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class MasterController extends Controller
         // $data['statement']=StatementOfWork::get();
             $data['statements'] = StatementOfWork::with(['service', 'subservice', 'allFiles'])
                 ->orderByDesc('created_on')
-                ->get();
+                ->paginate(10);
 
         return view('admin.statement.index',$data);
     }
@@ -573,8 +574,9 @@ public function BlogStore(Request $request)
         'featured_image' => 'nullable|image|max:2048',
         'category' => 'nullable|array',
         'is_active'=>'required',
+        'footer_status'=>'required',
         'seo_title' =>' nullable|string|max:255',
-        'meta_description' => 'nullable|string|max:255',
+        'meta_description' => 'nullable|string|',
     ];
 
     $request->validate($rules);
@@ -584,11 +586,12 @@ public function BlogStore(Request $request)
 
     // Assign fields manually
     $blog->title = $request->title;
-     $blog->is_active = $request->is_active;
+    $blog->is_active = $request->is_active;
+    $blog->footer_status = $request->footer_status;
+    $blog->footer_title = $request->footer_title;
     $blog->content = $request->content;
     $blog->seo_title = $request->seo_title;
     $blog->meta_description = $request->meta_description;
-    // $blog->category = $request->has('category') ? json_encode($request->category) : null;
     $blog->category =$request->category ?? [];
     
      $blog->created_by = Auth::user()->id;
@@ -645,8 +648,6 @@ public function CreateCase(){
 
    public function CaseEdit(Request $request, $id){
         $CaseStudy = CaseStudy::findOrFail($id);
-        
-
         
         return view("admin.caseStudy.create", compact("CaseStudy"));
 
@@ -788,7 +789,6 @@ public function CreateHireTalent(){
 
    public function HireTalentEdit(Request $request, $id){
         $hiretalent = HireTalent::findOrFail($id);
-        
 
         return view("admin.hiretalent.create", compact("hiretalent"));
 
@@ -859,7 +859,6 @@ public function HireTalentStore(Request $request)
     return redirect()->route('admin.hire.talent')->with('success', 'Hire talent created successfully.');
 }
 
-
     public function HireTalentDestroy($id)
     {
         $talent = HireTalent::findOrFail($id);
@@ -885,5 +884,34 @@ public function HireTalentStore(Request $request)
         return redirect()->back()->with('success', 'Talent deleted successfully.');
     }
     
+    public function Department(){
+        $data['departments']=Department::get();
+        return view('admin.support_department.index',$data);
+    }
+
+    public function SaveDepartment(Request $request){
+        $validated = $request->validate([
+            'name'=>'required',
+        ]);
+
+        
+        if($request->id){
+            $department=Department::where('id',$request->id)->first();
+            $msg="Department updated successfully";
+        }else{
+            $department= new Department();
+            $msg="Department added successfully";
+        }
+            
+
+        $department->name=$request->name;
+       
+        if($department->save()){
+            return response()->json(['status'=>true, 'msg'=>$msg]);
+        }
+
+        return response()->json(['status'=>false, 'msg'=>"something wen't wrong"]);
+
+    }
 
 }

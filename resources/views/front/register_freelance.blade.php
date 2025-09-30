@@ -263,7 +263,8 @@
                         timerProgressBar: true, // shows a small timer bar
                         allowOutsideClick: false
                     }).then(() => {
-                        window.location.reload(); 
+                        // window.location.reload(); 
+                        window.location.href = "/login";
                     });
 
                     console.log(response);

@@ -95,7 +95,7 @@ class FreelanceController extends Controller
 
         $userProfile = UserProfile::where('user_id', $request->freelancer_id)->first();
         $final_score = $userProfile ? $userProfile->final_score : null;
-
+        
     
         $ratingTitle=null;
 
@@ -118,14 +118,33 @@ class FreelanceController extends Controller
 
         if ($hireFreelancer->save()) {
 
-            sendEmail(
+           $chekc= sendEmail(
                 $hireFreelancer->email,
-                'ELYVATO | You have been hired as a Freelancer',
+                'ELYVATO | You have been onboard as a Freelancer',
                 'emails.hired_freelancer',
                 [
-                    'hireFreelancer' => $hireFreelancer,
+                    'freelancer' => $hireFreelancer,
                 ]
             );
+// dd($chekc);
+            $mobile=$hireFreelancer->mobile;
+
+            $hiredFreelancer = [
+                'name' => 'hired_freelancer',
+                'language' => ['code' => 'en'],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => $hireFreelancer->name],       // {{1}}
+                            
+                        ]
+                    ]
+                ]
+            ];
+
+            sendWhatsAppTemplate($mobile, $hiredFreelancer);
+
 
             return response()->json(['success' => true, 'message' => 'Freelance hired  successfully.']);
 
@@ -140,6 +159,8 @@ class FreelanceController extends Controller
     {
 
         $msg='';
+        $status='';
+        $message='';
 
         $request->validate([
             'id' => 'required|exists:bank_details,id',
@@ -147,19 +168,62 @@ class FreelanceController extends Controller
         ]);
 
         $bankDetail = BankDetails::findOrFail($request->id);
-          
+        $user=Admin::where('id',$bankDetail->user_id)->first();
+        $mobile=$user->mobile;
+        // $mobile='+919956398635';
+        
         if($request->status=='approved'){
             $bankDetail->status ='verified';
             $msg="Verified successfully";
+            
+            $status='Verified';
+            $message="Your payout account is now active. Future payments will be processed seamlessly.";
+
         }
 
         if($request->status=='disapproved'){
             $bankDetail->status ='rejected';
             $msg="Rejected successfully";
+
+            $status='Rejected';
+            $message="Please re-upload valid documents in your Elyvato dashboard to proceed.";
+
         }
 
         
         if($bankDetail->save()){
+
+            $check = sendEmail(
+                $user->email,
+                // 'yatodi5154@camjoint.com',
+                'ELYVATO | Bank Details Verification',
+                'emails.bankverification',
+                [
+                    'freelancer' => $user,
+                    'status' => $status, 
+                    'remarks' => $message ?? null
+                ]
+            );
+
+//    dd($check);
+
+            $bankDetailsVerification = [
+                'name' => 'bank_details_verification',
+                'language' => ['code' => 'en'],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => $user->name],       // {{1}}
+                            ['type' => 'text', 'text' => $status],    // {{2}}
+                            ['type' => 'text', 'text' => $message],    // {{3}}
+                        ]
+                    ]
+                ]
+            ];
+
+            $resp=sendWhatsAppTemplate($mobile, $bankDetailsVerification);
+            // dd($resp);
             return response()->json(['success'=>true,'message' =>$msg]);
         }
 

@@ -26,6 +26,7 @@ use App\Models\HireTalent;
 use App\Models\Note;
 use App\Models\Skill;
 use App\Models\Rating;
+use App\Models\ContactUs;
 
 use App\Models\Call;
 use App\Models\CustomeBooking;
@@ -97,6 +98,7 @@ class ProjectController extends Controller
         $data['employeeUser'] = Admin::where('role_id', 4)->get();
         $data['account_manager'] = Admin::where('role_id', 3)->get();
         $data['bookings'] = Booking::orderBy('id','desc')->get();
+        $data['gigs'] = StatementOfWork::orderBy('id','desc')->get();
 
         return view('admin.project.index', $data);
     }
@@ -106,11 +108,12 @@ public function CreateProject(Request $request){
         'booking'=>'required',
         'account_manager'=>'required',
         'employee'=>'required',
+        'gig'=>'required',
         'project_description'=>'required',
      ]);
 
      $booking=Booking::where('id',$request->booking)->first();
-
+     $booking->sow_id=$request->gig;
      $pro=new Project();
      $pro->booking_id=$booking->id;
      $pro->account_manager_id=$request->account_manager;
@@ -121,6 +124,8 @@ public function CreateProject(Request $request){
      $pro->project_status=$request->project_status ?? 'not_started';
 
      if($pro->save()){
+        $booking->save();
+
         return response()->json(['success'=>true,'message'=>'Project created successfully']);
         }else{
         return response()->json(['success'=>false,'message'=>'Faild to create project!']);
@@ -477,6 +482,7 @@ public function filterEmployee(Request $request)
         $booking->assign_to=$request->assign_to;
         if($booking->save()){
             $check=Project::where('booking_id',$request->booking_id)->first();
+            
             if(empty($check)){
                  Project::create([
                     'booking_id' => $request->booking_id,
@@ -545,6 +551,7 @@ public function filterEmployee(Request $request)
     {
         
         $project = Project::find($request->id);
+// dd($request->all());
 
         if (!empty($project)) {
             $project->project_status = $request->status;
@@ -558,6 +565,7 @@ public function filterEmployee(Request $request)
                 if(!empty($booking->sow_id)){
                     $sow=StatementOfWork::where('id',$booking->sow_id)->first();
                     $service=Service::where('id',$sow->service_id)->first();
+                    
                     $service_name=$service->title;
                 }
 
@@ -568,7 +576,7 @@ public function filterEmployee(Request $request)
 
                 // Send email to user when project starts
                 $user = Admin::find($booking->user_id);
-
+                $mobile=$user->mobile;
                 sendEmail(
                     $user->email,
                     'ELYVATO | Team Onboarded. Content Launch Begins',
@@ -579,8 +587,44 @@ public function filterEmployee(Request $request)
                         'project'=>$project
                     ]
                 );
+
+                $projectUpdate = [
+                'name' => 'project_activate',
+                'language' => ['code' => 'en'],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => $user->username ?? 'No username'], 
+                            ['type' => 'text', 'text' => $service_name],  
+                        ]
+                    ]
+                ]
+            ];
+
+            $resp=sendWhatsAppTemplate($mobile, $projectUpdate);
+
             }elseif($request->status=='completed'){
                 $project->completed_at=now();
+            $booking=Booking::where('id',$project->booking_id)->first();
+            $user = Admin::find($booking->user_id);
+                            $mobile=$user->mobile;
+                $projectUpdate = [
+                'name' => 'status_update',
+                'language' => ['code' => 'en'],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => $user->username ?? 'No username'], 
+                            ['type' => 'text', 'text' =>'Completed'],  
+                        ]
+                    ]
+                ]
+            ];
+
+            $resp=sendWhatsAppTemplate($mobile, $projectUpdate);
+
             }
             
             $project->project_status = $request->status;
@@ -694,6 +738,7 @@ public function filterEmployee(Request $request)
             $comment="Task created successfully";
 
             $user = Admin::find($task->assigned_to);
+            $mobile=$user->mobile;
 
             sendEmail(
                 $user->email,
@@ -704,6 +749,26 @@ public function filterEmployee(Request $request)
                     'task' => $task
                 ]
             );
+
+
+            
+             $assign_task = [
+                'name' => 'assign_task',
+                'language' => ['code' => 'en'],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => $user->username ?? 'no username'],       // {{1}}
+                            ['type' => 'text', 'text' => $request->title],       // {{1}}
+                            ['type' => 'text', 'text' => $request->description],       // {{1}}
+                            ['type' => 'text', 'text' => $request->due_date],       // {{1}}
+                        ]
+                    ]
+                ]
+            ];
+
+            $resp=sendWhatsAppTemplate($mobile, $assign_task);
 
             GenerateTaskHistory($task->id,$comment);
 
@@ -814,13 +879,26 @@ public function filterEmployee(Request $request)
             );
 
             $message = "🚀 *Your Team’s Gearing Up!*\n\n🚨 Team’s deployed, project’s in motion! Expect updates,momentum, and milestone wins coming your way.\n\n *Assign Project to:*\n\n*Name:* $assigned_to->name\n\n Email: $assigned_to->email ";
-        $mobile=$user->mobile;
-        // $mobile='+919956398635';
-        // dd($mobile);
-        $re=sendWhatsAppMessage($mobile, $message);
-        // dd($re);
-        }
 
+            $mobile=$user->mobile;
+            // dd($mobile);
+            // $re=sendWhatsAppMessage($mobile, $message);
+            
+            $assignTo = [
+                'name' => 'assign_employee',
+                'language' => ['code' => 'en'],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => $user->name],       // {{1}}
+                        ]
+                    ]
+                ]
+            ];
+
+            $resp=sendWhatsAppTemplate($mobile, $assignTo);
+        }
 
         return response()->json(['success' => true, 'message' => 'Employee assigned successfully.']);
     }
@@ -861,18 +939,20 @@ public function filterEmployee(Request $request)
 
         if(!empty($request->id)){
         $task = Task::findOrFail($request->id);
-        
          $task->status='approved';
-        $task->updated_by = Auth::user()->id;
+          $task->updated_by = Auth::user()->id;
 
          if($task->save()){
             $comment="Task Marked as completed successfully";
 
             GenerateTaskHistory($task->id,$comment);
 
-            return response()->json(['status'=>true,'message'=>"Marked as approved"]);
+
+                
+
+            return response()->json(['status'=>true, 'message'=>"Marked as approved"]);
          }else{
-            return response()->json(['status'=>false,'message'=>"Faild !"]);
+            return response()->json(['status'=>false, 'message'=>"Faild !"]);
          }
         }
     }
@@ -903,8 +983,16 @@ public function filterEmployee(Request $request)
             // dd($che,$user->email);
 
             $message = "⏳ *A Quick Nudge — You're Up!*\n\n⏰ Just nudging you! There’s a step waiting for your action to keep things moving.";
+
             $mobile=$user->mobile;
-            sendWhatsAppMessage($mobile, $message);
+            // sendWhatsAppMessage($mobile, $message);
+
+            $reminderMail = [
+                'name' => 'reminder_mail',
+                'language' => ['code' => 'en'],
+            ];
+
+            $resp=sendWhatsAppTemplate($mobile, $reminderMail);
 
             $comment="Reminder mail send successfully";
 
@@ -973,8 +1061,16 @@ public function filterEmployee(Request $request)
                 );
 
                  $message = "📬 *Your Delivery Has Landed!*\n\n📦 Your delivery’s ready! Head to your dashboard to review, approve, or send it back for tweaks.";
-        $mobile=$user->mobile;
-        sendWhatsAppMessage($mobile, $message);
+                $mobile=$user->mobile;
+                
+                // sendWhatsAppMessage($mobile, $message);
+
+                $RequestReview =[
+                    'name' => 'review_task',
+                    'language' => ['code' => 'en'],
+                ];
+
+            $resp=sendWhatsAppTemplate($mobile, $RequestReview);
 
             }
 
@@ -993,7 +1089,8 @@ public function filterEmployee(Request $request)
     {
         // dd($request->all());
         $milestone = Milestone::findOrFail($request->id);
-        $milestone->status = 'request_payment';
+        // $milestone->status = 'request_payment';
+        $milestone->status = 'pending';
 
         if($milestone->save()){
 
@@ -1037,7 +1134,37 @@ public function filterEmployee(Request $request)
             
             // $mobile='+919956398635';
             
-            sendWhatsAppMessage($mobile, $message);
+            // sendWhatsAppMessage($mobile, $message);
+
+            $firstMilestontemplateData = [
+                'name' => 'project_acknowledgement',
+                'language' => ['code' => 'en'] ,
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => $user->username??'no name'],  
+                            ['type' => 'text', 'text' => $service_name],  
+                            ['type' => 'text', 'text' => $milestone->title],  
+                            ['type' => 'text', 'text' => '₹' .number_format($milestone->amount ?? 0, 2)]
+                        ]
+                    ]
+                ]
+            ];
+
+            $res=sendWhatsAppTemplate($mobile, $firstMilestontemplateData);
+            // dd($res,$mobile,    $user->username,$service_name,$milestone->title);
+
+         }
+
+         if($check_milestone >=1){
+            $message = "🎯 *Another Milestone, Checked!*\n\n🧩 We’ve crossed a key milestone — keep an eye on your dashboard for what’s next.";
+            $mobile=$user->mobile;
+
+            // $mobile='+919956398635';
+
+            // $response=sendWhatsAppMessage($mobile, $message);
+            // dd($response);
 
             $firstMilestontemplateData = [
                 'name' => 'project_acknowledgement',
@@ -1046,6 +1173,7 @@ public function filterEmployee(Request $request)
                     [
                         'type' => 'body',
                         'parameters' => [
+                            ['type' => 'text', 'text' => $user->name.'Another Milestone, Checked!'],  
                             ['type' => 'text', 'text' => $service_name],  
                             ['type' => 'text', 'text' => $milestone->title],  
                             ['type' => 'text', 'text' => '₹' .number_format($milestone->amount ?? 0, 2)]
@@ -1056,15 +1184,6 @@ public function filterEmployee(Request $request)
 
             sendWhatsAppTemplate($mobile, $firstMilestontemplateData);
 
-
-         }
-
-         if($check_milestone >=1){
-            $message = "🎯 *Another Milestone, Checked!*\n\n🧩 We’ve crossed a key milestone — keep an eye on your dashboard for what’s next.";
-            $mobile=$user->mobile;
-            // $mobile='+919956398635';
-            $response=sendWhatsAppMessage($mobile, $message);
-            // dd($response);
          }
 
              
@@ -1078,8 +1197,6 @@ public function filterEmployee(Request $request)
     public function updateCallSchedule(Request $request)
     {
 
-        // dd($request->all());
-
         $request->validate([
             'call_id' => 'required|exists:calls,id',
             'call_link' => 'required|string',
@@ -1087,7 +1204,6 @@ public function filterEmployee(Request $request)
         ]);
 
         try {
-            
 
             $call = Call::findOrFail($request->call_id);
             $call->call_link = $request->call_link;
@@ -1101,6 +1217,7 @@ public function filterEmployee(Request $request)
             $booking=Booking::where('id',$call->booking_id)->first();
             // dd($booking,$call->booking_id);   
             $user = Admin::find($booking->user_id); // or wherever user_id is stored
+            $manager = Admin::find($booking->assign_to); // or wherever user_id is stored
 
             sendEmail(
                 $user->email,
@@ -1117,14 +1234,30 @@ public function filterEmployee(Request $request)
             $message = "🤝 *Meet Your Guide to Great Content!*\n\n🤝 Call’s booked, and your dedicated Account Manager is ready to lead the way. Let’s build something awesome.";
 
             $mobile=$user->mobile;
-            sendWhatsAppMessage($mobile, $message);
+            $managermobile=$manager->mobile;
+            // sendWhatsAppMessage($mobile, $message);
 
-            $accountManagertemplateData = [
-                    'name' => 'discovery_call_account_manager_deployement',
+            $callUpdate = [
+                    'name' => 'update_call',
                     'language' => ['code' => 'en']
                 ];
 
-            sendWhatsAppMessage($mobile, $accountManagertemplateData);
+            sendWhatsAppTemplate($mobile, $callUpdate);
+
+            $accountManagertemplateData = [
+                'name' => 'account_manager_call_update',
+                'language' => ['code' => 'en'],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => $user->name],
+                        ]
+                    ]
+                ]
+            ];
+
+            sendWhatsAppTemplate($managermobile, $accountManagertemplateData);
 
 
             return response()->json([
@@ -1177,6 +1310,8 @@ public function filterEmployee(Request $request)
                 throw new \Exception("Admin not found for user_id {$booking->user_id}");
             }
 
+            $mobile=$user->mobile;
+    
             // Send email
             sendEmail(
                 $user->email,
@@ -1192,7 +1327,14 @@ public function filterEmployee(Request $request)
 
             // WhatsApp message
             $message = "🔄 *Reschedule Confirmed!*\n\n📅 Your Account Manager will meet you at the updated time. Let’s keep the momentum going!";
-            sendWhatsAppMessage($user->mobile, $message);
+            // sendWhatsAppMessage($user->mobile, $message);
+
+            $callUpdate = [
+                    'name' => 'update_call',
+                    'language' => ['code' => 'en']
+                ];
+
+            sendWhatsAppTemplate($mobile, $callUpdate);
 
       
 
@@ -1209,7 +1351,7 @@ public function filterEmployee(Request $request)
 
     } catch (\Exception $e) {
         \Log::error('Call Schedule Update Error: ' . $e->getMessage());
-       dd( $e->getMessage());
+    //    dd( $e->getMessage());
         return response()->json([
             'success' => false,
             'message' => 'Something went wrong. Please try again.'
@@ -1294,6 +1436,12 @@ public function filterEmployee(Request $request)
         return response()->json(['success' => true]);
     }
 
+
+    public function EnquiryList(){
+        $data['contacts']=ContactUs::with('service')->orderBy('id','desc')->paginate(10);
+
+        return view('admin.enquiry.enquiry',$data);
+    }
 
 
 }

@@ -49,13 +49,13 @@
             <!-- First Div -->
             <div>
               @foreach ($firstHalf as $subservice)
-          <li class="px-2">
-            <a class="dropdown-item rounded"
-              href="{{ route('sub-service-sow', ['serviceSlug' => $service->slug, 'subserviceSlug' => $subservice->slug]) }}">
-              {{ $subservice->name }}
-            </a>
-          </li>
-          @endforeach
+                <li class="px-2">
+                  <a class="dropdown-item rounded"
+                    href="{{ route('sub-service-sow', ['serviceSlug' => $service->slug, 'subserviceSlug' => $subservice->slug]) }}">
+                    {{ $subservice->name }}
+                  </a>
+                </li>
+                @endforeach
             </div>
 
             <!-- Second Div -->

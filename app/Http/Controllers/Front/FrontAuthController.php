@@ -12,6 +12,7 @@ use App\Models\City;
 use App\Models\Role;
 use App\Models\RoleDesignation;
 use App\Models\UserProfile;
+use App\Models\Faq;
 use Validator;
 use Hash;
 use Session;
@@ -41,42 +42,7 @@ class FrontAuthController extends Controller
 
         }
         $data['title'] = "User Login";
-        
-        
-          $mobile='+919956398635';
 
-
-        // here send registration template  
-     
-        $registemplateData = [
-            'name' => 'registration',
-            'language' => ['code' => 'en'],
-            'components' => [
-                [
-                    'type' => 'body',
-                    'parameters' => [
-                        [
-                            'type' => 'text',
-                            'text' => "*Login Credentials:*\n\nEmail: user@example.com\nPassword: abc12345"
-                        ]
-                    ]
-                ]
-            ]
-        ];
-
-
-
-
-        // $response=sendWhatsAppTemplate($mobile, $registemplateData);
-
-        // $response=sendWhatsAppTemplate($mobile, $registemplateData);
-        
-        $message = "*Elyvato | Registration Success*\n\n🙌 *You’re One of Us Now!*\n\n🚀 We’re pumped to have you! Jump in and unlock powerful, streamlined content services that just make sense.\n\n🔐 *Your Login Credentials:*\n👤 Email: email\n🔑 Password: password\n\nLogin here: https://elyvato.com/login";
-
-        
-        // sendWhatsAppMessage($mobile, $message);
-        
-        // dd($response);
         
         return view('front.login', $data);
     }
@@ -105,7 +71,35 @@ class FrontAuthController extends Controller
 
 
     public function RegisterChoice(){
+        
         $data['title']="Elyvato | SignUp";
+
+        $data['faqs']=Faq::where('page_name','register-choice')->get();
+
+
+        $mobile='+919956398635';
+          $welcometemplateData = [
+                'name' => 'discover_call',
+                'language' => ['code' => 'en']
+            ];
+
+        $token = Str::random(64); 
+        // $resetLink = url("/password/reset/{$token}?email=" . urlencode($user->email));
+
+        // $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
+
+        // $message = "🔐 *No Worries — Let’s Reset It.*\n\n"
+        //      . "Need to reset your password? Tap below and you’ll be back in faster than you can say *Elyvato.*\n\n"
+        //      . $resetLink;
+
+            // $mobile=$user->mobile;
+            // $mobile='+919956398635';
+            // dd($mobile);
+
+    //    $response= sendWhatsAppMessage($mobile, $message);
+
+    //  dd($response);
+
         return view('front.register_choice',$data);
     }
 
@@ -133,8 +127,7 @@ class FrontAuthController extends Controller
                 $mobileExists = Admin::where('mobile', $request->mobile)->first();
 
                 if ($emailExists || $mobileExists) {
-                    $errorMessage = '';
-
+                       $errorMessage = '';
                     if ($emailExists && $mobileExists) {
                         $errorMessage = 'Email and mobile number are already registered. Please log in.';
                     } elseif ($emailExists) {
@@ -191,9 +184,8 @@ class FrontAuthController extends Controller
 
         
 
-
-        $welcometemplateData = [
-                'name' => 'welcome_template',
+            $welcometemplateData = [
+                'name' => 'welcome_registration',
                 'language' => ['code' => 'en']
             ];
 
@@ -202,7 +194,7 @@ class FrontAuthController extends Controller
         
         $mobile=$user->mobile;
         // $mobile='+919956398635';
-         $response=sendWhatsAppMessage($mobile, $message);
+        //  $response=sendWhatsAppMessage($mobile, $message);
 
         $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
 
@@ -229,7 +221,7 @@ class FrontAuthController extends Controller
                 ]
             ];
 
-        $response=sendWhatsAppTemplate($mobile, $registemplateData);
+        // $response=sendWhatsAppTemplate($mobile, $registemplateData);
 
 
      
@@ -367,11 +359,6 @@ class FrontAuthController extends Controller
         ], 429);
     }
 
-    // $admin = Admin::where('email', $request->email)
-    //               ->where('type', 'customer')
-    //               ->where('type', 'user')
-    //               ->where('is_hired', 'yes')
-    //               ->first();
 
     $admin = Admin::where('email', $request->email)
               ->where(function ($query) {
@@ -380,6 +367,13 @@ class FrontAuthController extends Controller
                             $subQuery->where('type', 'user')   ;
                         });
               })->first();
+    
+    if($admin->type=='user' && Role($admin->role_id)->name !='Freelancer'){
+        return response()->json([
+            'success' => false,
+            'message' => "You don't have permission"
+        ], 401);
+    }
               
 
     if (!empty($admin) && \Hash::check($request->password, $admin->password)) {
@@ -389,6 +383,9 @@ class FrontAuthController extends Controller
 
         $url = session()->pull('custom_redirect_url') ?? url('/');
 
+        if($admin->type=='user'){
+            $url=url('/user/dashboard');
+        }
         return response()->json([
             'success' => true,
             'message' => '🎉 Logged in. Let the magic begin!',
@@ -417,15 +414,15 @@ class FrontAuthController extends Controller
         ]);
 
         $user=Admin::where('email',$request->email)->first();
+
         if (!$user) {
             return response()->json(['status' => false, 'message' => 'Email not found.'], 404);
         }
 
         Session::put('reset_email', $request->email);
       
-         $token = Str::random(64); 
+        $token = Str::random(64); 
         $resetLink = url("/password/reset/{$token}?email=" . urlencode($user->email));
-
 
              sendEmail(
                 $user->email,
@@ -438,15 +435,21 @@ class FrontAuthController extends Controller
             );
 
             
-            $message = "🔐 *No Worries — Let’s Reset It.*\n\n🔐 Need to reset your password? Tap below and you’ll be back in faster than you can say *Elyvato.*";
+            // $message = "🔐 *No Worries — Let’s Reset It.*\n\n🔐 Need to reset your password? Tap below and you’ll be back in faster than you can say *Elyvato.*";
+
+             $message = "🔐 *No Worries — Let’s Reset It.*\n\n"
+             . "Need to reset your password? Tap below and you’ll be back in faster than you can say *Elyvato.*\n\n"
+             . $resetLink;
 
             $mobile=$user->mobile;
             // $mobile='+919956398635';
             // dd($mobile);
 
-       $response= sendWhatsAppMessage($mobile, $message);
+    //    $response= sendWhatsAppMessage($mobile, $message);
     //    dd($response);
- 
+            
+    
+
         $forgettemplateData = [
             'name' => 'forget_password',
             'language' => ['code' => 'en']

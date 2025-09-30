@@ -16,9 +16,11 @@ use App\Models\UserProfile;
 use App\Models\Booking;
 use App\Models\Call;
 use App\Models\CaseStudy;
+use App\Models\Department;
 use App\Models\Payment;
 use App\Models\HireTalent;
 use App\Models\Freelancer;
+use App\Models\Ticket;
 use Auth;
 use Carbon\Carbon;
 use Hash;
@@ -107,6 +109,17 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         //  dd($data['payment']);
 
         return view('front.invoice',$data);
+    }
+
+    public function Ticket(){
+
+        $data['title']='Raise Ticket';
+        $data['departments']=Department::get();
+        // $data['tickets']=Ticket::where('user_id',Auth::user()->id)->get();
+        $data['tickets']=Ticket::with('messages')->where('ticket_close','open')->first();
+        
+        // dd($data);  
+        return view('front.ticket',$data);
     }
 
 
@@ -229,7 +242,8 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         if ($request->has('search') && !empty($request->search)) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
-
+        
+      
         $data['instanthire'] = $query->paginate(12);
 // dd('hire list');
         return view('front.instant_hire_list',$data);
@@ -271,6 +285,7 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
                 // dd($data['sowList']);
         return view('front.sow_list', $data);
     }
+
 
 
 
@@ -532,6 +547,24 @@ public function getDefaultServices()
                         'password' => $password
                     ]
             );
+
+            $welcometemplateData = [
+                'name' => 'welcome_registration',
+                'language' => ['code' => 'en']
+            ];
+
+            $mobile=$user->mobile;
+
+        $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
+
+        $message = "*Elyvato | Registration Successful* 🎉\n\n"
+         . "Welcome aboard, {$user->name}! 🚀\n\n"
+         . "Your account is ready. Here are your login details:\n"
+         . "👤 Email: {$user->email}\n"
+         . "🔑 Password: {$password}\n\n"
+         . "Login now 👉 https://elyvato.com/login";
+
+          sendWhatsAppMessage($mobile, $message);
 
             return response()->json([
                 'status'  => true,

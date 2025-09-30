@@ -11,4 +11,11 @@ class ContactUs extends Model
 
     protected $fillable = ['name', 'email', 'phone', 'service', 'message'];
 
+
+    public function service()
+{
+    return $this->belongsTo(Service::class, 'service', 'id');
+}
+
+
 }

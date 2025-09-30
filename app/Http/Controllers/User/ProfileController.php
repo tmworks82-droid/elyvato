@@ -142,6 +142,8 @@ public function uploadCancelledCheck(Request $request)
 
 
 
+
+
  public function UpdateBankDetails(Request $request)
     {
 

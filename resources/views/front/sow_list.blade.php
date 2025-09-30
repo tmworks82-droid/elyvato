@@ -131,7 +131,7 @@
             <div class="row service-cards" id="sow-list">
 
                 @if (!empty($sowList) && count($sowList) > 0)
-                    @foreach ($sowList as $sow)
+                    {{-- @foreach ($sowList as $sow)
                         <div class="col-md-6 col-lg-4">
                             <div class="h-100 bg-white border border-bg-tertiary rounded service-card d-flex flex-column">
 
@@ -164,10 +164,6 @@
                                     @endif
                                 @endforeach
 
-
-                                {{-- <div class="service-card-image-box rounded-top">
-                            <img src="{{ asset('front/assets/images/graphic-design.jpg') }}" alt="{{ $sow->name }}" class="img-fluid service-card-image">
-                </div> --}}
 
                                 <div class="service-card-content p-4 d-flex flex-column flex-grow-1">
                                     <div class="mb-4">
@@ -235,7 +231,76 @@
                                 </div>
                             </div>
                         </div>
+                    @endforeach --}}
+
+                    @foreach ($sowList as $sow)
+                        <div class="col-md-6 col-lg-4">
+                            <div class="h-100 bg-white border border-bg-tertiary rounded service-card d-flex flex-column">
+
+                                @php
+                                    $fileShown = false;
+                                    $sowId = App\Models\StatementOfWork::where('slug', $sow->slug)->first();
+                                    $subService = App\Models\SubService::where('id', $sowId->subservice_id)->first();
+                                    $subServiceSlug = $subService->slug;
+
+                                    $cardUrl = route('sow.details.sub', [$serviceSlug, $subServiceSlug, $sow->slug]);
+                                @endphp
+
+                                {{-- Make top portion (image + title + description) clickable --}}
+                                <a href="{{ $cardUrl }}"
+                                    class="text-decoration-none text-dark flex-grow-1 d-flex flex-column">
+
+                                    @foreach ($sow->allFiles as $files)
+                                        @if (!$fileShown && $files->file_type == 'image')
+                                            <div class="service-card-image-box rounded-top">
+                                                <img src="{{ asset($files->image_path) }}" alt="{{ $sow->name }}"
+                                                    class="img-fluid service-card-image">
+                                            </div>
+                                            @php $fileShown = true; @endphp
+                                        @elseif (!$fileShown && $files->file_type == 'video')
+                                            @php
+                                                preg_match('/embed\/([^"?&]+)/', $files->video, $matches);
+                                                $VideoId = $matches[1] ?? null;
+                                            @endphp
+                                            <div class="service-card-image-box rounded-top">
+                                                <img src="https://img.youtube.com/vi/{{ $VideoId }}/hqdefault.jpg"
+                                                    alt="YouTube Thumbnail" class="img-fluid service-card-image">
+                                            </div>
+                                            @php $fileShown = true; @endphp
+                                        @endif
+                                    @endforeach
+
+                                    <div class="service-card-content p-4 d-flex flex-column flex-grow-1">
+                                        <div class="mb-4">
+                                            <h3 class="fw-bold fs-4 mb-3 text-main">{{ $sow->title }}</h3>
+                                            <p class="mb-0">
+                                                {{ \Illuminate\Support\Str::words(strip_tags(html_entity_decode($sow->description)), 25, '...') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                {{-- Keep footer links inside the card but OUTSIDE the main <a> --}}
+                                <div class="mt-auto border-top pt-3 px-4 pb-3">
+                                    @if (auth()->check())
+                                        <a href="{{ route('post.custom.requirement', $sow->slug) }}"
+                                            class="service-card-link d-inline-flex align-items-center text-sm link-text">
+                                            Post Custom Requirement
+                                            <i class="ri-login-box-line"></i>
+                                        </a>
+                                    @else
+                                        <a href="{{ url('login') }}"
+                                            class="service-card-link d-inline-flex align-items-center text-sm link-text">
+                                            Login for Custom Requirement
+                                            <i class="ri-login-box-line"></i>
+                                        </a>
+                                    @endif
+                                </div>
+
+                            </div>
+                        </div>
                     @endforeach
+                    
                 @else
                     <div class="alert alert-warning" role="alert">
                         No Gig List Found !
@@ -347,7 +412,7 @@
 
                 button.html(
                     '<span class="d-flex align-items-center gap-2">Loading... <i class="ri-loader-4-line ri-spin"></i></span>'
-                    );
+                );
                 button.prop('disabled', true);
 
                 $.ajax({
@@ -372,7 +437,7 @@
                     error: function() {
                         button.html(
                             '<span class="d-flex align-items-center gap-2">Try Again <i class="ri-restart-line"></i></span>'
-                            );
+                        );
                         button.prop('disabled', false);
                     }
                 });

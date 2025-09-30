@@ -132,7 +132,28 @@ class PaymentController extends Controller
         $message = "💰 *Payment Done. Let’s Get Building.*\n\n💸 We’ve got your payment — and your project’s officially moving forward. Let the magic begin.";
         $mobile=$user->mobile;
 
-        sendWhatsAppMessage($mobile, $message);
+        // sendWhatsAppMessage($mobile, $message);
+
+
+        $clientName=$user->name;
+        $paymentAmount=$paid;
+
+        $milestonePayment = [
+            'name' => 'payment_milestone',
+            'language' => ['code' => 'en'],
+            'components' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $clientName],      
+                        ['type' => 'text', 'text' => $paymentAmount],   
+                    ]
+                ]
+            ]
+        ];
+
+        sendWhatsAppTemplate($mobile, $milestonePayment);
+
 
         return response()->json([
             'success' => true,
@@ -171,20 +192,37 @@ class PaymentController extends Controller
             sendEmail(
                 $user->email,
                 "New Invoice Request Received",
-                'emails.invoice_request',
+                'emails.invoice_request',   
                 ['user' => $user->name,'user_name'=>Auth::user()->username] 
             );
+
+
+            $mobile=$user->mobile;
+
+            $invoiceRequest = [
+                'name' => 'invoice_request',
+                'language' => ['code' => 'en'],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => Auth::user()->username],       // {{1}}
+                            ['type' => 'text', 'text' => $bookingId],    // {{2}}
+                        ]
+                    ]
+                ]
+            ];
+
+            sendWhatsAppTemplate($mobile, $invoiceRequest);
+
         }
 
         return response()->json([
             'status' => true,
-            'message' => $msg,
+            'message' => $msg,   
         ]);
 
     }
-    
- 
-    
     
 
 }

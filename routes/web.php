@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminTicketController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -25,8 +26,11 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\FrontAuthController;
 use App\Http\Controllers\Front\BookingController;
+use App\Http\Controllers\Front\TicketConversationController;
 
 use App\Http\Controllers\Front\SocialAuthController;
+use App\Models\Department;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,7 +69,6 @@ Route::domain(config('app.domain'))->group(function () {
     Route::group(['middleware' =>'admin.guest'], function () {
         Route::get('/backoffice/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
         Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.dologin');
-
     });
 
     // user middleware routes
@@ -75,6 +78,12 @@ Route::domain(config('app.domain'))->group(function () {
 
         Route::get('/bookings', [BookingController::class, 'Booking']);
         Route::get('/payment-list', [DashboardController::class, 'PaymentsList']);
+
+        Route::post('/upload-ticket-attachment', [TicketConversationController::class, 'uploadAttachmentTicket'])->name('upload.ticket.attachment');
+        Route::post('/store-ticket', [TicketConversationController::class, 'storeTicket'])->name('tickets.store');
+    // Add a route to handle the reply submission
+        Route::post('/tickets/reply', [TicketConversationController::class, 'storeReply'])->name('tickets.reply');
+        Route::post('/tickets/close/user', [TicketConversationController::class, 'closeTicketByUser'])->name('tickets.close.user');
 
         // Route::post('/create-order', [BookingController::class, 'createRazorpayOrder'])->name('razorpay.order.create');
 
@@ -96,7 +105,6 @@ Route::domain(config('app.domain'))->group(function () {
         Route::post('/user-update-profile}', [DashboardController::class, 'UpdateProfile'])->name('user.update_user_profile');
 
         Route::post('/freelance-user-update-profile}', [DashboardController::class, 'UpdateFreelancerProfile'])->name('freelance.user.update_user_profile');
-        
 
         // Certification upload
 Route::post('/freelance/upload-certification', [ProfileController::class, 'uploadCertification'])
@@ -157,6 +165,10 @@ Route::post('/save/availability-time', [ProfileController::class, 'SaveAvailabil
         Route::get('/dashboard', [AdminDashboardController::class, 'showDashboard'])->name('admin.dashboard');
         Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
+        Route::get('/ticket-list', [AdminTicketController::class, 'TicketList'])->name('admin.ticket.list');
+        Route::get('/ticket-reply-view/{id}', [AdminTicketController::class, 'TicketReplyView'])->name('admin.ticket.reply.page');
+        Route::post('/ticket-reply', [AdminTicketController::class, 'AgentReply'])->name('admin.ticket.reply');
+        Route::post('/ticket-close', [AdminTicketController::class, 'closeTicket'])->name('admin.ticket.close');
 
 
         Route::get('/users', [AdminDashboardController::class, 'UsersPage']);
@@ -211,7 +223,27 @@ Route::post('/save/availability-time', [ProfileController::class, 'SaveAvailabil
         Route::delete('destroy-hire-talent/{id}',[MasterController::class,'HireTalentDestroy'])->name('admin.destroy.talent');
         
         Route::post('/toggle-clock', [MasterController::class, 'toggleClock']);
+
+        Route::get('/support-department', [MasterController::class, 'Department']);
+        Route::post('/save-support-department', [MasterController::class, 'SaveDepartment'])->name('save.support.department');
         
+
+        Route::delete('/delete-record/{id}', function ($id) {
+            // Find the record in your database (for example, from the "users" table)
+            $record = Department::find($id);
+            
+            if ($record) {
+                // Delete the record
+                $record->delete();
+                
+                // Return a success response
+                return response()->json(['message' => 'Record deleted successfully']);
+            }
+
+            // Return an error response if record not found
+            return response()->json(['message' => 'Record not found'], 404);
+        });
+
         Route::get('create-statement',[MasterController::class,'StatementCreate']);
         Route::get('edit-statement/{id}',[MasterController::class,'StatementCreate'])->name('statements.edit');
         Route::post('save-statement-work',[MasterController::class,'saveStatementOfWork'])->name('save.statement-work');
@@ -291,7 +323,8 @@ Route::post('/save/availability-time', [ProfileController::class, 'SaveAvailabil
         Route::post('/reminder/mail', [ProjectController::class, 'ReminderMail'])->name('reminder.mail');
         
         Route::post('/employee/filter', [ProjectController::class, 'filterEmployee'])->name('employee.filter');
-
+        
+        Route::get('/enquiry-list', [ProjectController::class, 'EnquiryList'])->name('enquiry.list');
 
         Route::get('/country', [CityController::class, 'Country'])->name('country');
         Route::get('/create-country', [CityController::class, 'CreateCountry'])->name('create.country');
@@ -344,6 +377,9 @@ Route::post('/save/availability-time', [ProfileController::class, 'SaveAvailabil
         Route::post('/proceed-booking', [BookingController::class, 'ProceedToBooking'])->name('user.proceed.booking');
         
         Route::get('/', [FrontController::class, 'index']);
+
+        Route::get('raise-ticket', [FrontController::class, 'Ticket'])->name('raise.ticket');
+
         Route::get('/contact', [FrontController::class, 'ContactCustomer']);
         Route::get('/login', [FrontAuthController::class, 'UserLoginForm'])->name('user_login_form');
         

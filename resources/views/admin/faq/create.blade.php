@@ -61,6 +61,7 @@
                         <option value="blog" {{ (isset($faqs) && $faqs->page_name == 'blog') ? 'selected' : '' }}>Blog</option>
                         <option value="about" {{ (isset($faqs) && $faqs->page_name == 'about') ? 'selected' : '' }}>About</option>
                         <option value="gig-details" {{ (isset($faqs) && $faqs->page_name == 'gig-details') ? 'selected' : '' }}>Gig Details</option>
+                        <option value="register-choice" {{ (isset($faqs) && $faqs->page_name == 'register-choice') ? 'selected' : '' }}>Register Choice</option>
                     </select>
                   </div>
 

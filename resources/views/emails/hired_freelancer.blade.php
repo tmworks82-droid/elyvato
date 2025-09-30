@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>You are Hired – Elyvato</title>
+  <title>You are Onboard – Elyvato</title>
   <style>
     body {
         background-color: #303030;
@@ -68,14 +68,14 @@
       <img src="{{ url('front/assets/images/elyvato-header-logo.png') }}" alt="Elyvato Logo">
     </div>
 
-    <h1>Congratulations {{ $freelancer->name }} 🎉</h1>
-    <h2>You’ve Been Hired as a Freelancer</h2>
-    <h3>We are thrilled to inform you that you have been successfully hired for a project on <strong>Elyvato</strong>. Get ready to showcase your creativity and deliver excellence!</h3>
+    <h1>We are thrilled to have you with our team! {{ $freelancer->name }} 🎉</h1>
+    <h2>Welcome Aboard! 🎉</h2>
+    <h3>Congratulations on being successfully onboarded to <strong>Elyvato</strong>. We’re excited to have you in our community, and our recruitment team will be connecting with you shortly to guide you on the next steps</h3>
 
-    <div class="credentials">
+    {{-- <div class="credentials">
       <p><strong>Project Title: </strong> {{ $projectTitle ?? 'Assigned Project' }}</p>
       <p><strong>Start Date: </strong> {{ $startDate ?? date('d M, Y') }}</p>
-    </div>
+    </div> --}}
 
     <p>
       <a href="{{ url('/login') }}" class="button btn" target="_blank">

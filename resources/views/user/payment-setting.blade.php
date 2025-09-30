@@ -55,12 +55,12 @@
 
         <div class="row mb-3">
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label for="bank_name" class="form-label">Bank Name</label>
                 <input type="text" name="bank_name" id="bank_name" class="form-control" placeholder="Enter bank name" value="{{$bank_detail->bank_name ?? ''}}" required>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <label for="cancelled_check_image" class="form-label">Upload Cancelled Cheque</label>
                 <div class="dropzone" id="cancelled-check-dropzone">
                     <div class="dz-message">Drop file here or click to upload</div>
@@ -70,19 +70,21 @@
             </div>
 
             <!-- Government ID Dropdown -->
-<div class="col-md-6">
+            
+<div class="col-md-12 mt-3">
     <label for="gov_id_type" class="form-label">Government ID</label>
     <select name="gov_id_type" id="gov_id_type" class="form-select">
         <option value="">-- Select ID Type --</option>
-        <option value="passport" {{ $bank_detail->gov_id_type == 'passport' ? 'selected' : '' }}>Passport</option>
-        <option value="driving_license" {{ $bank_detail->gov_id_type == 'driving_license' ? 'selected' : '' }}>Driving License</option>
-        <option value="aadhaar" {{ $bank_detail->gov_id_type == 'aadhaar' ? 'selected' : '' }}>Aadhaar</option>
-        <option value="pan" {{ $bank_detail->gov_id_type == 'pan' ? 'selected' : '' }}>PAN</option>
+        <option value="passport" {{ !empty($bank_detail) && $bank_detail->gov_id_type == 'passport' ? 'selected' : '' }}>Passport</option>
+        <option value="driving_license" {{ !empty($bank_detail) && $bank_detail->gov_id_type == 'driving_license' ? 'selected' : '' }}>Driving License</option>
+        <option value="aadhaar" {{ !empty($bank_detail) && $bank_detail->gov_id_type == 'aadhaar' ? 'selected' : '' }}>Aadhaar</option>
+        <option value="pan" {{ !empty($bank_detail) && $bank_detail->gov_id_type == 'pan' ? 'selected' : '' }}>PAN</option>
     </select>
 </div>
 
+
 <!-- Passport Front -->
-<div class="col-md-3 gov-field {{ $bank_detail->gov_id_type == 'passport' ? '' : 'd-none' }}" id="passport-front-field">
+<div class="col-md-3 mt-2 gov-field {{ !empty($bank_detail) && $bank_detail->gov_id_type == 'passport' ? '' : 'd-none' }}" id="passport-front-field">
     <label class="form-label">Passport Front</label>
     <div class="dropzone" id="passport-front-dropzone"></div>
     <input type="hidden" name="passport_front" id="passport_front"
@@ -90,7 +92,7 @@
 </div>
 
 <!-- Passport Back -->
-<div class="col-md-3 gov-field {{ $bank_detail->gov_id_type == 'passport' ? '' : 'd-none' }}" id="passport-back-field">
+<div class="col-md-3 mt-2 gov-field {{!empty($bank_detail) && $bank_detail->gov_id_type == 'passport' ? '' : 'd-none' }}" id="passport-back-field">
     <label class="form-label">Passport Back</label>
     <div class="dropzone" id="passport-back-dropzone"></div>
     <input type="hidden" name="passport_back" id="passport_back"
@@ -98,7 +100,7 @@
 </div>
 
 <!-- Driving License -->
-<div class="col-md-3 gov-field {{ $bank_detail->gov_id_type == 'driving_license' ? '' : 'd-none' }}" id="dl-field">
+<div class="col-md-3 mt-2 gov-field {{!empty($bank_detail) && $bank_detail->gov_id_type == 'driving_license' ? '' : 'd-none' }}" id="dl-field">
     <label class="form-label">Driving License</label>
     <div class="dropzone" id="dl-dropzone"></div>
     <input type="hidden" name="driving_license" id="driving_license"
@@ -106,7 +108,7 @@
 </div>
 
 <!-- Aadhaar Front -->
-<div class="col-md-3 gov-field {{ $bank_detail->gov_id_type == 'aadhaar' ? '' : 'd-none' }}" id="aadhaar-front-field">
+<div class="col-md-3 mt-2 gov-field {{!empty($bank_detail) && $bank_detail->gov_id_type == 'aadhaar' ? '' : 'd-none' }}" id="aadhaar-front-field">
     <label class="form-label">Aadhaar Front</label>
     <div class="dropzone" id="aadhaar-front-dropzone"></div>
     <input type="hidden" name="aadhaar_front" id="aadhaar_front"
@@ -114,7 +116,7 @@
 </div>
 
 <!-- Aadhaar Back -->
-<div class="col-md-3 gov-field {{ $bank_detail->gov_id_type == 'aadhaar' ? '' : 'd-none' }}" id="aadhaar-back-field">
+<div class="col-md-3 mt-2 gov-field {{ !empty($bank_detail) && $bank_detail->gov_id_type == 'aadhaar' ? '' : 'd-none' }}" id="aadhaar-back-field">
     <label class="form-label">Aadhaar Back</label>
     <div class="dropzone" id="aadhaar-back-dropzone"></div>
     <input type="hidden" name="aadhaar_back" id="aadhaar_back"
@@ -122,7 +124,7 @@
 </div>
 
 <!-- PAN -->
-<div class="col-md-3 gov-field {{ $bank_detail->gov_id_type == 'pan' ? '' : 'd-none' }}" id="pan-field">
+<div class="col-md-3 mt-2 gov-field {{!empty($bank_detail) &&  $bank_detail->gov_id_type == 'pan' ? '' : 'd-none' }}" id="pan-field">
     <label class="form-label">PAN</label>
     <div class="dropzone" id="pan-dropzone"></div>
     <input type="hidden" name="pan" id="pan"
@@ -161,9 +163,8 @@
                 </a>
             </div>
             
-               
                 @if($bank_detail->gov_id_type=='pan')
-                <div class="col-md-4">
+            <div class="col-md-4">
                 <label for="cancelled_check_image" class="form-label">Pan Card</label> <br>
                     <a href="{{url($bank_detail->pan)}}">
                     <img src="{{url($bank_detail->pan)}}" width="100" height="100" alt="">
@@ -172,7 +173,6 @@
             </div>
             @endif
 
-            
                 @if($bank_detail->gov_id_type=='aadhaar')
                     <div class="col-md-4">
                     <label for="cancelled_check_image" class="form-label">Aadhaar Front</label> <br>

@@ -96,6 +96,7 @@ class DashboardController extends Controller
         return view('user.dashboard',$data);
     }
 
+// public function Ticket()
 
     public function BookingList(Request $request){
 
@@ -656,7 +657,7 @@ $messages = [
     $user->username = $request->username;
     $user->email = $request->email;
     $user->mobile = $request->mobile;
-    $user->role_id = $request->role;
+    // $user->role_id = $request->role;
     $user->save();
 
     
@@ -830,7 +831,6 @@ return response()->json(['message' => 'Password updated successfully.']);
     public function UpdateFreelancerProfileFiles(Request $request)
     {
 
-
         // Update Admin basic details
         $user = Admin::find(Auth::user()->id);
 
@@ -881,7 +881,8 @@ return response()->json(['message' => 'Password updated successfully.']);
         // dd($request->all());
 
         $request->validate([
-            'profile_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            // 'profile_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'profile_image' => 'required',
         ]);
 
         $user=UserProfile::where('user_id',Auth::user()->id)->first();
@@ -897,7 +898,6 @@ return response()->json(['message' => 'Password updated successfully.']);
             if (!file_exists($uploadPath)) {
                 mkdir($uploadPath, 0777, true);
             }
-
             // Move file
             $file->move($uploadPath, $filename);
 

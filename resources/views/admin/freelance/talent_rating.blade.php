@@ -208,13 +208,11 @@
                                     @endif
                                 </div>
 
-                                
-
-
                                 <div class="col-sm-3">
                                     <strong><i class="fas fa-user-circle mr-1"></i> Profile Picture</strong>
-                                    @if (!empty($freelancer->profile->profile))
-                                        <img src="{{ url($freelancer->profile->profile) }}" alt="Profile Picture"
+
+                                    @if (!empty($freelancer->profile->image))
+                                        <img src="{{ url($freelancer->image) }}" alt="Profile Picture"
                                             width="60" height="60" class="rounded-circle">
                                     @else
                                         <p class="text-muted">Not Uploaded</p>

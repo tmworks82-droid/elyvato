@@ -162,11 +162,7 @@
                                     <button class="btn btn-outline-danger btn-sm mb-2 delete-task-btn" data-type="review"
                                         data-task-id="{{ $task->id ?? '' }}" name="button"
                                         value="Request for Review">Request for Review</button>
-                                    @if (auth()->user()->hasPermission('delete_task'))
-                                        <button class="btn btn-outline-danger btn-sm delete-task-btn" data-type="delete"
-                                            name="button" value="Delete Task"
-                                            data-task-id="{{ $task->id ?? '' }}">Delete</button>
-                                    @endif
+                                   
                                 </div>
                             </div>
                         </div>

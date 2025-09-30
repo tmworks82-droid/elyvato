@@ -95,7 +95,7 @@
 		}
 	</style>
 	
-<img src="{{ asset('front/assets/images/pattern-a.svg') }}" alt="hero pattern" class="header-pattern-left position-absolute">
+<!--<img src="{{ asset('front/assets/images/pattern-a.svg') }}" alt="hero pattern" class="header-pattern-left position-absolute">-->
 
 {{-- ============================= breadcrumb section ============================= --}}
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="d-none">
@@ -111,10 +111,20 @@
 
 {{--------banner ---}}
 
-<div class="container rounded-1 ">
-    <img src="https://elyvato.com/front/assets/images/30min Banner.jpg" class="img-fluid w-100 mt-3
-    " alt="elyvato banner" style="height: 500px; border-radius:5px;">
-</div>
+
+<!-- Desktop / Tablet only -->
+<!--<div class="container rounded-1 d-none d-sm-block">-->
+<!--    <img src="https://elyvato.com/front/assets/images/30min Banner.jpg" -->
+<!--         class="img-fluid w-100 mt-3 rounded"-->
+<!--         alt="elyvato banner">-->
+<!--</div>-->
+
+<!-- Mobile only -->
+<!--<div class="container rounded-1 d-block d-sm-none">-->
+<!--    <img src="https://elyvato.com/front/assets/images/mobile_Banner.jpg" -->
+<!--         class="img-fluid w-100 mt-3 rounded"-->
+<!--         alt="elyvato banner">-->
+<!--</div>-->
 
 {{-- ============================= hero section ============================= --}}
 <section class="section-padding-top section-padding-bottom home-hero">
@@ -248,7 +258,7 @@
 					    'dow',
 					    'DuPont',
 					    'Syngenta',
-					    'Flipkart',
+					   
 						'NDTV',
 						'HT-Digital-Streams',
 					    'mxplayer',
@@ -270,7 +280,7 @@
 				<div class="client-slider owl-carousel">
 					@foreach ($clients as $k=>$client)
 						<div class="item">
-							<img src="{{ asset('front/assets/images/client/' . $client . '.png')}}" alt="{{ $client }}" @if($k==0 || $k==7) style="filter:grayscale(100%) brightness(0.2);" @endif @if($k==6) style="filter:grayscale(100%) brightness(0.9);" @endif  @if($k==8) style="filter:grayscale(100%) brightness(0.4);" @endif @if($k==4) style="filter:grayscale(5%) brightness(10.0);" @endif class="{{$k}}  kimg-fluid client-slider-image w-100">
+							<img src="{{ asset('front/assets/images/client/' . $client . '.png')}}" alt="{{ $client }}" @if($k==0 || $k==6) style="filter:grayscale(100%) brightness(0.2);" @endif @if($k==5) style="filter:grayscale(100%) brightness(0.9);" @endif  @if($k==7) style="filter:grayscale(100%) brightness(0.4);" @endif @if($k==3) style="filter:grayscale(5%) brightness(10.0);" @endif class="{{$k}}  kimg-fluid client-slider-image w-100">
 						</div>
 					@endforeach
 				</div>
@@ -342,37 +352,31 @@
 {{-- ============================= services section ============================= --}}
 <section class="section-padding-top section-padding-bottom bg-light">
 	<div class="container">
+
 		<div class="row align-items-center justify-content-between mb-3">
 			<div class="col-lg-8">
 				<h2 class="fw-bold mb-2">Services for Your Content Needs</h2>
 				<p>Most viewed all-time top-selling services.</p>
 			</div>
-			<!--<div class="col-lg-4 text-lg-end text-center">-->
-			<!--	<button type="button"-->
-			<!--		class="btn btn-md-large btn-main w-100 d-flex align-items-center gap-2 justify-content-center"-->
-			<!--		data-bs-toggle="modal" data-bs-target="#bookingModal"><i class="ri-phone-line"></i>Instant-->
-			<!--		Hire</button>-->
-			<!--</div>-->
+			
 			<div class="col-lg-4 text-lg-end text-center">
-				<!--<button  class="btn btn-main" data-bs-toggle="modal" data-bs-target="#bookingModal">Instant Hire <i class="ri-bard-line"></i></button>-->
 				<a href="{{route('instant.hire.booking')}}"  class="btn btn-main">Instant Hire <i class="ri-bard-line"></i></a>
 				<a href="{{ url('services') }}" class="btn btn-main">View All Services</a>
 			</div>
 		</div>
-		<div class="mb-3 mb-lg-5 d-flex d-sm-none d-lg-flex home-service-category-cards">
 
+		<div class="mb-3 mb-lg-5 d-flex d-sm-none d-lg-flex home-service-category-cards">
 			@foreach (Service()->take(8) as $service)
 			<div class="home-service-category-card-container d-flex">
 				<a href="{{ route('service-sow-list', ['slug' => $service->slug]) }}" class="w-100 h-100 bg-white border rounded-2 p-3 p-lg-3 home-service-category-card">
 					<i class="{{ $service->icon }} fs-3 mb-2"></i>
-					<p class="fw-medium mb-0 text-sm">{{$service->name}}</p>
+					<p class="fw-medium mb-0 text-sm">{{strtoupper($service->name)}}</p>
 				</a>
-			</div>				
+			</div>
 			@endforeach
 		</div>
 
 		<div class="mb-3 mb-lg-5 d-none d-sm-flex d-lg-none home-service-category-cards">
-
 			@foreach (Service()->take(9) as $service)
 			<div class="home-service-category-card-container d-flex">
 				<a href="{{ route('service-sow-list', ['slug' => $service->slug]) }}" class="w-100 h-100 bg-white border rounded-2 p-3 p-lg-3 home-service-category-card">
@@ -384,14 +388,16 @@
 		</div>
 
 		<div class="row service-cards">
-			
-
 			@foreach ($sows as $sow)
+
+			@php 
+				$Service=App\Models\Service::where('id',$sow->service_id)->first();
+				$subService=App\Models\SubService::where('id',$sow->subservice_id)->first();
+			@endphp
+
 			<div class="col-md-6 col-lg-3">
+				<a href="{{ route('sow.details.sub',[$Service->slug,$subService->slug,$sow->slug]) }}">
 				<div class="h-100 bg-white border border-bg-tertiary rounded service-card d-flex flex-column">
-					{{--<div class="service-card-image-box rounded-top">
-						<img src="{{ asset('front/assets/images/graphic-design.jpg') }}" alt="{{ $sow->title }}" class="img-fluid service-card-image">
-					</div>--}}
 
 					@php
                         $fileShown = false;
@@ -403,7 +409,6 @@
                                 <img src="{{ asset($files->image_path) }}" alt="{{ $sow->name }}" class="img-fluid service-card-image">
                             </div>
                             @php $fileShown = true; @endphp
-							
 
                         @elseif (!$fileShown && $files->file_type == 'video')
 						@php
@@ -416,12 +421,11 @@
 								}
 							@endphp
                             <div class="service-card-image-box rounded-top">
-                                <!-- <img src="{{ asset('front/assets/images/video-editing.jpg') }}" alt="{{ $sow->name }}" class="img-fluid service-card-image"> -->
-                              <img 
-    src="https://img.youtube.com/vi/{{ $VideoId }}/hqdefault.jpg" 
-    data-fallback="https://img.youtube.com/vi/{{ $VideoId }}/hqdefault.jpg" 
-    alt="YouTube Thumbnail" 
-    class="img-fluid service-card-image youtube-thumb">	
+                              
+                              <img src="https://img.youtube.com/vi/{{ $VideoId }}/hqdefault.jpg" 
+								data-fallback="https://img.youtube.com/vi/{{ $VideoId }}/hqdefault.jpg" 
+								alt="YouTube Thumbnail" 
+								class="img-fluid service-card-image youtube-thumb">	
 
 							</div>
                             @php $fileShown = true; @endphp
@@ -431,19 +435,21 @@
 					<div class="service-card-content p-4 d-flex flex-column flex-grow-1">
 						<div class="mb-4">
 								@php 
-									
 									$Service=App\Models\Service::where('id',$sow->service_id)->first();
 									$subService=App\Models\SubService::where('id',$sow->subservice_id)->first();
-									
 								@endphp
+							
 							<h3 class="fw-bold fs-4 mb-3">
-
 								<a href="{{ route('sow.details.sub',[$Service->slug,$subService->slug,$sow->slug]) }}">
 									{{ $sow->title}}
 								</a>
 							</h3>
-							<p class="mb-0">{{ \Illuminate\Support\Str::words(strip_tags($sow->description), 25, '...') }}</p>
+
+							<a href="{{ route('sow.details.sub',[$Service->slug,$subService->slug,$sow->slug]) }}">
+							<p class="mb-0 text-dark">{!! \Illuminate\Support\Str::words(strip_tags($sow->description), 25, '...') !!}</p>
+							</a>
 						</div>
+
 						<div class="mt-auto border-top pt-3">
 							<!-- <a href="#" class="service-card-link d-inline-flex align-items-center text-sm link-text">
                                 Login for Custom Requirement 
@@ -466,6 +472,7 @@
 						</div>
 					</div>
 				</div>
+			</a>
 			</div>
 			@endforeach
 		</div>
@@ -480,9 +487,10 @@
 				<img src="{{ asset('front/assets/images/home-freelancer.jpg') }}" alt="Our Talent" class="img-fluid rounded-2">
 			</div>
 			<div class="col-lg-6 pe-lg-5">
-				<h2 class="mb-3 fw-bold">Our Talent</h2>
+				<h2 class="mb-3 fw-bold">Hire Talent in 30 minutes</h2>
 				<p>Elyvato is where India's top 1% of content & marketing professionals reside, the sharpest minds meticulously selected and continuously trained for unparalleled service delivery. Unlike open marketplaces, we ensure every creative solution you receive is from a proven expert, not just a freelancer. Connect with a curated league of extraordinary skill, ready to elevate your projects with consistent results.</p>
 				<ul class="ps-0 mb-4">
+				    <li class="d-flex align-items-center mb-1 gap-2"><i class="ri-check-double-line"></i> Vetted freelancers in just 30 minutes.</li>
 					<li class="d-flex align-items-center mb-1 gap-2"><i class="ri-check-double-line"></i> Elite talent for high-stakes roles.</li>
 					<li class="d-flex align-items-center mb-1 gap-2"><i class="ri-check-double-line"></i> Custom workflows, zero bottlenecks.</li>
 					<li class="d-flex align-items-center mb-1 gap-2"><i class="ri-check-double-line"></i> Dedicated support from brief to delivery.</li>
@@ -843,9 +851,6 @@
 								<div class="card-footer border-0 bg-transparent p-0">
 									<!-- Avatar -->
 									<div class="d-flex align-items-center">
-										{{--<div class="flex-shrink-0 me-2">
-											<img class="arounded" src="{{ asset('front/assets/images/avatar/user-1.jpg') }}" alt="avatar" width="40" height="40">
-										</div>--}}
 										<div>
 											<p class="mb-0">By Meenakshi Dubey.</p>
 											<p class="mb-0 text-sm">Content Lead</p>
@@ -1721,82 +1726,7 @@
 	</div>
 </section>
 
-{{-- Instant Hire process modal   --}}
 
-<!-- Modal -->
-	<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="bookingModalLabel">Schedule Your Instant Hire Call</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-
-					<div class="marquee-wrapper mb-2">
-						<div class="marquee-text">
-							<p class=" fw-medium mb-0">
-							Schedule your Premium⭐ Instant Hire call for just INR 9! The best part? This amount is completely adjustable against your total project cost.
-							</p>
-						</div>
-						<input type="hidden" name="selected_date" id="selectedDateInput">
-					</div>
-					
-					<div class="mb-3">
-						<div class="calendar">
-							<div class="calendar-header">
-								<i id="prev" class="fas fa-angle-left"></i>
-								<h2 id="monthYear"></h2>
-								<i id="next" class="fas fa-angle-right"></i>
-							</div>
-							<div class="calendar-weekdays">
-								<div>Sun</div>
-								<div>Mon</div>
-								<div>Tue</div>
-								<div>Wed</div>
-								<div>Thu</div>
-								<div>Fri</div>
-								<div>Sat</div>
-							</div>
-							<div class="calendar-days" id="calendarDays"></div>
-						</div>
-					</div>
-
-					<div class="form-group mb-4">
-						<label for="time-picker" class="text-sm text-muted mb-1">Select a Time Slot</label>
-						<div class="input-group">
-							<select id="timeSlot" name="time_slot" class="form-select focus-shadow-none">
-								<option value="">Select a time slot</option>
-							</select>
-						</div>
-					</div>
-
-					@if(!Auth::check())
-						<div class="form-floating mb-3">
-							<input type="email" class="form-control focus-shadow-none" name="email" id="email"
-								placeholder="name@example.com" required>
-							<label for="email">Email address</label>
-						</div>
-
-						<div class="form-floating mb-3">
-							<input type="mobile" class="form-control focus-shadow-none" name="mobile" id="mobile"
-								placeholder="123456789" required>
-							<label for="email">Phone Number</label>
-						</div>
-
-					@endif
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-					<button type="button" data-id="0" data-price="9"
-						class="btn btn-main proceed-booking-btn">Hire Now</button>
-				</div>
-			</div>
-		</div>
-			<input type="hidden" id="isLoggedIn" value="{{ Auth::check() ? '1' : '0' }}">
-	</div>
-	
 @endsection
 
 @section('scripts')
@@ -1904,383 +1834,14 @@ $(document).ready(function () {
             };
         });
     });
-    
-    
-    // here calendaer and booking  start 
-    
-//     document.addEventListener('DOMContentLoaded', function () {
-// 			flatpickr("#formDate", {
-// 				dateFormat: "Y-m-d",
-// 				minDate: "today",
-// 				defaultDate: "today",
-// 				allowInput: false
-// 			});
-// 		});
 
 
-		// here start new booking js 
-
-		const calendarDays = document.getElementById("calendarDays");
-		const monthYear = document.getElementById("monthYear");
-		const prev = document.getElementById("prev");
-		const next = document.getElementById("next");
-
-		let currentDate = new Date();
-
-		const events = {
-			//   "2025-06-11": ["Employment (Semi...)"],
-		};
-
-		let selectedDate = null;
-
-		function renderCalendar(date) {
-			const year = date.getFullYear();
-			const month = date.getMonth();
-			const today = new Date();
-			today.setHours(0, 0, 0, 0);
-
-			const firstDay = new Date(year, month, 1);
-			const lastDay = new Date(year, month + 1, 0);
-			const startDay = firstDay.getDay();
-
-			monthYear.innerText = date.toLocaleString("default", { month: "long", year: "numeric" });
-			calendarDays.innerHTML = "";
-
-			for (let i = 0; i < startDay; i++) {
-				calendarDays.innerHTML += `<div></div>`;
-			}
-
-			for (let day = 1; day <= lastDay.getDate(); day++) {
-				const dateObj = new Date(year, month, day);
-				const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-				const dayEvents = events[dateStr] || [];
-
-				let classes = [];
-				if (dateObj.getTime() < today.getTime()) {
-					classes.push('disabled');
-				}
-				if (
-					dateObj.getDate() === today.getDate() &&
-					dateObj.getMonth() === today.getMonth() &&
-					dateObj.getFullYear() === today.getFullYear()
-				) {
-					classes.push('today');
-				}
-				if (selectedDate === dateStr) {
-					classes.push('selected');
-				}
-
-				let html = `<div class="${classes.join(' ')}" data-date="${dateStr}"><strong>${day}</strong>`;
-				dayEvents.forEach(e => {
-					html += `<div class="event">${e}</div>`;
-				});
-				html += `</div>`;
-
-				calendarDays.innerHTML += html;
-			}
-
-			attachDateClickListeners();
-		}
-
-		function attachDateClickListeners() {
-			const dateDivs = document.querySelectorAll("#calendarDays div:not(.disabled)");
-			const bookedSlots = @json($bookedSlots);
-
-			dateDivs.forEach(div => {
-				div.addEventListener("click", function () {
-					selectedDate = this.getAttribute("data-date");
-					document.getElementById("selectedDateInput").value = selectedDate;
-					renderCalendar(currentDate);
-					// alert(selectedDate);
-					// alert(bookedSlots);
-					generateTimeSlots(1, 23, 30, selectedDate, bookedSlots); //  added params
-				});
-			});
-		}
-
-
-		prev.addEventListener("click", () => {
-			currentDate.setMonth(currentDate.getMonth() - 1);
-			renderCalendar(currentDate);
-		});
-
-		next.addEventListener("click", () => {
-			currentDate.setMonth(currentDate.getMonth() + 1);
-			renderCalendar(currentDate);
-		});
-
-		renderCalendar(currentDate);
-
-		// here is time slot list 
-
-
-		document.addEventListener("DOMContentLoaded", function () {
-			const bookedSlots = @json($bookedSlots);
-        //   console.log(bookedSlots);
-			const today = new Date().toISOString().split('T')[0];
-			selectedDate = today;
-			document.getElementById("selectedDateInput").value = today;
-			generateTimeSlots(1, 23, 30, today, bookedSlots);
-		});
-
-
-		function generateTimeSlots(startHour = 1, endHour = 23, interval = 30, selectedDate = null, bookedSlots = []) {
-			const select = document.getElementById("timeSlot");
-			select.innerHTML = '<option value="">Select a time slot (IST)</option>';
-
-			const now = new Date();
-			const isToday = selectedDate === now.toISOString().split("T")[0];
-
-			for (let hour = startHour; hour <= endHour; hour++) {
-				for (let min = 0; min < 60; min += interval) {
-					const timeObj = new Date();
-					timeObj.setHours(hour, min, 0, 0);
-
-					// const timeValue = timeObj.toTimeString().slice(0, 5); // "HH:MM"
-					// const timeValue = String(hour).padStart(2, '0') + ':' + String(min).padStart(2, '0');
-
-					const hourStr = String(hour).padStart(2, '0');
-					const minStr = String(min).padStart(2, '0');
-					const timeValue = `${hourStr}:${minStr}`; // "14:30"
-
-					const display = timeObj.toLocaleTimeString([], {
-						hour: '2-digit',
-						minute: '2-digit',
-						hour12: false
-					});
-
-					// const fullDateTime = `${selectedDate} ${timeValue}:00`;
-					const fullDateTime = `${selectedDate} ${hourStr}:${minStr}:00`;
-
-					const option = document.createElement("option");
-					option.value = timeValue;
-					//  alert(fullDateTime);
-				// 	console.log("Checking fullDateTime:", fullDateTime);
-				// 	console.log("bookedSlots includes:", bookedSlots.includes(fullDateTime));
-					// Disable if it's past time today
-					if (isToday && new Date(`${selectedDate}T${timeValue}`) <= now) {
-						option.disabled = true;
-						// option.textContent = `${display} (Past)`;
-						option.textContent = `${display}`;
-					}
-					// Disable if already booked
-					else if (bookedSlots.includes(fullDateTime)) {
-						//alert('run');
-						option.disabled = true;
-						option.textContent = `${display} (Not Available)`;
-					}
-					// Else normal
-					else {
-						option.textContent = display;
-					}
-
-					select.appendChild(option);
-				}
-			}
-		}
-    
-    
-    // here proceed hire 
-    
-    	$(document).on('click', '.proceed-booking-btn', function (e) {
-			e.preventDefault();
-
-            let $btn = $('.proceed-booking-btn');
-            $btn.prop('disabled', true).text('Processing...');
-    
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-
-			let time = $('#timeSlot').val();
-			let day = $('#selectedDateInput').val();
-			//  alert(day); 
-			//  alert(time);
-			let isLoggedIn = $('#isLoggedIn').val();
-			
-			let price = $(this).data('price');
-
-			if (isLoggedIn == 0) {
-
-				let email = $('#email').val();  // Get email
-				let mobile = $('#mobile').val();  // Get mobile
-
-				// Basic validation
-				if (!email || !mobile) {
-					Swal.fire("Missing Info", "Please complete your details by entering your email ID and contact information.", "warning");
-				        $btn.prop('disabled', false).text('Book Now');
-				} else {
-					RegisteUsername(email, mobile, price, time, day);
-				}
-
-			} else {
-				createRazorpayOrder(price, time, day, isLoggedIn); // Call the order function
-			}
-
-		});
-
-		// register user if not login 
-
-		function RegisteUsername(email, mobile, price, time, day) {
-		    let $btn = $('.proceed-booking-btn');
-            $btn.prop('disabled', true).text('Processing...');
-            
-            PleaseWait();
-            
-			$.ajax({
-				url: "{{ url('registeration') }}",
-				type: 'POST',
-				data: {
-					email: email,
-					mobile: mobile
-				},
-				success: function (response) {
-				    Swal.close();
-					if(response.success) {
-						  let userId = response.data?.user_id || null;
-						//   alert('run razorpay now 1');
-
-						// Swal.fire("Success", response.message, "success");
-
-						// Swal.fire("Success", res.message, "success").then(() => {
-						// 	createRazorpayOrder(sow_id, price, time, day, userId);
-						// });
-
-						Swal.fire({
-							title: "Info",
-							text: response.message,
-							icon: "success",
-							confirmButtonText: "Processing...", // Change button text here
-							timer: 3000,
-    						timerProgressBar: true,
-						}).then(() => {
-							createRazorpayOrder(price, time, day, userId);
-						});
-
-
-						// callback(true, userId); // Continue to Razorpay
-					} else {
-						if (response.message === "Your account already registered.") {
-						  let userId = response.data?.user_id || null;
-							// Swal.fire("Info", response.message, "info");
-							// alert('run razorpay now 2');
-
-							// Swal.fire("Info", response.message, "success").then(() => {
-							// 	createRazorpayOrder(sow_id, price, time, day, userId);
-							// });
-
-							Swal.fire({
-								title: "Info",
-								text: response.message,
-								icon: "success",
-								confirmButtonText: "PleaseWait...",  // Change button text here
-								timer: 3000,
-								timerProgressBar: true,
-							}).then(() => {
-								createRazorpayOrder(price, time, day, userId);
-							});
-						
-							// callback(true, UserId); // Still proceed to Razorpay
-						} else {
-				// 			alert('run razorpay now 3');
-							Swal.fire("Error", response.message || "Registration failed.", "error");
-							callback(false);
-							
-							$btn.prop('disabled', false).text('Book Now');
-						}
-					}
-				},
-				error: function (xhr, status, error) {
-					console.error(error);
-					Swal.fire("Error", "Something went wrong. Try again.", "error");
-					callback(false);
-					$btn.prop('disabled', false).text('Book Now');
-				}
-			});
-		}
-
-		//  STEP 1: Call this to begin the Razorpay process
-		function createRazorpayOrder(price, time, day, user_id) {
-			PleaseWait();
-
-            let $btn = $('.proceed-booking-btn');
-            $btn.prop('disabled', true).text('Processing...');
-            
-			$.ajax({
-				url: "{{ route('razorpay.order.create') }}",
-				type: "POST",
-				data: {
-					_token: "{{ csrf_token() }}",
-					price: price
-				},
-				success: function (orderData) {
-					Swal.close();
-
-					let options = {
-						key: orderData.razorpay_key,
-						amount: orderData.amount,
-						currency: orderData.currency,
-						name: "Elyvato",
-						description: "Call Sechdule Payment",
-						image: "https://elyvato.com/front/assets/images/elyvato-header-logo.png",
-						order_id: orderData.order_id,
-						handler: function (response) {
-							storeBooking(response, price, time, day, user_id); 
-						},
-						theme: {
-							color: "#8c32f6"
-						}
-					};
-
-					let rzp = new Razorpay(options);
-					rzp.open();
-				},
-				error: function () {
-					Swal.close();
-					Swal.fire("Error", "Failed to create order.", "error");
-					$btn.prop('disabled', false).text('Book Now');
-				}
-			});
-		}
-
-
-
-		// STEP 2: Call this after Razorpay success
-		function storeBooking(response, price, time, day, user_id) {
-			PleaseWait();
-			
-			let $btn = $('.proceed-booking-btn');
-            $btn.prop('disabled', true).text('Processing...');
-
-			$.ajax({
-				url: "{{ route('user.proceed.hire') }}",
-				type: "POST",
-				data: {
-					_token: "{{ csrf_token() }}",
-					
-					price: price,
-					time: time,
-					day: day,
-					user_id:user_id,
-					razorpay_payment_id: response.razorpay_payment_id,
-					razorpay_order_id: response.razorpay_order_id,
-					razorpay_signature: response.razorpay_signature
-				},
-				success: function (res) {
-					Swal.close();
-					Swal.fire("Success", res.message, "success").then(() => {
-						window.location.href = "{{ url('/booking-list') }}";
-					});
-				},
-				error: function () {
-					Swal.close();
-					Swal.fire("Error", "Technical error!", "error");
-					$btn.prop('disabled', false).text('Book Now');
-				}
-			});
-		}
 		
+
+		
+    
+   
+    
+    	
 </script>
 @endsection

@@ -141,4 +141,10 @@ class Admin extends Authenticatable
         return $this->hasMany(UserAvailability::class, 'user_id');
     }
 
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);  // A user can have many tickets
+    }
+
 }

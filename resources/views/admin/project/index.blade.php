@@ -528,6 +528,7 @@
                 </div>
 
                 <div class="modal-body">
+                   
                     <form id="create_project_form">
                         <div class="form-row">
                             <div class="col-md-12">
@@ -539,6 +540,16 @@
                                             @foreach ($bookings as $booking)
                                                 <option value="{{ $booking->id }}">{{ $booking->booking_id }} (
                                                     {{ GetUser($booking->user_id)->username }} )</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label>Gig </label>
+                                        <select name="gig" id="gig" class="form-control" required>
+                                            <option value="">Select gig</option>
+                                            @foreach ($gigs as $gig)
+                                                <option value="{{ $gig->id }}">{{ $gig->title }} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -592,7 +603,6 @@
 
                         </div>
                     </form>
-
 
                 </div>
             </div>

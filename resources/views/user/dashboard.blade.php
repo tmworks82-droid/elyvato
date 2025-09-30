@@ -167,4 +167,10 @@
 </div>
 @endif
 
+
+<a href="#" class="whatsapp-float" target="_blank">
+            Ticket
+        </a>
+ 
+
 @endsection

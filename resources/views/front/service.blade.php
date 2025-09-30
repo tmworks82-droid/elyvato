@@ -46,7 +46,7 @@
 
                 @foreach (Service() as $category)
                     <a href="{{ route('service-sow-list', ['slug' => $category->slug]) }}"
-                        class="btn btn-filter border">{{ $category->name }}</a>
+                        class="btn btn-filter border">{{ strtoupper($category->name) }}</a>
                 @endforeach
             </div>
             <div class="row service-cards">
@@ -56,8 +56,10 @@
                         <div class="col-md-6 col-lg-4 col-xl-3">
                             <div class="h-100 bg-white border border-bg-tertiary rounded service-card d-flex flex-column">
                                 <div class="service-card-image-box rounded-top">
+                                    <a href="{{ route('service-sow-list', $ser->slug) }}" class="service-card-link d-inline-flex align-items-center">
                                     <img src="{{ asset($ser->service_icon) }}" alt="{{ $ser->name }}"
                                         class="img-fluid service-card-image">
+                                    </a>
                                 </div>
                                 <div class="service-card-content p-4 d-flex flex-column flex-grow-1">
                                     <div class="mb-4">
@@ -76,11 +78,11 @@
                                                     }
                                                 @endphp
 
-                                                {{ $firstPart }}<br>
-                                                {{ $secondPart }}
+                                                {{ strtoupper($firstPart) }}<br>
+                                                {{ strtoupper($secondPart) }}
                                             </a>
                                         </h3>
-                                        <p class="mb-0">{{ $ser->description }}</p>
+                                        {{-- <p class="mb-0">{{ $ser->description }}</p> --}}
                                     </div>
 
                                     <div class="mt-auto">

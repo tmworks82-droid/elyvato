@@ -437,8 +437,10 @@
 					<div class="col-md-6 col-lg-4 col-xl-3">
 						<div class="h-100 bg-white border border-light-subtle rounded service-card shadow-sm d-flex flex-column">
 							<div class="service-card-image-box rounded-top">
+								<a href="{{ route('service-sow-list', ['slug' => $service->slug]) }}">
 								<img src="{{ asset($service->service_icon) }}" alt="{{ $service->name }}"
 									class="img-fluid service-card-image">
+								</a>
 							</div>
 							<div class="service-card-content p-4 d-flex flex-column flex-grow-1">
 								<div class="mb-4">
@@ -447,7 +449,9 @@
 											{{ $service->name }}
 										</a>
 									</h3>
+									<a href="{{ route('service-sow-list', ['slug' => $service->slug]) }}">
 									<p class="mb-0">{{ $service->description }}</p>
+									</a>
 								</div>
 								<div class="mt-auto">
 									<a href="{{ route('service-sow-list', ['slug' => $service->slug]) }}"

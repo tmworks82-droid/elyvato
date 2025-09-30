@@ -29,7 +29,7 @@
         
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0G7G79VB6"></script>
-        <script>
+        {{-- <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -43,11 +43,11 @@
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "sx4txiixfb");
-    </script>
+    </script> --}}
     
     <!--here meta pixels-->
     <!-- Meta Pixel Code -->
-    <script>
+    {{-- <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -58,11 +58,11 @@
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '1673774589850706');
         fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
+    </script> --}}
+    {{-- <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1673774589850706&ev=PageView&noscript=1"
     />
-    </noscript>
+    </noscript> --}}
     <!-- End Meta Pixel Code -->
 
 

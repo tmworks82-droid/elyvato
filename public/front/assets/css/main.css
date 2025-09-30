@@ -438,6 +438,7 @@ input:focus {
         transform: translateY(10px);
         transition: opacity 0.3s ease, transform 0.3s ease;
     }
+    
     .navbar .adropdown:hover > .dropdown-menu{
         display: block;
         margin-top: 0px;
@@ -505,7 +506,8 @@ input:focus {
 }
 .footer-nav .nav-link{
     padding: 0px;
-    margin-bottom: 0.9rem;
+    font-size: 14px;
+    margin-bottom: 0.4rem;
     color: rgba(var(--bs-white-rgb), 0.5);
     display: inline-flex;
 }

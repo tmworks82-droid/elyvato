@@ -541,7 +541,7 @@
                     },
                     success: function(response) {
                         $btn.prop('disabled', false).html('Save');
-                        if (response.success) {
+                        if (response.success==true) {
 
                             $('#sechduleCall')[0].reset(); // Optional: reset the form
 

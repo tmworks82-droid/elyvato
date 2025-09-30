@@ -51,7 +51,13 @@
     </div>
 
 
-      <p class="fw-bold mb-1">{{Auth::user()->name}}</p>
+      <p class="fw-bold mb-1">{{Auth::user()->name}} <br>
+         @if (Auth::user()->is_hired == 'yes')
+                <span class="badge badge-warning  bg-success  float-right">Hired</span>
+            @else
+                <span class="badge badge-danger bg-warning float-right">Not Hired</span>
+            @endif
+      </p>
     </div>
   </div>
 

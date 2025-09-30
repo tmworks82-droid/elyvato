@@ -80,4 +80,10 @@ class Service extends Model
     }
 
 
+    public function contacts()
+    {
+        return $this->hasMany(Contactus::class, 'service', 'id');
+    }
+
+
 }

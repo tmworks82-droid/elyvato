@@ -361,7 +361,6 @@
                                 <label for="highest_qualification">Highest Qualification *</label>
                             </div>
                         </div>
-
                     </div>
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
@@ -371,6 +370,7 @@
                                     @php
                                         $selectedSkills = explode(',', $profile->skills ?? ''); // turn "1,2,3" into [1,2,3]
                                     @endphp
+                                    
                                     @foreach ($skill as $talent)
                                         <option value="{{ $talent->id }}"
                                             {{ in_array($talent->id, $selectedSkills) ? 'selected' : '' }}>
@@ -564,6 +564,7 @@
                     <label for="company_name">Company Name *</label>
                 </div>
             </div>
+
             <div class="col-md">
                 <div class="form-floating">
                     <select name="role" id="role" class="form-select focus-shadow-none">
@@ -761,7 +762,6 @@
         <i class="ri-separator fs-1 text-main"></i>
     </div>
 
-    
     {{-- password update --}}
     {{-- <div class="overflow-x-hidden mt-4"> --}}
         <h2 class="fs-4 fw-bold mb-3 w-full pb-3 border-bottom">Change Password</h2>
@@ -1357,7 +1357,7 @@ initDropzone(
 // here is select time availibility
 const savedAvailability = @json($availability);
 $(function () {
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"];
     const scheduleContainer = $('#schedule-container');
 
     $.each(days, function (index, day) {

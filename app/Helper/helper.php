@@ -16,6 +16,7 @@ use App\Models\Booking;
 use App\Models\StatementOfWork;
 use \Carbon\Carbon;
 use App\Models\Rating;
+use App\Models\Blog;
 use App\Models\TimeSheet;
 use App\Models\HireTalent;
 use GuzzleHttp\Client;
@@ -202,9 +203,17 @@ function Service(){
     // return Service::all();
 }
 
+
+
+
 function Hiretalent(){
     return HireTalent::where('is_active',1)->get();
     // return Service::all();
+}
+
+
+function Blog(){
+    return Blog::where('footer_status',1)->get();
 }
 
 function ServiceNmae($id){
@@ -481,6 +490,8 @@ function assignBookingToAccountManager($bookingId, $bookingSlot, $UserId)
         'scheduled_at' => $bookingSlot,
         'created_by'   => $UserId,
         'status'       => 'pending',
+        'created_on'    =>now(),
+        'updated_at'    =>now(),
     ]);
 
     Booking::where('id', $bookingId)->update(['assign_to' => null]);
