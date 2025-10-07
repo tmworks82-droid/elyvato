@@ -46,14 +46,13 @@ class TicketConversationController extends Controller
             'attachment' => 'required',
         ]);
 
-          $ticketUid = 'TCK-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
+        $ticketUid = 'EL-'.strtoupper(Str::random(6));
 
         $ticket = new Ticket();
         $ticket->ticket_id=$ticketUid;
         $ticket->user_id = auth()->id() ?? 0;
         $ticket->department_id = $request->department;
         $ticket->describe_issue = $request->issue;
-
 
             $attachments = json_decode($request->input('attachment'), true);
             $ticket->image = json_encode($attachments); // Save as JSON string
@@ -70,7 +69,9 @@ class TicketConversationController extends Controller
                 ]
             );
            $mobile=$user->mobile;
-        //    $mobile='+919956398635';
+
+          //  $mobile='+919956398635';
+            $date=formatDateReadable($ticket->created_at);
 
             $ticketTemplateData = [
                 'name' => 'raise_ticket',
@@ -81,7 +82,7 @@ class TicketConversationController extends Controller
                         'parameters' => [
                             ['type' => 'text', 'text' => $user->username],     // {{1}}
                             ['type' => 'text', 'text' => $ticket->ticket_id],     // {{2}}
-                            ['type' => 'text', 'text' => $ticket->created_at],    // {{3}}
+                            ['type' => 'text', 'text' => $date],    // {{3}}
                         ]
                     ]
                 ]
@@ -112,8 +113,8 @@ public function storeReply(Request $request)
     ]);
 
     // Find the ticket
-    $ticket = Ticket::where('user_id',Auth::user()->id)->first();
-
+    $ticket = Ticket::where(['user_id'=>Auth::user()->id,'ticket_close'=>'open'])->first();
+//    dd($ticket,$request->all());
     // Determine if the message is from the user or admin
     $sender = 'user';
 

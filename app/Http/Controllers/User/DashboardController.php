@@ -397,6 +397,7 @@ class DashboardController extends Controller
         return response()->json($cities);
     }
 
+    
 
 public function UpdateProfile(Request $request)
 {

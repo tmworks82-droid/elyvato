@@ -11,15 +11,27 @@
                             Elyvato is your end-to-end content marketplace - combining speed, quality, and local
                             relevance to help brands grow. From strategy to delivery, we make content that works.
                         </p>
-                        <h6 class="mb-2 mb-md-4 mt-5">Follow on</h6>
+
+                        <h5 class="mb-2 mb-md-4 mt-5">Locations</h5>
                         <ul class="list-inline mb-0 mt-3">
-                            <li class="list-inline-item"> <a class="btn btn-xs btn-footer-social"
-                                    href="https://www.instagram.com/elyvato_world/" target="_blank" title="instagram"><i
-                                        class="ri-instagram-line"></i></a> </li>
-                            <li class="list-inline-item"> <a class="btn btn-xs btn-footer-social"
-                                    href="https://www.linkedin.com/company/elyvato/" target="_blank" title="linkedin"><i
-                                        class="ri-linkedin-line"></i></a> </li>
+                            <p>
+                                 <img src="{{url('front/images/us.jpg')}}" alt="us flag" style="width:24px; margin-right: 8px;"> USA - HQ<br>
+                            </p>
+                           
+                           Elyvato Global LLC <br> 7901 4th Street North, Suite 300 <br>
+                            St. Petersburg, Florida 33702 <br>
+                            United States
                         </ul>
+
+                        
+                        <ul class="list-inline mb-0 mt-3">
+                            <p>
+                                 <img src="{{url('front/images/india.png')}}" alt="us flag" style="width:30px; margin-right: 8px;"> India<br>
+                            </p>
+
+                          BSI Business Park, H-block, 160, 3rd <br> Floor, 302, Sector-63, Noida, Uttar <br> Pradesh-201301
+                        </ul>
+
                     </div>
 
                     <div class="col-2 col-md-2">
@@ -123,8 +135,24 @@
     </div>
     <div class="container section-padding-top">
         <div class="row g-4 justify-content-between">
-            <div
-                class="col-md-6 order-md-2 d-flex flex-column flex-md-row justify-content-md-end gap-2 gap-md-4 footer-legal-links">
+            <div class="col-md-6 order-md-2 d-flex flex-column flex-md-row justify-content-md-end gap-2 gap-md-4 footer-legal-links">
+               {{--<form action="{{ route('setCurrency') }}" method="POST">
+                    @csrf
+                    <select name="currency" id="currency" onchange="this.form.submit()">
+                        <option value="INR" {{ session('currency') == 'INR' ? 'selected' : '' }}>INR-₹</option>
+                        <option value="USD" {{ session('currency') == 'USD' ? 'selected' : '' }}>USD-$</option>
+                        <option value="USD" {{ session('currency') == 'USD' ? 'selected' : '' }}>GBP-£</option>
+                    </select>
+                </form>--}}
+
+                <ul class="list-inline mb-0">
+                            <li class="list-inline-item"> <a class="btn btn-xs btn-footer-social"
+                                    href="https://www.instagram.com/elyvato_world/" target="_blank" title="instagram"><i
+                                        class="ri-instagram-line"></i></a> </li>
+                            <li class="list-inline-item"> <a class="btn btn-xs btn-footer-social"
+                                    href="https://www.linkedin.com/company/elyvato/" target="_blank" title="linkedin"><i
+                                        class="ri-linkedin-line"></i></a> </li>
+                        </ul>
                 <a href="{{ url('/terms-of-services') }}">Terms of Services</a>
                 <a href="{{ url('/privacy-policy') }}">Privacy Policy</a>
             </div>

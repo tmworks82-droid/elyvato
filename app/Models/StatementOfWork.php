@@ -10,8 +10,6 @@ use App\Models\SubService;
 use App\Models\Service;
 use Illuminate\Support\Str;
 
-
-
 class StatementOfWork extends Model
 {
     use HasFactory;
@@ -35,19 +33,15 @@ class StatementOfWork extends Model
         'meta_description',
     ];
 
-   
-
-
     const CREATED_AT = 'created_on';
     const UPDATED_AT = 'updated_at';
 
 
-     protected static function booted()
+    protected static function booted()
     {
         static::creating(function ($sow) {
             $sow->slug = Str::slug($sow->title);
         });
-
     }
 
     public $timestamps = true;
@@ -65,6 +59,12 @@ class StatementOfWork extends Model
     public function allFiles()
     {
         return $this->hasMany(AllFiles::class, 'sow_id', 'id');
+    }
+
+
+    public function currencies()
+    {
+        return $this->hasOne(\App\Models\Currency::class, 'sow_id', 'id');
     }
 
 }

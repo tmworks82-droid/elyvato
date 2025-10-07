@@ -41,26 +41,24 @@ class MasterController extends Controller
     public function Statement(){
         $data['page_title']="Statement of Work";
         // $data['statement']=StatementOfWork::get();
-            $data['statements'] = StatementOfWork::with(['service', 'subservice', 'allFiles'])
+            $data['statements'] = StatementOfWork::with(['service', 'subservice', 'allFiles','currencies'])
                 ->orderByDesc('created_on')
                 ->paginate(10);
 
         return view('admin.statement.index',$data);
     }
 
-
     public function StatementCreate(Request $request,$id=''){
           $data['service']=Service::get();
           $data['subservice']=SubService::get();
 
-          if (!empty($id)) {
-            $data['statement'] = StatementOfWork::with('allFiles')->findOrFail($id);
+        if (!empty($id)) {
+            $data['statement'] = StatementOfWork::with('allFiles','currencies')->findOrFail($id);
         } else {
             $data['statement'] = null;
         }
         return view('admin.statement.create',$data);
     }
-
 
     public function saveStatementOfWork(Request $request)
     {
@@ -75,7 +73,10 @@ class MasterController extends Controller
             'subscription'=>'required',
             'seo_title'=>'nullable|string|max:255',
             'meta_description'=>'nullable|string',
+            'usd_max_price'=>'required',
+            'usd_min_price'=>'required',
         ]);
+        // dd($request->all());
 
 
        
@@ -83,11 +84,17 @@ class MasterController extends Controller
 
         if($request->id){
             $statement = StatementOfWork::find($request->id);
-            
+            $currency=Currency::where('sow_id',$request->id)->first();
+
             $msg="Statement of Work updated successfully.";
         }else{
             $statement=new StatementOfWork();
+            $currency=new Currency();
             $msg="Statement of Work saved successfully.";
+        }
+
+        if(empty($currency)){
+            $currency=new Currency();
         }
 
         // Set fields
@@ -119,6 +126,16 @@ class MasterController extends Controller
         $statement->updated_by = Auth::user()->id; // Always update this
 
         $statement->save();
+
+        // dd($currency);
+        $currency->currency_name='US Dollar';
+        $currency->currency_code='USD';
+        $currency->sow_id=$request->id;
+        $currency->min_price=$request->usd_min_price;
+        $currency->price=$request->usd_max_price;
+        // dd($currency);
+        $currency->save();
+
 
         // here store files
           

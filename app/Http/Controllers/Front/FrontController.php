@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\SubService;
@@ -26,51 +27,27 @@ use Carbon\Carbon;
 use Hash;
 use Str;
 
+
 class FrontController extends Controller
 {
     public function index(){
         $data['title']="Home";
-
-        $welcometemplateData = [
-            'name' => 'registration',
-            'language' => ['code' => 'en'],
-            'components' => [
-                [
-                    'type' => 'body',
-                    'parameters' => [
-                        [
-                            'type' => 'text',
-                            'text' => 'Aayushi' // replace with dynamic value
-                        ]
-                    ]
-                ]
-            ]
-        ];
-
-        
-        // $mobile=$user->mobile;
-        // $mobile='+919956398635';
-        //  $response=sendWhatsAppTemplate($mobile, $welcometemplateData);
-
 
         $sowSubset = StatementOfWork::where('featured','yes')
             // ->inRandomOrder()
             ->take(8)
             ->get();
 
+    $accountManagers = Admin::where('role_id', 3)->pluck('id');
 
-// Step 1: Get all account manager IDs
-$accountManagers = Admin::where('role_id', 3)->pluck('id');
+    $bookings = Booking::whereIn('assign_to', $accountManagers)->get();
+    $bookingIdToManager = $bookings->pluck('assign_to', 'id'); // [booking_id => assign_to]
 
-// Step 2: Get bookings assigned to these managers
-$bookings = Booking::whereIn('assign_to', $accountManagers)->get();
-$bookingIdToManager = $bookings->pluck('assign_to', 'id'); // [booking_id => assign_to]
 
-// Step 3: Get all future pending calls for those bookings
-$calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
-    ->where('status', 'pending')
-    ->where('scheduled_at', '>=', today())
-    ->get();
+    $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
+        ->where('status', 'pending')
+        ->where('scheduled_at', '>=', today())
+        ->get();
 
         // Step 4: Add account manager info to each call
         $calls->map(function ($call) use ($bookingIdToManager) {
@@ -88,7 +65,6 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
             $bookedManagerIds = $callsAtTime->pluck('account_manager')->unique();
             return $bookedManagerIds->count() === $accountManagers->count();
         })->keys()->toArray();
-
       
         $data['sows'] = $sowSubset;
         $data['bookedSlots'] = $bookedSlots;
@@ -103,7 +79,7 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         return view('front.blog.index',$data);
     }
 
-    public function Invoice(){
+    public function Invoice(){ 
         $data['title']="Invoice";
         $data['payment'] = Payment::with(['booking','creator','creator.profile','booking.statementOfWork'])->where('id',1)->first();
         //  dd($data['payment']);
@@ -111,15 +87,37 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         return view('front.invoice',$data);
     }
 
+    public function TicketList(){
+     
+        $data['title']='Raise Ticket';
+        
+        $data['tickets']=Ticket::with('messages')->where('user_id',Auth::user()->id)->get();
+        
+        return view('user.ticket_list',$data);
+    }
+
+
     public function Ticket(){
 
         $data['title']='Raise Ticket';
         $data['departments']=Department::get();
-        // $data['tickets']=Ticket::where('user_id',Auth::user()->id)->get();
+        
         $data['tickets']=Ticket::with('messages')->where('ticket_close','open')->first();
         
-        // dd($data);  
-        return view('front.ticket',$data);
+        // return view('front.ticket',$data);
+        return view('user.ticket',$data);
+    }
+
+    public function TicketDetails($encryptedId){
+     
+        $id = Crypt::decrypt($encryptedId);
+
+        $data['title']='Raise Ticket';
+        $data['departments']=Department::get();
+        
+        $data['tickets']=Ticket::with('messages')->where('id',$id)->first();
+        // dd($data['tickets']);
+        return view('user.ticket_details',$data);
     }
 
 
@@ -128,8 +126,8 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         // Try to find blog first
         $blog = Blog::where('slug', $slug)->first();
     
-        if ($blog) {
-               
+        if($blog){
+        
             $previous = Blog::where('id', '<', $blog->id)->orderBy('id', 'desc')->first();
             $next = Blog::where('id', '>', $blog->id)->orderBy('id')->first();
     
@@ -146,7 +144,7 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         // If not a blog, try to find category
         $category = Service::where('slug', $slug)->first();
        
-        if ($category) {
+        if($category) {
        
         $data['blogs'] = Blog::where('category', 'LIKE', '%"' . $category->id . '"%') // Use LIKE to find category in the string
             ->paginate(6); // Paginate results
@@ -156,7 +154,7 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         
         return view('front.blog.blog_category', $data); // Return the view with the data
     }
-        // Neither blog nor category found → throw 404 manually
+       
         abort(404);
     }
 
@@ -245,11 +243,10 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         
       
         $data['instanthire'] = $query->paginate(12);
-// dd('hire list');
+
         return view('front.instant_hire_list',$data);
     }
-    
-    
+
 
     public function ServiceSowList(Request $request, $slug)
     {
@@ -257,7 +254,6 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
         $servi = Service::where("slug", $slug)->firstOrFail();
         $data['serviceSlug'] = $servi->slug;
         $data['subServiceSlug'] = '';
-
 
         // Start query
         $query = StatementOfWork::where([
@@ -271,10 +267,9 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
             $query->where('estimated_time', '<=', $deliveryDays);
         }
         
-        // Budget Max Filter based on max_price column
-                if ($request->has('budget_max')) {
-                    $query->where('max_price', '<=', (int) $request->budget_max);
-                }
+        if($request->has('budget_max')) {
+            $query->where('max_price', '<=', (int) $request->budget_max);
+        }
 
         $data['sowList'] = $query->paginate(12);
         $data['selectedDeliveryTime'] = $request->delivery_time; 
@@ -285,8 +280,6 @@ $calls = Call::whereIn('booking_id', $bookingIdToManager->keys())
                 // dd($data['sowList']);
         return view('front.sow_list', $data);
     }
-
-
 
 
    
@@ -580,4 +573,19 @@ public function getDefaultServices()
         }
     }
 
+
+     public function setCurrency(Request $request)
+    {
+        // Validate the currency input
+        $request->validate([
+            'currency' => 'required|in:INR,USD',
+        ]);
+
+        // Set the currency in the session
+        session(['currency' => $request->currency]);
+
+        // Redirect back to the previous page
+        return redirect()->back();
+    }
+    
 }

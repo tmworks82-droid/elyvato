@@ -109,7 +109,8 @@
 
           <div class="col-sm-4 form-group">
             <label>Mobile:</label>
-            <input type="number" class="form-control" id="mobile" name="mobile" value="{{ $results->mobile }}"
+            <input type="text" class="form-control" id="mobile" name="mobile" value="{{ str_replace('+91', '', $results->mobile) }}
+"
             placeholder="Enter mobile">
           </div>
 
@@ -172,7 +173,7 @@
           <div class="mb-3 col-md-4">
             <label for="country" class="form-label">Country</label>
             <input type="text" class="form-control" id="country" name="country"
-            value="{{ $results->profile->country ?? 'India' }}">
+            value="{{ $results->profile->country->name ?? 'India' }}">
           </div>
 
           <!-- State -->

@@ -20,19 +20,9 @@
 
 <div class="w-100 border rounded-2 p-3 admin-sidebar d-none d-lg-block">
   {{-- sidebar profile card --}}
+  
   <div class="mb-3 pb-3 border-bottom">
     <div class="text-center">
-      {{-- <div class="mb-3 position-relative">
-
-        <a href="{{ route('user.profiles') }}" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Edit Profile">
-          @if(!empty(GetProfile(Auth::user()->id)))
-            <img src="{{  asset(GetProfile(Auth::user()->id))}}" alt="{{ Auth::user()->name }}" class="rounded-circle" width="80" height="80">
-        @else
-          <img src="{{ url('front/assets/images/default_dp.png')}}" alt="{{ Auth::user()->name }}" class="rounded-circle" width="80" height="80">
-        @endif
-        </a>
-      </div> --}}
-
       <div class="mb-3 position-relative d-inline-block" style="width: 80px; height: 80px;">
         <!-- Profile Image -->
         <img src="{{ !empty(GetProfile(Auth::user()->id)) ? asset(GetProfile(Auth::user()->id)) : url('front/assets/images/default_dp.png') }}"
@@ -48,8 +38,7 @@
 
         <!-- Hidden File Input -->
         <input type="file" id="profileImageInput" class="d-none" accept="image/*">
-    </div>
-
+      </div>
 
       <p class="fw-bold mb-1">{{Auth::user()->name}} <br>
          @if (Auth::user()->is_hired == 'yes')
@@ -72,8 +61,8 @@
         <li>
             <a href="{{route('user.tasks.list')}}" class="{{ Request::is('task-lists') ? 'active' : '' }} {{  Request::is('task-lists/*') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-calendar-check-line"></i>Task List</a>
         </li>
-        @else
 
+        @else
         <li>
             <a href="{{url('booking-list')}}" class="{{ Request::is('booking-list') ? 'active' : '' }} {{  Request::is('booking-details/*') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-calendar-check-line"></i> My Bookings</a>
         </li>
@@ -92,8 +81,11 @@
             <a href="{{route('user.profiles')}}" class="{{ Request::is('user/profiles') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-user-3-line"></i> Profile</a>
         </li>
 
-        @if(Auth::user()->type=='user')
+        <li>
+            <a href="{{url('user/ticket-list')}}" class="{{ Request::is('user/ticket-list') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-customer-service-line"></i>Support</a>
+        </li> 
 
+        @if(Auth::user()->type=='user')
         <li>
             <a href="{{route('user.payment.setting')}}" class="{{ Request::is('user/payment-setting') ? 'active' : '' }} {{  Request::is('user/payment-setting/*') ? 'active' : '' }} d-flex align-items-center gap-2"><i class="ri-calendar-check-line"></i>Payment Setting</a>
         </li>

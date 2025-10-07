@@ -1,14 +1,13 @@
 @php
-    $title = 'Ticket - Elyvato';
-    $metaDescription =
-        'Elyvato-Raise a support ticket quickly and easily. Submit your query, track progress, and get timely resolutions from our support team.';
-    $robotsMeta = 'index, follow';
-    $canonical = 'https://elyvato.com';
-    $featuredImage = '/images/tmw-team.JPG';
+    $title = 'Dashboard - Elyvato';
+    $robotsMeta = 'noindex, nofollow';
 @endphp
 
 
-@extends('layouts.front.app')
+ @extends('layouts.front.user-app')
+
+
+@section('pageContent')
 @section('styles')
     <!-- Dropzone CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/dropzone.css">
@@ -180,78 +179,27 @@
         }
     </style>
 @endsection
-@section('pageContent')
+<style>
+    th{
+            font-weight: 600;
+    }
+</style>
 
-    {{-- ============================= breadcrumb section ============================= --}}
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="d-none">
-        <ol class="breadcrumb mb-0" itemscope itemtype="https://schema.org/BreadcrumbList">
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <a href="https://elyvato.com" itemprop="item">
-                    <span itemprop="name">Home</span>
-                </a>
-                <meta itemprop="position" content="1" />
-            </li>
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <a href="#" class="breadcrumb-nlink" itemprop="item">
-                    <span itemprop="name">Help</span>
-                </a>
-                <meta itemprop="position" content="2" />
-            </li>
-        </ol>
-    </nav>
 
+{{-- header --}}
+<div class="mb-3 mb-lg-4">
+    <div class="d-flex gap-3 flex-wrap">
+        <button class="btn d-inline d-lg-none p-0 fs-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="ri-menu-2-line"></i>
+        </button>
+        <h1 class="fw-bold mb-0">Dashboard</h1>
     </div>
+</div>
 
-    <section class="container ticket-container">
+
+<section class="container ticket-container">
         <!-- Section 1: Form to raise a new ticket -->
-        @if (empty($tickets))
-            <div id="ticket-form-section">
-                <div class="d-grid mb-3">
-                    <button class="btn btn-primary btn-lg d-flex justify-content-between align-items-center"
-                        id="toggle-form-btn" type="button">
-                        <span id="toggle-btn-text">Raise a New Ticket</span>
-                    </button>
-                </div>
-                <div class="card" id="ticket-form-card">
-                    <div class="card-header">
-                        Please fill out the details below
-                    </div>
-                    <div class="card-body">
-                        <form id="new-ticket-form" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <div class="mb-4">
-                                <label for="department" class="form-label fw-medium">Select Department</label>
-                                <select class="form-select form-select-lg" name="department" id="department" required>
-                                    <option value="" selected disabled>Choose a department...</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-4">
-                                <label for="issue" class="form-label fw-medium">Describe your issue</label>
-                                <textarea class="form-control" id="issue" name="issue" rows="6"
-                                    placeholder="Please provide as much detail as possible..." required></textarea>
-                            </div>
-                            <div class="mb-4">
-                                <label for="attachment" class="form-label fw-medium">Attach an image (optional)</label>
-
-                                {{-- <input class="form-control" type="file" name="attachment" id="attachment" accept="image/*"> --}}
-
-                                <div class="dropzone" id="portfolio-dropzone">
-                                    <div class="dz-message">Drop file here or click to upload</div>
-                                </div>
-
-                                <input type="hidden" name="attachment" id="attachment">
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Submit Ticket</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @else
+      
             <!-- Section 2: Chat interface for an existing ticket -->
             <div id="ticket-chat-section" class="d-nonee">
                 <div class="card mb-5">
@@ -259,8 +207,13 @@
                         Conversation with Technical Support <br>
                         <span style="font-size: small; color: green;">TicketId- {{ $tickets->ticket_id }} </span>
 
-                        <button id="close-ticket-btn" class="btn btn-sm btn-main" data-ticket-id="{{ $tickets->id }}"
+                        @if($tickets->ticket_close=='close')
+                        <button  class="btn btn-sm btn-danger"
+                            style="float: inline-end;">Ticket closed </button>
+                            @else
+                            <button id="close-ticket-btn" class="btn btn-sm btn-main" data-ticket-id="{{ $tickets->id }}"
                             style="float: inline-end;">Close Ticket </button>
+                            @endif
                     </div>
                     <div class="card-body" id="chat-log">
                         <!-- Chat messages will be appended here -->
@@ -311,6 +264,7 @@
 
                     </div>
                     <div class="card-footer bg-white">
+                        @if($tickets->ticket_close=='open')
                         <form id="reply-form" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="input-group">
@@ -342,6 +296,36 @@
                                 </button>
                             </div>
                         </form>
+                        @else
+
+                          <form id="reply-form" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="input-group">
+                                <!-- Reply Message Input -->
+                                <input type="text" 
+                                    class="form-control form-control-lg" placeholder="Type your reply..."
+                                    aria-label="Type your reply" required disabled>
+
+
+                                <!-- Hidden File Input -->
+                                <input type="file" id="attachment" name="attachment" class="d-none"
+                                    accept="image/*,application/pdf" onchange="updateAttachmentName()">
+
+                                <!-- Preview area -->
+                                <div id="attachment-preview" class="mt-2 d-flex align-items-center gap-2"></div>
+                                <!-- Send Button -->
+                                <button class="btn btn-primary" type="button" disabled>
+                                    <!-- Send Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+
+                        @endif
                     </div>
 
                     <div class="dropzone-container" style="display: none;" id="portfolio-dropzone">
@@ -381,16 +365,16 @@
 
                                 const meta = document.createElement('div');
                                 meta.innerHTML = `
-      <div class="fw-semibold small">${file.name}</div>
-      <div class="text-muted small">${Math.round(file.size/1024)} KB</div>
-    `;
+                                    <div class="fw-semibold small">${file.name}</div>
+                                    <div class="text-muted small">${Math.round(file.size/1024)} KB</div>
+                                    `;
 
                                 wrap.appendChild(thumb);
                                 wrap.appendChild(meta);
                                 wrap.appendChild(removeBtn);
                                 preview.appendChild(wrap);
 
-                            } else {
+                            }else {
                                 // PDF (or other) → show a pill with name
                                 const pill = document.createElement('span');
                                 pill.className = 'pill';
@@ -404,13 +388,9 @@
                             }
                         }
                     </script>
-
-
-
-
                 </div>
             </div>
-        @endif
+        
 
         <!-- Section 2: Chat interface for an existing ticket -->
         <div id="ticket-chat-section" class="d-none">
@@ -424,6 +404,7 @@
 
                 </div>
                 <div class="card-footer bg-white">
+                    @if($tickets->ticket_close=='open')
                     <form id="reply-form" method="post">
                         @csrf
                         <div class="input-group">
@@ -438,15 +419,32 @@
                                 </svg>
                             </button>
                         </div>
-                    </form>
+                    </form> 
+                    @else
+
+                    <form id="reply-form" method="post">
+                        @csrf
+                        <div class="input-group">
+                            <input type="text" name="message" class="form-control form-control-lg"
+                                placeholder="Type your reply..." aria-label="Type your reply" required disabled>
+                            <button class="btn btn-primary" type="button" disabled>
+                                <!-- Send Icon SVG -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form> 
+
+                    @endif
+
                 </div>
             </div>
         </div>
-
     </section>
-
 @endsection
-
 @section('scripts')
     <!-- Custom JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/dropzone.min.js"></script>
@@ -884,7 +882,6 @@
                         icon: 'error',
                         position: 'top-right'
                     }) || alert(msg);
-
 
                     if (xhr.status === 409) {
                         $btn.removeClass('btn-warning bg-warning').addClass('btn-secondary').text(

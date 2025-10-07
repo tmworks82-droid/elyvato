@@ -205,7 +205,7 @@ class FreelanceController extends Controller
                 ]
             );
 
-//    dd($check);
+
 
             $bankDetailsVerification = [
                 'name' => 'bank_details_verification',
@@ -233,5 +233,41 @@ class FreelanceController extends Controller
         ]);
     }
 
+
+    // send reminder profile update 
+
+    public function UpdateProfileReminder(Request $request){
+        // dd($request->all());
+        $user=Admin::where('id',$request->id)->first();
+        $mobile=$user->mobile;
+
+        $profileReminderTemplateData = [
+            'name' => 'freelancer_profile_reminder', 
+            'language' => ['code' => 'en'],
+            'components' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $user->name ?? $user->username], 
+                    ]
+                ]
+            ]
+        ];
+
+       sendWhatsAppTemplate($mobile, $profileReminderTemplateData);
+
+       $check = sendEmail(
+                $user->email,
+                // 'tmworks82@gmail.com',
+                'ELYVATO | Update Profile Details',
+                'emails.reminder_profile',
+                [
+                    'user' => $user,
+                ]
+            );
+            // dd($check);
+
+        return response()->json(['success'=>true,'message'=>'Reminder send successfully']);
+    }
 
 }

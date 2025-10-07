@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Session;
 use App\Models\Dipartment;
 use App\Services\UserService;
 use App\Models\Admin;
@@ -21,6 +22,7 @@ use App\Models\TimeSheet;
 use App\Models\HireTalent;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+
 
 
 
@@ -560,39 +562,40 @@ function hasCallConflict($managerId, $bookingSlot)
 /**
  * Assign booking to manager: create Call, Project, update Booking, send email
  */
+
 function assignBooking($bookingId, $bookingSlot, $UserId, $managerId)
-{
-    Call::create([
-        'booking_id'   => $bookingId,
-        'scheduled_at' => $bookingSlot,
-        'created_by'   => $UserId,
-        'status'       => 'pending',
-    ]);
+    {
+        Call::create([
+            'booking_id'   => $bookingId,
+            'scheduled_at' => $bookingSlot,
+            'created_by'   => $UserId,
+            'status'       => 'pending',
+        ]);
 
-    Booking::where('id', $bookingId)->update(['assign_to' => $managerId]);
+        Booking::where('id', $bookingId)->update(['assign_to' => $managerId]);
 
-    Project::create([
-        'booking_id'         => $bookingId,
-        'account_manager_id' => $managerId,
-        'project_status'     => 'not_started',
-        'created_by'         => $UserId,
-    ]);
-      
-    $user = Admin::where('id', $managerId)->first();
+        Project::create([
+            'booking_id'         => $bookingId,
+            'account_manager_id' => $managerId,
+            'project_status'     => 'not_started',
+            'created_by'         => $UserId,
+        ]);
+        
+        $user = Admin::where('id', $managerId)->first();
 
-    // Send notification email
-    sendEmail(
-        $user->email,
-        'New Booking Call Assigned to you - ' . config('app.name'),
-        'emails.booking_call_assigned',
-        [
-            'user'         => $user,
-            'booking_time' => $bookingSlot,
-        ]
-    );
+        // Send notification email
+        sendEmail(
+            $user->email,
+            'New Booking Call Assigned to you - ' . config('app.name'),
+            'emails.booking_call_assigned',
+            [
+                'user'         => $user,
+                'booking_time' => $bookingSlot,
+            ]
+        );
 
-    return true;
-}
+        return true;
+    }
 
 
  function getUserRating($userId, $default = 4.5)
@@ -673,4 +676,80 @@ function assignBooking($bookingId, $bookingSlot, $UserId, $managerId)
             ->latest()
             ->first();
         return $clock;
+    } 
+
+   
+
+    function convertPrice1($id)
+    {
+
+        // Get currency from session if exists, otherwise use default from .env
+        // $currency = session('currency', env('DEFAULT_CURRENCY', 'INR'));
+        $currency = env('DEFAULT_CURRENCY');
+        // dd($currency);
+        if($currency=='INR'){
+            
+            $currencyDetails = \App\Models\StatementOfWork::where(['id'=>$id])->first();
+        
+            return $currencyDetails ? $currencyDetails->max_price : 0;
+        }else{
+            $currencyDetails = \App\Models\Currency::where(['currency_code'=>$currency,'sow_id'=>$id])->first();
+            return $currencyDetails ? $currencyDetails->price : 0;
+        }
     }
+
+    function convertPriceOld($id)
+    {
+        // Get currency from session, default to INR if not set
+        $currency = session('currency', 'INR');
+        //  dd($id);
+        if($currency == 'INR'){
+            $currencyDetails = \App\Models\StatementOfWork::where(['id' => $id])->first();
+            return $currencyDetails->max_price;
+        } else {
+            $currencyDetails = \App\Models\Currency::where(['currency_code' => $currency, 'sow_id' => $id])->first();
+            return $currencyDetails ? $currencyDetails->price : 0;
+        }
+    }
+
+
+    function convertPrice($id)
+    {
+        
+        $client = new Client();
+
+        // Get the user's IP address
+        $ip = request()->ip();
+        //$ip='138.199.42.123';  // USA
+         $ip='106.219.164.121'; // INdia
+        
+        // Make the API call to ip-api to get the user's location based on IP
+        try {
+            $response = $client->get("http://ip-api.com/json/{$ip}");
+            $geo = json_decode($response->getBody()->getContents());
+            
+            // Default currency is INR, but if the user is not in India, set it to USD
+            $currency = 'INR';
+            if (isset($geo->country) && $geo->country !== 'India') {
+                $currency = 'USD';
+            }
+        } catch (\Exception $e) {
+        
+            $currency = 'INR';
+        }
+
+        Session::put('currency', $currency);
+        
+        $currency = session('currency');
+    
+        // Fetch the currency details based on the determined or session currency
+        if ($currency == 'INR') {
+            // dd($currency);
+            $currencyDetails = \App\Models\StatementOfWork::where(['id' => $id])->first();
+            return $currencyDetails ? $currencyDetails->max_price : 0;
+        } else {
+            $currencyDetails = \App\Models\Currency::where(['currency_code' => $currency, 'sow_id' => $id])->first();
+            return $currencyDetails ? $currencyDetails->price : 0;
+        }
+    }
+

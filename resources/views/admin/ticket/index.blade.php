@@ -117,8 +117,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>User Info</th>
-                                                        <th>Issue</th>
-                                                        <th>Attachment</th> 
+                                                        <th>TicketID</th>
                                                         <th>Created On</th>
                                                         <th>Ticket Status</th>
                                                         <th>Action</th>
@@ -129,21 +128,8 @@
                                                     @foreach($tickets as $ticket)
                                                     <tr>
                                                         <td>{{$ticket->user->name ?? $ticket->user->username}} <br> {{$ticket->user->mobile}} <br> {{$ticket->user->email}}</td>
-                                                        <td>{{$ticket->describe_issue}}</td>
-                                                        <td>
-                                                            @php
-                                                                $attachments = json_decode($ticket->image, true);
-                                                            @endphp
-                                                             @if(!empty($attachments))
-                                                                @foreach($attachments as $file)
-                                                                <a href="{{url($file??'')}}" target="_blank">
-                                                                    <img src="{{url($file??'')}}" alt="attachment" width="100px;">
-                                                                    </a> 
-                                                                @endforeach
-                                                            @endif
-
-                                                            
-                                                        </td>
+                                                        <td> <a href="{{route('admin.ticket.reply.page',$ticket->id)}}" target="_blank"> {{$ticket->ticket_id}} </a> </td>
+                                                        
                                                         <td>{{formatDateReadable($ticket->created_at)}}</td>
                                                         <td>
                                                             @if($ticket->ticket_close=='close')

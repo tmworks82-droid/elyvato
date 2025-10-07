@@ -91,19 +91,22 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-
                     <div class="col-md-12">
                         <div class="card card-primary">
-
                             <div class="card-header">
                                 <h3 class="card-title">Freelancer Info</h3>
 
                                 @if ($freelancer->is_hired == 'yes')
-                                    <span class="badge badge-warning float-right">Hired</span>
+                                    <span class="badge badge-warning float-left ml-2">Hired</span>
                                 @else
-                                    <span class="badge badge-danger float-right">Not Hired</span>
+                                    <span class="badge badge-danger float-left ml-2">Not Hired</span>
                                 @endif
 
+                                <button class="btn btn-warning float-right m-1 btn-sm profile-reminder" data-type="reminder"
+                                        data-id="{{ $freelancer->id ?? '' }}">
+                                        <i class="fas fa-check-circle"></i> Send Reminder
+                                </button>
+                                
                             </div>
 
                             <div class="card-body row">
@@ -435,6 +438,7 @@
                                         data-id="{{ $freelancer->bankDetails->id ?? '' }}">
                                         <i class="fas fa-times-circle"></i> Disapprove
                                     </button>
+                                    
                                 </div>
                                 @endif
                             </div>
@@ -696,6 +700,42 @@
                     _token: "{{ csrf_token() }}",
                     id: id,
                     status: status
+                },
+                success: function(response) {
+                    if (response.success==true) {
+                        $.toast({
+                            heading: 'Success',
+                            text: response.message,
+                            showHideTransition: 'slide',
+                            icon: 'success',
+                            position: 'top-right',
+                            hideAfter: 3000, 
+                            afterHidden: function() {
+                                location.reload();
+                            }
+                        });
+                    }else{
+                        
+                        alert('Something went wrong while updating.');
+                    }
+                },
+                error: function() {
+                    toastr.error("Something went wrong. Please try again!");
+                }
+            });
+        });
+
+        
+        // here is send reinder mail to freelancer 
+         $(document).on('click', '.profile-reminder', function() {
+            let id = $(this).data('id');
+            
+            $.ajax({
+                url: "{{ route('profile.update-reminder') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: id,
                 },
                 success: function(response) {
                     if (response.success==true) {

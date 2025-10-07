@@ -319,6 +319,7 @@
 											<div class="position-absolute top-0 left-0 w-100 h-100 d-flex align-items-center justify-content-center gig-detail-play-btn">
 												 <i class="ri-play-circle-line"></i> 
 											</div>
+
 										@endif
 									</a>
 								</div>
@@ -377,24 +378,27 @@
 									<h3 class="fs-5 fw-medium w-100 border-bottom pb-2 mb-3">Standard</h3>
 									@if(!empty($sows->min_price) && $sows->offer_price > 0)
 									@php
-									
-									
+
 										$original_price = $sows->min_price;
 										$offer_price = $sows->offer_price;
 										$discount_amount = $original_price - $offer_price; // 1500 - 1000 = 500
 										$discount_percentage = ($discount_amount / $original_price) * 100;
-											@endphp
-											<h4 class="fs-2 fw-semibold mb-3">₹ {{ number_format($sows->offer_price) }} /-</h4>
+									
+									@endphp
+									<h4 class="fs-2 fw-semibold mb-3">₹ {{ number_format($sows->offer_price) }} /-</h4>
+
 									<small class="text-success"> <s>₹ {{ number_format($sows->min_price) }}</s> {{ round($discount_percentage) }}% Off</small>
-								   @else
-											<h4 class="fs-2 fw-semibold mb-3">₹ {{ number_format($sows->min_price) }} /-</h4>
+									@else
+								   @php
+										$convertedPrice = convertPrice($sows->id);
+									@endphp    
+											<h4 class="fs-2 fw-semibold mb-3">{{ number_format($convertedPrice, 2) }} {{session('currency')}} /-</h4>
 									@endif
-
-
 
 									<h5 class="fw-semibold">{{$sows->title}}</h5>
 									<p> {!!  trimWords($sows->description) !!} </p>
 								</div>
+
 								<div class="mt-3 pb-3">
 									<p class="mb-2 d-flex align-items-center gap-2"><i
 											class="ri-hourglass-fill text-main"></i>{{$sows->estimated_time}}</p>
@@ -406,6 +410,7 @@
 											class="ri-vip-crown-2-line text-main"></i>{{ucwords($sows->subscription_time)}} Subscription</p>
 									@endif
 								</div>
+
 								<button type="button"
 									class="btn btn-md-large btn-main w-100 d-flex align-items-center gap-2 justify-content-center"
 									data-bs-toggle="modal" data-bs-target="#bookingModal"><i class="ri-phone-line"></i>Book

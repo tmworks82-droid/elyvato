@@ -229,7 +229,7 @@ $data['bookedSlots'] = $bookedSlots;
             'receipt' => 'RCPT_' . time(),
             'amount' => $request->price * 100, // Amount in paise
             'currency' => 'INR'
-        ]);
+        ]); 
 
         return response()->json([
             'order_id' => $order->id,

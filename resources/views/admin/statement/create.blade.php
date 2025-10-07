@@ -101,6 +101,18 @@
               <input type="number" class="form-control" id="max_price" name="max_price" placeholder="Enter max price" step="0.01" value="{{ old('max_price', $statement->max_price ?? '') }}">
             </div>
 
+            <!-- USD Price Range -->
+            <div class="mb-3 col-md-4">
+              <label for="usd_min_price" class="form-label">USD Min Price</label>
+              <input type="number" class="form-control" id="usd_min_price" name="usd_min_price" step="0.01" placeholder="Enter min price" value="{{ old('usd_min_price', $statement->currencies->min_price ?? '') }}">
+            </div>
+
+            <div class="mb-3 col-md-4">
+              <label for="usd_max_price" class="form-label">USD Max Price</label>
+              <input type="number" class="form-control" id="usd_max_price" name="usd_max_price" placeholder="Enter max USD price" step="0.01" value="{{ old('usd_max_price', $statement->currencies->price ?? '') }}">
+            </div>
+
+           
             <div class="mb-3 col-md-4">
               <label for="max_price" class="form-label">Offer Price</label>
               <input type="number" class="form-control" id="offer_price" name="offer_price" placeholder="Enter max price" step="0.01" value="{{ old('offer_price', $statement->offer_price ?? '') }}">
@@ -109,9 +121,9 @@
             <!-- Estimated Time -->
             <div class="mb-3 col-md-4">
               <label for="estimated_time" class="form-label">Estimated Time</label>
-              <input type="text" class="form-control" id="estimated_time" name="estimated_time" placeholder="Enter estimate time" value="{{ old('estimated_time', $statement->estimated_time ?? '') }}">
+              <input type="text" class="form-control" id="estimated_time" name="estimated_time" placeholder="Enter estimate time" value="{{ old('estimated_time', $statement->estimated_time ?? '') }}" required>
             </div>
-
+ 
             <div class="mb-3 col-md-4">
               <label for="file_type" class="form-label">Files Formate</label>
               <select name="file_type" id="file_type" class="form-control">
@@ -154,7 +166,7 @@
             <div class="mb-3 file-input-group col-md-4" id="video_input" style="display: none;">
               <label class="form-label d-flex justify-content-between">
                 Video Link
-              </label>
+              </label> 
 
               <div class="input-group" id="video_input_group">
                 <input type="text" class="form-control" placeholder="Past here video link" name="video[]" accept="video/*">
@@ -173,13 +185,14 @@
                 <input class="form-check-input" type="radio" name="featured" id="featured" value="yes"
                   {{ (isset($statement) && $statement->featured == 'yes') ? 'checked' : '' }}>
                 <label class="form-check-label" for="featured">Yes</label>
-               
               </div>
+
               <div class="form-check form-check-inline">
                <input class="form-check-input" type="radio" name="featured" id="no" value="no"
                   {{ (isset($statement) && $statement->featured == 'no') ? 'checked' : '' }} checked>
                 <label class="form-check-label" for="no">No</label>
-                </div>
+              </div>
+
             </div>
             
             <!--is subscription -->
@@ -208,9 +221,6 @@
                 <option value="biweekly"  {{ (isset($statement) && $statement->subscription_time == 'biweekly') ? 'selected' : '' }}>Biweekly</option>
               </select>
             </div>
-
-            
-            
             
             <!-- Is Active -->
             <div class="mb-3 col-md-4">
@@ -228,8 +238,6 @@
                 <label class="form-check-label" for="inactive">Inactive</label>
               </div>
             </div>
-
-            
 
             <!-- Description -->
             <div class="mb-3 col-md-12">
@@ -301,7 +309,6 @@
     $('#title').on('input', function () {
         let titleVal = $(this).val();
       $('#seo_title').val(titleVal);
-      
     });
 
     $(document).ready(function() {
@@ -318,6 +325,23 @@
         if (!isNaN(max)) {
             let min = Math.floor(max * 0.95); // subtract 5% and round down
             $('#min_price').val(min);
+        }
+    });
+
+
+    $('#usd_min_price').on('input', function() {
+        let min = parseFloat($(this).val());
+        if (!isNaN(min)) {
+            let max = Math.ceil(min * 1.05); // add 5% and round up
+            $('#usd_max_price').val(max);
+        }
+    });
+
+    $('#usd_max_price').on('input', function() {
+        let max = parseFloat($(this).val());
+        if (!isNaN(max)) {
+            let min = Math.floor(max * 0.95); // subtract 5% and round down
+            $('#usd_min_price').val(min);
         }
     });
 

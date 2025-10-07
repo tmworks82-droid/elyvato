@@ -1,14 +1,13 @@
 @php
-    $title = 'Ticket - Elyvato';
-    $metaDescription =
-        'Elyvato-Raise a support ticket quickly and easily. Submit your query, track progress, and get timely resolutions from our support team.';
-    $robotsMeta = 'index, follow';
-    $canonical = 'https://elyvato.com';
-    $featuredImage = '/images/tmw-team.JPG';
+    $title = 'Dashboard - Elyvato';
+    $robotsMeta = 'noindex, nofollow';
 @endphp
 
 
-@extends('layouts.front.app')
+ @extends('layouts.front.user-app')
+
+
+@section('pageContent')
 @section('styles')
     <!-- Dropzone CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/dropzone.css">
@@ -180,29 +179,25 @@
         }
     </style>
 @endsection
-@section('pageContent')
+<style>
+    th{
+            font-weight: 600;
+    }
+</style>
 
-    {{-- ============================= breadcrumb section ============================= --}}
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="d-none">
-        <ol class="breadcrumb mb-0" itemscope itemtype="https://schema.org/BreadcrumbList">
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <a href="https://elyvato.com" itemprop="item">
-                    <span itemprop="name">Home</span>
-                </a>
-                <meta itemprop="position" content="1" />
-            </li>
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <a href="#" class="breadcrumb-nlink" itemprop="item">
-                    <span itemprop="name">Help</span>
-                </a>
-                <meta itemprop="position" content="2" />
-            </li>
-        </ol>
-    </nav>
 
+{{-- header --}}
+<div class="mb-3 mb-lg-4">
+    <div class="d-flex gap-3 flex-wrap">
+        <button class="btn d-inline d-lg-none p-0 fs-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="ri-menu-2-line"></i>
+        </button>
+        <h1 class="fw-bold mb-0">Dashboard</h1>
     </div>
+</div>
 
-    <section class="container ticket-container">
+
+<section class="container ticket-container">
         <!-- Section 1: Form to raise a new ticket -->
         @if (empty($tickets))
             <div id="ticket-form-section">
@@ -256,11 +251,12 @@
             <div id="ticket-chat-section" class="d-nonee">
                 <div class="card mb-5">
                     <div class="card-header" id="chat-header">
-                        Conversation with Technical Support <br>
+                        Conversation with  <span id="withname">Technical Support</span>  <br>
+
                         <span style="font-size: small; color: green;">TicketId- {{ $tickets->ticket_id }} </span>
 
-                        <button id="close-ticket-btn" class="btn btn-sm btn-main" data-ticket-id="{{ $tickets->id }}"
-                            style="float: inline-end;">Close Ticket </button>
+                        <button id="close-ticket-btn" class="btn btn-sm btn-main" data-ticket-id="{{ $tickets->id }}" style="float: inline-end;">Close Ticket </button>
+
                     </div>
                     <div class="card-body" id="chat-log">
                         <!-- Chat messages will be appended here -->
@@ -280,6 +276,7 @@
                                 <div class="message-time text-light">{{ $tickets->created_at->format('H:i') }}</div>
                             </div>
                         </div>
+                      
 
                         @if (!empty($tickets->messages) && count($tickets->messages))
                             @foreach ($tickets->messages as $message)
@@ -288,7 +285,7 @@
                                         <div class="chat-message user-message">
                                             <span> {{ $message->message }}</span> <br>
                                             @if (!empty($message->image))
-                                                <img src="{{ $message->image }}" alt="" style="width: 200px;">
+                                                <img src="{{ url($message->image) }}" alt="" style="width: 200px;">
                                             @endif
                                             <div class="message-time text-light">{{ $message->created_at->format('H:i') }}
                                             </div>
@@ -297,11 +294,15 @@
                                 @else
                                     <div>
                                         <div class="chat-message agent-message">
-                                            <span
-                                                style="font-size: 13px; color: #652398;">{{ GetUser($message->user_id)->name ?? GetUser($message->user_id)->username }}</span>
+                                            <span id="namewith" style="font-size: 13px; color: #652398;">{{ GetUser($message->user_id)->name ?? GetUser($message->user_id)->username }}</span>
                                             <br>
-                                            {{ $message->message }}
-                                            <br> <span
+                                            {{ $message->message }} <br>
+
+                                            @if (!empty($message->image))
+                                                <img src="{{ url($message->image) }}" alt="" style="width: 200px;">
+                                            @endif
+                                            <br>
+                                             <span
                                                 class="message-time">{{ $message->created_at->format('H:i') }}</span>
                                         </div>
                                     </div>
@@ -438,15 +439,12 @@
                                 </svg>
                             </button>
                         </div>
-                    </form>
+                    </form> 
                 </div>
             </div>
         </div>
-
     </section>
-
 @endsection
-
 @section('scripts')
     <!-- Custom JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/dropzone.min.js"></script>
@@ -896,5 +894,14 @@
                 }
             });
         });
+
+        $(document).ready(function(){
+            var name=$('#namewith').text();
+            // alert(name);
+            if(name==''){
+                name="Support";
+            }
+            $('#withname').html(name);
+        })
     </script>
 @endsection

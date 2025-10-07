@@ -73,15 +73,20 @@ Route::domain(config('app.domain'))->group(function () {
 
     // user middleware routes
     Route::group(['middleware' => 'user.auth'], function () {
-        // here uer login handle auth
-        Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        
+        Route::get('user/ticket-list', [FrontController::class, 'TicketList'])->name('list.ticket');
+        Route::get('user/raise-ticket', [FrontController::class, 'Ticket'])->name('raise.ticket');
+        Route::get('user/ticket/details/{id}', [FrontController::class, 'TicketDetails']);
 
+        
+        Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+     
         Route::get('/bookings', [BookingController::class, 'Booking']);
         Route::get('/payment-list', [DashboardController::class, 'PaymentsList']);
 
         Route::post('/upload-ticket-attachment', [TicketConversationController::class, 'uploadAttachmentTicket'])->name('upload.ticket.attachment');
         Route::post('/store-ticket', [TicketConversationController::class, 'storeTicket'])->name('tickets.store');
-    // Add a route to handle the reply submission
+    
         Route::post('/tickets/reply', [TicketConversationController::class, 'storeReply'])->name('tickets.reply');
         Route::post('/tickets/close/user', [TicketConversationController::class, 'closeTicketByUser'])->name('tickets.close.user');
 
@@ -364,12 +369,17 @@ Route::post('/save/availability-time', [ProfileController::class, 'SaveAvailabil
         Route::post('/bank-details/update-status', [FreelanceController::class, 'updateBankStatus'])
     ->name('bank-details.update-status');
 
+     Route::post('/profile-update-reminder', [FreelanceController::class, 'UpdateProfileReminder'])
+    ->name('profile.update-reminder');
+
 
     });
 
             // here front controller
         Route::post('/contact-store', [FrontController::class, 'store'])->name('contact.store');
 
+        Route::post('/set-currency', [FrontController::class, 'setCurrency'])->name('setCurrency');
+        
         Route::get('/comming-soon', [FrontController::class, 'CommingSoon'])->name('comming.soon');
         Route::get('/register-freelance', [FrontController::class, 'RegisterFreelance'])->name('register.freelancer');  
         Route::post('/freelancers/register', [FrontController::class, 'RegisterAsFreelance'])->name('freelancers.store');
@@ -378,7 +388,6 @@ Route::post('/save/availability-time', [ProfileController::class, 'SaveAvailabil
         
         Route::get('/', [FrontController::class, 'index']);
 
-        Route::get('raise-ticket', [FrontController::class, 'Ticket'])->name('raise.ticket');
 
         Route::get('/contact', [FrontController::class, 'ContactCustomer']);
         Route::get('/login', [FrontAuthController::class, 'UserLoginForm'])->name('user_login_form');
