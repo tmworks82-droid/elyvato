@@ -85,8 +85,8 @@
                             </p>
                         </td>
                         {{--<td>{{ $val->statementOfWork->initial_payment_percentage ?? 'N/A' }}%</td>--}}
-                        <td>{{ $val->initial_paid_amount ?? 'N/A' }} </td>
-                        <td>{{ $val->total_amount ?? 'N/A' }}</td>
+                        <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $val->initial_paid_amount ?? 'N/A' }} </td>
+                        <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $val->total_amount ?? 'N/A' }}</td>
                         <td>
                             @if($val->status=='pending')
                                 <span class="badge text-bg-warning">Pending</span>

@@ -141,8 +141,8 @@
                         <th scope="row">{{ $index + 1 }}</th>
                         <td>{{ $booking->statementOfWork->service->name ?? 'no service'}}</td>
                         <td>{{ $booking->initial_payment_percentage }} %</td>
-                        <td>{{ $booking->initial_paid_amount}}</td>
-                        <td>{{ $booking->total_price }}</td>
+                        <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $booking->initial_paid_amount}}</td>
+                        <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $booking->total_price }}</td>
                         <td>
                             @if($booking->status=='pending')
                             <span class="badge text-bg-warning">{{ $booking->status }}</span>

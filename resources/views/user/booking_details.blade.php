@@ -117,8 +117,8 @@
                                     </p>
                                 </td>
                                 {{--<td>{{ $booking->statementOfWork->initial_payment_percentage ?? 'N/A' }}%</td>--}}
-                                <td>₹ {{ $booking->initial_paid_amount ?? 'N/A' }}</td>
-                                <td>₹ {{ $booking->total_price ?? 'N/A' }}</td>
+                                <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $booking->initial_paid_amount ?? 'N/A' }}</td>
+                                <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $booking->total_price ?? 'N/A' }}</td>
                                 <td>
                                     @if ($booking->status == 'pending')
                                         <span class="badge text-bg-warning">Pending</span>
@@ -159,7 +159,7 @@
                                                 {{ $booking->statementOfWork->subservice->name ?? 'No service' }} <br>
                                                 {!! trimWords($booking->statementOfWork->description ?? 'No service')!!}
                                                 </td>
-                                <td>₹ {{ $booking->initial_paid_amount ?? 'NA' }}</td>
+                                <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $booking->initial_paid_amount ?? 'NA' }}</td>
                                 <td>{{ $booking->created_on ?? 'N/A' }}</td>
                                 <td>
                                     @if ($booking->project->project_status == 'not_started')
@@ -207,7 +207,7 @@
                                 <td>{{ $milestone->due_date }}</td>
                                 <td>{{ $milestone->title ?? 'NA' }}</td>
                                 <td>{{ $milestone->description ?? 'N/A' }}</td>
-                                <td>₹ {{ $milestone->amount ?? 'N/A' }}</td>
+                                <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $milestone->amount ?? 'N/A' }}</td>
                                 <td>
                                     @if ( $milestone->status == 'pending')
                                         <span class="badge text-bg-warning">Pending</span>

@@ -66,7 +66,7 @@
                             @foreach ($payments as $payment)
                                 <tr>
                                     <th scope="row">{{ $i++ }}</th>
-                                    <td>₹ {{ $payment->amount }}</td>
+                                    <td>{{ Currency_symbol(session('currency')) ?? '' }} {{ $payment->amount }}</td>
                                     <td>{{ formatDateReadable($payment->payment_date) }}</td>
                                     <td>Online</td>
                                     <td>
