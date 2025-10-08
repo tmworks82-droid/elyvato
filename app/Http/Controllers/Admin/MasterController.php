@@ -51,6 +51,7 @@ class MasterController extends Controller
     public function StatementCreate(Request $request,$id=''){
           $data['service']=Service::get();
           $data['subservice']=SubService::get();
+          $data['country']=Country::get();
 
         if (!empty($id)) {
             $data['statement'] = StatementOfWork::with('allFiles','currencies')->findOrFail($id);
@@ -82,20 +83,17 @@ class MasterController extends Controller
        
         // Check if we're updating or creating
 
-        if($request->id){
-            $statement = StatementOfWork::find($request->id);
-            $currency=Currency::where('sow_id',$request->id)->first();
+        if ($request->id) {
+                $statement = StatementOfWork::find($request->id);
 
-            $msg="Statement of Work updated successfully.";
-        }else{
-            $statement=new StatementOfWork();
-            $currency=new Currency();
-            $msg="Statement of Work saved successfully.";
-        }
+                // Optional: delete existing currencies to avoid duplicates or mismatch
+                Currency::where('sow_id', $request->id)->delete();
 
-        if(empty($currency)){
-            $currency=new Currency();
-        }
+                $msg = "Statement of Work updated successfully.";
+            } else {
+                $statement = new StatementOfWork();
+                $msg = "Statement of Work saved successfully.";
+            }
 
         // Set fields
         $statement->service_id = $request->service_id;
@@ -123,22 +121,34 @@ class MasterController extends Controller
         if (!$statement->exists) {
             $statement->created_by = Auth::user()->id; // For insert
         }
+
         $statement->updated_by = Auth::user()->id; // Always update this
 
         $statement->save();
 
         // dd($currency);
-        $currency->currency_name='US Dollar';
-        $currency->currency_code='USD';
-        $currency->sow_id=$request->id;
-        $currency->min_price=$request->usd_min_price;
-        $currency->price=$request->usd_max_price;
-        // dd($currency);
-        $currency->save();
+       
+        $countries     = $request->input('countries');
+        $minPrices     = $request->input('usd_min_price');
+        $maxPrices     = $request->input('usd_max_price');
+        $offerPrices   = $request->input('offer_price'); 
+
+        foreach ($countries as $index => $countryId) {  
+            $country=Country::where('id',$countryId)->first();
+            // dd($country);
+            Currency::create([
+                'sow_id'        => $statement->id,
+                'country_id'    =>$countryId,
+                'currency_name' => $country->country_name,
+                'currency_code' => $country->currency,
+                'min_price'     => $minPrices[$index],
+                'price'         => $maxPrices[$index],
+                'offer_price'   => $offerPrices[$index] ?? null,
+            ]);
+        }
 
 
         // here store files
-          
 
         $sowId = $statement->id;
 

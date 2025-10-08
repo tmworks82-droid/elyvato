@@ -472,21 +472,15 @@
 @endsection
 @push('scripts')
     <!-- jQuery -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>-->
-    <!--<script src="https://cdn.rawgit.com/mugifly/jquery-simple-datetimepicker/72933bbe/jquery.simple-dtpicker.js"></script>-->
-    <!--<link href="https://cdn.rawgit.com/mugifly/jquery-simple-datetimepicker/72933bbe/jquery.simple-dtpicker.css" rel="stylesheet" />-->
-
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+       <script src="https://cdn.ckeditor.com/ckeditor5/38.0.0/classic/ckeditor.js"></script>
 
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-
-
     <script>
-        CKEDITOR.replace('description');
-
+     
+ClassicEditor
+    .create(document.querySelector('#description'))
         $(function() {
             let start = 7 * 60; // 7:00 AM in minutes
             let end = 23 * 60 + 30; // 11:30 PM in minutes

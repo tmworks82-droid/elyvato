@@ -7,6 +7,12 @@
 @extends('layouts.main')
 @section('title', 'Service Create | ' . $page_name . ' list')
 @section('content')
+<style>
+    #content {
+    min-height: 60px; 
+    height: 60px;     
+}
+</style>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -28,9 +34,7 @@
         </section>
 
         <!-- Main content -->
-
         <section class="content">
-
 
             <div class="container mt-4">
                 <div class="card">
@@ -62,10 +66,10 @@
 
                                 <!-- Slug -->
                                 {{-- <div class="mb-3 col-md-6">
-                    <label for="slug" class="form-label">Slug</label>
-                    <input type="text" name="slug" id="slug" class="form-control"
-                        value="{{ old('slug', $blog->slug ?? '') }}" required>
-                </div> --}}
+                                        <label for="slug" class="form-label">Slug</label>
+                                        <input type="text" name="slug" id="slug" class="form-control"
+                                            value="{{ old('slug', $blog->slug ?? '') }}" required>
+                                    </div> --}}
                                 @php
                                     // Check if $blog exists and has 'category', else default to empty array
                                     $selectedCategories = [];
@@ -193,23 +197,36 @@
     <!-- /.content-wrapper -->
 @endsection
 @push('scripts')
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    {{-- <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script> --}}
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.0/classic/ckeditor.js"></script>
 
     <script>
-        CKEDITOR.replace('content');
 
-        CKEDITOR.instances.content.on('change', function() {
-            // get HTML from CKEditor
-            let htmlData = CKEDITOR.instances.content.getData();
 
-            // convert to plain text
+        ClassicEditor
+    .create(document.querySelector('#content'))
+    .then(editor => {
+       
+        const descriptionEditor = editor;
+
+        descriptionEditor.model.document.on('change:data', function() {
+            
+            let htmlData = descriptionEditor.getData();
+
             let plainText = $('<div>').html(htmlData).text();
 
-            // only update if meta_description is empty
-            // if ($('#meta_description').val().trim() === '') {
-            $('#meta_description').val(plainText);
-            // }
+            let wordArray = plainText.split(/\s+/); 
+            if (wordArray.length > 200) {
+                wordArray = wordArray.slice(0, 200); 
+            }
+ 
+            $('#meta_description').val(wordArray.join(' '));
         });
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
 
         // --- Title to SEO Title ---
         $('#title').on('input', function() {

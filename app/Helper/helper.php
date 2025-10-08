@@ -22,7 +22,8 @@ use App\Models\TimeSheet;
 use App\Models\HireTalent;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-
+use App\Models\Currency;
+use App\Models\Country;
 
 
 
@@ -61,8 +62,6 @@ function BookingNotification(){
         if(getRoleNamebyId(Auth::user()->role_id)->name_slug=='super-admin' || getRoleNamebyId(Auth::user()->role_id)->name_slug=='admin'){
             $booking=Booking::where('is_visited','no')->count();
         }
-    
-    
     return $booking;
 }
 
@@ -91,7 +90,6 @@ function getPermissionNamebyId($id)
 {
 	return \App\Models\Permission::where('id', $id)->first();
 }
-
 
 
 
@@ -165,6 +163,7 @@ function GetUser($id){
         );
     }
 
+
 	function GenerateTaskHistory($taskId,$comment){
 
         if (!isset($taskId)) {
@@ -186,6 +185,7 @@ function GetUser($id){
 
 	}
 
+
     function logEventHistory($eventType, $eventHistory, $formData = [], $userId = null)
     {
 		// dd($eventType, $eventHistory, $formData, $userId);
@@ -204,8 +204,6 @@ function Service(){
     return Service::with('subservices')->where('is_active',1)->get();
     // return Service::all();
 }
-
-
 
 
 function Hiretalent(){
@@ -698,22 +696,10 @@ function assignBooking($bookingId, $bookingSlot, $UserId, $managerId)
         }
     }
 
-    function convertPriceOld($id)
-    {
-        // Get currency from session, default to INR if not set
-        $currency = session('currency', 'INR');
-        //  dd($id);
-        if($currency == 'INR'){
-            $currencyDetails = \App\Models\StatementOfWork::where(['id' => $id])->first();
-            return $currencyDetails->max_price;
-        } else {
-            $currencyDetails = \App\Models\Currency::where(['currency_code' => $currency, 'sow_id' => $id])->first();
-            return $currencyDetails ? $currencyDetails->price : 0;
-        }
-    }
+ 
 
 
-    function convertPrice($id)
+    function convertPrice_old($id)
     {
         
         $client = new Client();
@@ -723,7 +709,7 @@ function assignBooking($bookingId, $bookingSlot, $UserId, $managerId)
         //$ip='138.199.42.123';  // USA
          $ip='106.219.164.121'; // INdia
         
-        // Make the API call to ip-api to get the user's location based on IP
+        
         try {
             $response = $client->get("http://ip-api.com/json/{$ip}");
             $geo = json_decode($response->getBody()->getContents());
@@ -753,3 +739,94 @@ function assignBooking($bookingId, $bookingSlot, $UserId, $managerId)
         }
     }
 
+
+    function convertPrice($sowId)
+    {
+        // 1) Detect if the IP is from India
+        // $ip = request()->ip();
+        // $ip = '138.199.42.123';
+        $ip ='115.240.90.163'; //ind
+        // $ip='128.1.186.123';
+        // $ip='198.244.234.214';
+        $isIndia = false;
+        $currencyCode = 'USD'; // Default currency
+
+    try {
+        $client = new Client(['timeout' => 2, 'connect_timeout' => 1]);
+        // Only fetch status + countryCode to keep it light
+        $res  = $client->get("http://ip-api.com/json/{$ip}?fields=status,countryCode");
+        $data = json_decode($res->getBody()->getContents(), true);
+        if (($data['status'] ?? 'fail') === 'success') {
+            $countryCode = strtoupper((string)($data['countryCode'] ?? ''));
+        }
+    } catch (\Throwable $e) {
+        // ignore and use default currency (USD)
+    }
+
+    // 2) Map countryCode to currency_code (ISO 4217)
+    $isoToCurrency = [
+        'US' => 'USD',
+        'GB' => 'GBP',
+        'CA' => 'CAD',
+        'AU' => 'AUD',
+        'AE' => 'AED',
+        'SG' => 'SGD',
+        'EU' => 'EUR',
+        'JP' => 'JPY',
+        'CN' => 'CNY',
+        'BR' => 'BRL',
+        'ZA' => 'ZAR',
+        'RU' => 'RUB',
+        'MX' => 'MXN',
+        'IN' => 'INR',
+    ];
+
+    // Map the country code to currency code
+    $currencyCode = $isoToCurrency[$countryCode] ?? 'USD'; // Default to USD if no match
+
+    // 3) Get the price for the currency and sow_id from currencies table
+    $currencyRow = Currency::where('sow_id', $sowId)
+        ->where('currency_code', $currencyCode)
+        ->first();
+
+    // 4) If a matching record exists, return its price
+    if ($currencyRow && !is_null($currencyRow->price)) {
+        Session::put('currency', $currencyCode); // Set the session for the selected currency
+        return  $currencyRow;
+    }
+
+    if ($currencyCode=='INR') {
+         $inrPrice = StatementOfWork::where('id', $sowId)->first();
+                Session::put('currency', 'INR');
+                return $inrPrice ;
+    }
+
+    // 5) If no record for the currency, fallback to USD price for that sow_id
+    $usdPrice = Currency::where('sow_id', $sowId)
+        ->where('currency_code', 'USD')
+        ->first();
+//  dd($currencyCode);
+    if (!empty($usdPrice)) {
+        Session::put('currency', 'USD');
+        
+        return  $usdPrice;
+    }
+   
+
+    // 6) Fallback to any available currency for that sow_id
+    $anyCurrency = Currency::where('sow_id', $sowId)->first();
+    if ($anyCurrency && !is_null($anyCurrency->price)) {
+        Session::put('currency', $anyCurrency->currency_code);
+        return  $anyCurrency;
+    }
+
+    // 7) Final fallback: return the base price from StatementOfWork (INR)
+    $inrPrice = StatementOfWork::where('id', $sowId)->first();
+    Session::put('currency', 'INR');
+    return $inrPrice ;
+    }
+
+    function Currency_symbol($currency){
+        $symbol=Country::where('currency',$currency)->value('symbol');
+        return $symbol;
+    }

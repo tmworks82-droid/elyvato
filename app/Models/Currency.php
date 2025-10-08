@@ -14,7 +14,8 @@ class Currency extends Model
         'currency_name',
         'price',
         'min_price',
-        'sow_id'
+        'sow_id',
+        'offer_price'
     ];
 
 

@@ -13,15 +13,44 @@
         @yield(section: 'styles')
         <style>
              .whatsapp-float {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 999;
-         background-color: #aeecc6; 
-        border-radius: 50%;
-        padding: 8px;
-         box-shadow: 0 0 10px rgba(0,0,0,0.2); 
-    }
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 999;
+                background-color: #aeecc6; 
+                border-radius: 50%;
+                padding: 8px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2); 
+            }
+
+            /* Tablet (<992px) */
+@media (max-width: 991.98px) {
+  .whatsapp-float {
+   position: fixed;
+    bottom: 110px;
+    right: 18px;
+    z-index: 999;
+    background-color: #aeecc6; 
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);    /* slightly larger tap target */
+  }
+}
+
+/* Mobile (<576px) */
+@media (max-width: 575.98px) {
+  .whatsapp-float {
+    position: fixed;
+    bottom: 110px;
+    right: 18px;
+    z-index: 999;
+    background-color: #aeecc6; 
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+}
+
     .whatsapp-float img {
         display: block;
     }

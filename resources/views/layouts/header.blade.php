@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ URL::asset('plugins/chart.js/Chart.css') }}"> --}}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Summernote CSS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <style>
         .select2-container .select2-selection--single {
             height: 30px;

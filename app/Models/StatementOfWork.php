@@ -64,7 +64,7 @@ class StatementOfWork extends Model
 
     public function currencies()
     {
-        return $this->hasOne(\App\Models\Currency::class, 'sow_id', 'id');
+        return $this->hasMany(\App\Models\Currency::class, 'sow_id', 'id');
     }
 
 }

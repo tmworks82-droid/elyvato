@@ -77,7 +77,6 @@
                     </div>
                     @endif
                     
-
                     <div class="col-sm-4 form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="Enter name" required>
@@ -95,22 +94,21 @@
 
                     <div class="col-sm-4 form-group">
                         <label>Mobile:</label>
-                      <input type="number" class="form-control" id="mobile" name="mobile" value="{{ old('mobile') }}" placeholder="Enter mobile">
+                      <input type="text" class="form-control" id="mobile" name="mobile" value="{{ str_replace('+91', '', $results->mobile) }}" placeholder="Enter mobile">
                     </div>  
 
                     <div class="col-sm-4 form-group">
-                                <label>Profile Picture:</label>
-                                <input type="file" class="form-control" id="image" name="image">
-                                @if(!empty($profiles->image))
-                                <img src="{{$profiles->image}}" alt="profile" style="width:100px;">
-                                @endif
-                      </div>
+                        <label>Profile Picture:</label>
+                        <input type="file" class="form-control" id="image" name="image">
+                        @if(!empty($profiles->image))
+                        <img src="{{$profiles->image}}" alt="profile" style="width:100px;">
+                        @endif
+                    </div>
 
                     <div class="mb-3 col-md-4">
                       <label for="company_name" class="form-label">Bio</label>
                       <textarea name="bio" class="form-control" rows="4" id="bio" maxlength="500">{{ old('bio', $profiles->profile->bio ?? '') }}</textarea>
                       <small class="text-muted">Max 30 words allowed.</small>
-
                     </div>
 
                     <div class="mb-3 col-md-4">
